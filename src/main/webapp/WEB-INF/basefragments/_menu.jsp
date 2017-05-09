@@ -10,7 +10,8 @@
 	<strong>DANH MỤC SẢN PHẨM</strong>
 </div>
 <div class="CL2">
-	<form:form method="GET">
+	<form:form modelAttribute="listCategory"
+			action="${pageContext.request.contextPath}/">
 		<ul>
 			<c:forEach var="item" items="${listCategory}">
 				<li><a href="#">${item.name}</a></li>

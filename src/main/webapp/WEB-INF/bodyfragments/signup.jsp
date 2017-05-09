@@ -5,7 +5,7 @@
 <%@taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
 
-<div class="login-container">
+<div class="login-container" valign="top">
 
 	<h3>Đăng ký tài khoản</h3>
 	<br>
@@ -37,34 +37,34 @@
 
 				<tr>
 					<td>Tài khoản *</td>
-					<td><input name="username" /></td>
+					<td><form:input name="username" /></td>
 					<td><form:errors path="username" /></td>
 				</tr>
 
 				<tr>
 					<td>Mật khẩu *</td>
-					<td><input type="password" name="password" /></td>
+					<td><form:input type="password" name="password" /></td>
 					<td><form:errors path="password" /></td>
 				</tr>
 				<tr>
 					<td>Số điện thoại</td>
-					<td><input name="phone" /></td>
+					<td><form:input name="phone" /></td>
 					<td><form:errors path="phone" /></td>
 				</tr>
 				<tr>
 					<td>Địa chỉ</td>
-					<td><input name="address" /></td>
+					<td><form:input name="address" /></td>
 					<td><form:errors path="address" /></td>
 				</tr>
 				<tr>
 					<td>Giới tính</td>
-					<td><input name="gender" /></td>
+					<td><form:input name="gender" /></td>
 					<td><form:errors path="phone" /></td>
 				</tr>
 
 				<tr>
 					<td>&nbsp;</td>
-					<td><input type="submit" value="Đăng ký" /></td>
+					<td><form:input type="submit" value="Đăng ký" /></td>
 				</tr>
 			</table>
 

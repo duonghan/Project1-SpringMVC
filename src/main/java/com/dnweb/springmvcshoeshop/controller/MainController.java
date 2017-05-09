@@ -61,13 +61,13 @@ public class MainController {
 		}
 		System.out.println("Target=" + target);
 
-		// Trường hợp update SL trên giỏ hàng.
+		// TrÆ°á»�ng há»£p update SL trĂªn giá»� hĂ ng.
 		// (@ModelAttribute("cartForm") @Validated CartInfo cartForm)
 		if (target.getClass() == CartInfo.class) {
 
 		}
 
-		// Trường hợp save thông tin khách hàng.
+		// TrÆ°á»�ng há»£p save thĂ´ng tin khĂ¡ch hĂ ng.
 		// (@ModelAttribute("customerForm") @Validated CustomerInfo
 		// customerForm)
 		else if (target.getClass() == CustomerInfo.class) {
@@ -94,32 +94,31 @@ public class MainController {
 	
 	// Vi du trang hom ...
 	@RequestMapping("/")
-	public String home(Model model) {
+	public String home(/*Model model*/) {
 		//model.addAttribute("listCategory", this.categoryDAO.getAllCategory());
-		listCategory(model);
+		//listCategory(model);
 		return "index";
 	}
 	
 
-	// Phuong thuc na can duoc goi tai mọi nơi, để nó tạo attribute nay cho _menu.
-	//Hiển thị danh mục sản phẩm
-	 // Vi du nhu the, khi do trang attribute listCaegory luon co gia tri tai mọi trang.
-	// Hoặc có thể làm nó trong Intercepter.
+	// Phuong thuc na can duoc goi tai má»�i nÆ¡i, Ä‘á»ƒ nĂ³ táº¡o attribute nay cho _menu.
+	//Hiá»ƒn thá»‹ danh má»¥c sáº£n pháº©m
+	 // Vi du nhu the, khi do trang attribute listCaegory luon co gia tri tai má»�i trang.
+	// Hoáº·c cĂ³ thá»ƒ lĂ m nĂ³ trong Intercepter.
 	// Hieu khong?
 	//hieu r a ak
-	//lan trc e cu tuong controller nó cần phải nhận đc cái request nào đó kia
-	//nhưng h e hiểu r
-	//hnay cũng muộn r, hnay e hỏi nhiều quá
+	//lan trc e cu tuong controller nĂ³ cáº§n pháº£i nháº­n Ä‘c cĂ¡i request nĂ o Ä‘Ă³ kia
+	//nhÆ°ng h e hiá»ƒu r
+	//hnay cÅ©ng muá»™n r, hnay e há»�i nhiá»�u quĂ¡
 	//
-	public void listCategory(Model model){
-		
-		
-		model.addAttribute("listCategory", categoryDAO.getAllCategory());	
+	public String listCategory(Model model){
+		model.addAttribute("listCategory", categoryDAO.getAllCategory());
+		return "_menu";
 		 
 	}
 	
 	
-	// Danh sách sản phẩm.
+	// Danh sĂ¡ch sáº£n pháº©m.
 	@RequestMapping({ "/productList" })
 	public String listProductHandler(Model model, //
 			@RequestParam(value = "name", defaultValue = "") String likeName,
@@ -144,7 +143,7 @@ public class MainController {
 		}
 		if (product != null) {
 
-			// Thông tin giỏ hàng có thể đã lưu vào trong Session trước đó.
+			// ThĂ´ng tin giá»� hĂ ng cĂ³ thá»ƒ Ä‘Ă£ lÆ°u vĂ o trong Session trÆ°á»›c Ä‘Ă³.
 			CartInfo cartInfo = Utils.getCartInSession(request);
 
 			ProductInfo productInfo = new ProductInfo(product);
@@ -152,7 +151,7 @@ public class MainController {
 			cartInfo.addProduct(productInfo, 1);
 		}
 
-		// Chuyển sang trang danh sách các sản phẩm đã mua.
+		// Chuyá»ƒn sang trang danh sĂ¡ch cĂ¡c sáº£n pháº©m Ä‘Ă£ mua.
 		return "redirect:/shoppingCart";
 	}
 
@@ -165,7 +164,7 @@ public class MainController {
 		}
 		if (product != null) {
 
-			// Thông tin giỏ hàng có thể đã lưu vào trong Session trước đó.
+			// ThĂ´ng tin giá»� hĂ ng cĂ³ thá»ƒ Ä‘Ă£ lÆ°u vĂ o trong Session trÆ°á»›c Ä‘Ă³.
 			CartInfo cartInfo = Utils.getCartInSession(request);
 
 			ProductInfo productInfo = new ProductInfo(product);
@@ -174,11 +173,11 @@ public class MainController {
 
 		}
 
-		// Chuyển sang trang danh sách các sản phẩm đã mua.
+		// Chuyá»ƒn sang trang danh sĂ¡ch cĂ¡c sáº£n pháº©m Ä‘Ă£ mua.
 		return "redirect:/shoppingCart";
 	}
 
-	// POST: Cập nhập số lượng cho các sản phẩm đã mua.
+	// POST: Cáº­p nháº­p sá»‘ lÆ°á»£ng cho cĂ¡c sáº£n pháº©m Ä‘Ă£ mua.
 	@RequestMapping(value = { "/shoppingCart" }, method = RequestMethod.POST)
 	public String shoppingCartUpdateQty(HttpServletRequest request, //
 			Model model, //
@@ -187,11 +186,11 @@ public class MainController {
 		CartInfo cartInfo = Utils.getCartInSession(request);
 		cartInfo.updateQuantity(cartForm);
 
-		// Chuyển sang trang danh sách các sản phẩm đã mua.
+		// Chuyá»ƒn sang trang danh sĂ¡ch cĂ¡c sáº£n pháº©m Ä‘Ă£ mua.
 		return "redirect:/shoppingCart";
 	}
 
-	// GET: Hiển thị giỏ hàng.
+	// GET: Hiá»ƒn thá»‹ giá»� hĂ ng.
 	@RequestMapping(value = { "/shoppingCart" }, method = RequestMethod.GET)
 	public String shoppingCartHandler(HttpServletRequest request, Model model) {
 		CartInfo myCart = Utils.getCartInSession(request);
@@ -200,16 +199,16 @@ public class MainController {
 		return "shoppingCart";
 	}
 
-	// GET: Nhập thông tin khách hàng.
+	// GET: Nháº­p thĂ´ng tin khĂ¡ch hĂ ng.
 	@RequestMapping(value = { "/shoppingCartCustomer" }, method = RequestMethod.GET)
 	public String shoppingCartCustomerForm(HttpServletRequest request, Model model) {
 
 		CartInfo cartInfo = Utils.getCartInSession(request);
 
-		// Chưa mua mặt hàng nào.
+		// ChÆ°a mua máº·t hĂ ng nĂ o.
 		if (cartInfo.isEmpty()) {
 
-			// Chuyển tới trang danh giỏ hàng
+			// Chuyá»ƒn tá»›i trang danh giá»� hĂ ng
 			return "redirect:/shoppingCart";
 		}
 
@@ -223,7 +222,7 @@ public class MainController {
 		return "shoppingCartCustomer";
 	}
 
-	// POST: Save thông tin khách hàng.
+	// POST: Save thĂ´ng tin khĂ¡ch hĂ ng.
 	@RequestMapping(value = { "/shoppingCartCustomer" }, method = RequestMethod.POST)
 	public String shoppingCartCustomerSave(HttpServletRequest request, //
 			Model model, //
@@ -231,11 +230,11 @@ public class MainController {
 			BindingResult result, //
 			final RedirectAttributes redirectAttributes) {
 
-		// Kết quả Validate CustomerInfo.
+		// Káº¿t quáº£ Validate CustomerInfo.
 		if (result.hasErrors()) {
 			customerForm.setValid(false);
 			// Forward to reenter customer info.
-			// Forward tới trang nhập lại.
+			// Forward tá»›i trang nháº­p láº¡i.
 			return "shoppingCartCustomer";
 		}
 
@@ -244,66 +243,66 @@ public class MainController {
 
 		cartInfo.setCustomerInfo(customerForm);
 
-		// Chuyển hướng sang trang xác nhận.
+		// Chuyá»ƒn hÆ°á»›ng sang trang xĂ¡c nháº­n.
 		return "redirect:/shoppingCartConfirmation";
 	}
 
-	// GET: Xem lại thông tin để xác nhận.
+	// GET: Xem láº¡i thĂ´ng tin Ä‘á»ƒ xĂ¡c nháº­n.
 	@RequestMapping(value = { "/shoppingCartConfirmation" }, method = RequestMethod.GET)
 	public String shoppingCartConfirmationReview(HttpServletRequest request, Model model) {
 		CartInfo cartInfo = Utils.getCartInSession(request);
 
-		// Chưa mua mặt hàng nào.
+		// ChÆ°a mua máº·t hĂ ng nĂ o.
 		if (cartInfo.isEmpty()) {
 
-			// Chuyển tới trang danh giỏ hàng
+			// Chuyá»ƒn tá»›i trang danh giá»� hĂ ng
 			return "redirect:/shoppingCart";
 		} else if (!cartInfo.isValidCustomer()) {
 
-			// Chuyển tới trang nhập thông tin khách hàng.
+			// Chuyá»ƒn tá»›i trang nháº­p thĂ´ng tin khĂ¡ch hĂ ng.
 			return "redirect:/shoppingCartCustomer";
 		}
 
 		return "shoppingCartConfirmation";
 	}
 
-	// POST: Gửi đơn hàng (Save).
+	// POST: Gá»­i Ä‘Æ¡n hĂ ng (Save).
 	@RequestMapping(value = { "/shoppingCartConfirmation" }, method = RequestMethod.POST)
 
-	// Day xử lý, nguoi dung hoan thanh dơn hang ==> Luu thong tin don hang
-	// Vào DB
-	// Tránh ngoại lệ: UnexpectedRollbackException (Xem giải thích thêm).
+	// Day xá»­ lĂ½, nguoi dung hoan thanh dÆ¡n hang ==> Luu thong tin don hang
+	// VĂ o DB
+	// TrĂ¡nh ngoáº¡i lá»‡: UnexpectedRollbackException (Xem giáº£i thĂ­ch thĂªm).
 	@Transactional(propagation = Propagation.NEVER)
 	public String shoppingCartConfirmationSave(HttpServletRequest request, Model model) {
 		CartInfo cartInfo = Utils.getCartInSession(request);
 
-		// Chưa mua mặt hàng nào.
+		// ChÆ°a mua máº·t hĂ ng nĂ o.
 		if (cartInfo.isEmpty()) {
 
-			// Chuyển tới trang danh giỏ hàng
+			// Chuyá»ƒn tá»›i trang danh giá»� hĂ ng
 			return "redirect:/shoppingCart";
 		} else if (!cartInfo.isValidCustomer()) {
 
-			// Chuyển tới trang nhập thông tin khách hàng.
+			// Chuyá»ƒn tá»›i trang nháº­p thĂ´ng tin khĂ¡ch hĂ ng.
 			return "redirect:/shoppingCartCustomer";
 		}
 		try {
-			// Lưu don hang vao DB
+			// LÆ°u don hang vao DB
 			orderDAO.saveOrder(cartInfo);
 		} catch (Exception e) {
 
-			// Cần thiết: Propagation.NEVER?
+			// Cáº§n thiáº¿t: Propagation.NEVER?
 			return "shoppingCartConfirmation";
 		}
 
-		// Xóa rỏ hàng khỏi session.
+		// XĂ³a rá»� hĂ ng khá»�i session.
 		Utils.removeCartInSession(request);
 
-		// Lưu thông tin đơn hàng đã xác nhận mua.
-		// Lưu thong tin don hang vua mua (La don hang cuoi cung, moi nhát).
+		// LÆ°u thĂ´ng tin Ä‘Æ¡n hĂ ng Ä‘Ă£ xĂ¡c nháº­n mua.
+		// LÆ°u thong tin don hang vua mua (La don hang cuoi cung, moi nhĂ¡t).
 		Utils.storeLastOrderedCartInSession(request, cartInfo);
 
-		// Chuyến hướng tới trang hoàn thành mua hàng.
+		// Chuyáº¿n hÆ°á»›ng tá»›i trang hoĂ n thĂ nh mua hĂ ng.
 		return "redirect:/shoppingCartFinalize";
 	}
 
