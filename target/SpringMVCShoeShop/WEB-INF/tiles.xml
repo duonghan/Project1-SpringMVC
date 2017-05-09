@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE tiles-definitions PUBLIC  
+      "-//Apache Software Foundation//DTD Tiles Configuration 3.0//EN"  
+      "http://tiles.apache.org/dtds/tiles-config_3_0.dtd">
+
+<tiles-definitions>
+
+	<!-- Base Define -->
+	<definition name="base.definition" template="/WEB-INF/layouts/classic.jsp">
+		<put-attribute name="title" value="" />
+		<put-attribute name="header" value="/WEB-INF/basefragments/_header.jsp" />
+		<put-attribute name="menu" value="/WEB-INF/basefragments/_menu.jsp" />
+		<put-attribute name="body" value="" />
+		<put-attribute name="footer" value="/WEB-INF/basefragments/_footer.jsp" />
+	</definition>
+
+	<!-- Home Page -->
+	<definition name="index" extends="base.definition">
+		<put-attribute name="title" value="Shoe Shop" />
+		<put-attribute name="body" value="/WEB-INF/bodyfragments/index.jsp" />
+	</definition>
+
+	<!-- ContactUs Page -->
+	<definition name="contactusPage" extends="base.definition">
+		<put-attribute name="title" value="Contact Us" />
+		<put-attribute name="body"
+			value="/WEB-INF/bodyfragments/contactus.jsp" />
+	</definition>
+
+	<!-- 403 Page -->
+	<definition name="403" extends="base.definition">
+		<put-attribute name="title" value="Truy cập bị từ chối" />
+		<put-attribute name="body" value="/WEB-INF/bodyfragments/403.jsp" />
+	</definition>
+
+	<!-- Acccount Info Page -->
+	<definition name="accountInfo" extends="base.definition">
+		<put-attribute name="title" value="Thông tin cá nhân" />
+		<put-attribute name="body"
+			value="/WEB-INF/bodyfragments/accountInfo.jsp" />
+	</definition>
+
+	<!-- About Page -->
+	<definition name="about" extends="base.definition">
+		<put-attribute name="title" value="Về chúng tôi" />
+		<put-attribute name="body"
+			value="/WEB-INF/bodyfragments/about.jsp" />
+	</definition>
+	
+	<!-- Login Page -->
+	<definition name="login" extends="base.definition">
+		<put-attribute name="title" value="Đăng nhập" />
+		<put-attribute name="body" value="/WEB-INF/bodyfragments/login.jsp" />
+	</definition>
+
+	<!-- Order Page -->
+	<definition name="order" extends="base.definition">
+		<put-attribute name="title" value="Đặt hàng" />
+		<put-attribute name="body" value="/WEB-INF/bodyfragments/order.jsp" />
+	</definition>
+
+	<!-- Order List Page -->
+	<definition name="orderList" extends="base.definition">
+		<put-attribute name="title" value="Danh sách đơn hàng" />
+		<put-attribute name="body"
+			value="/WEB-INF/bodyfragments/orderList.jsp" />
+	</definition>
+
+	<!-- Product Page -->
+	<definition name="product" extends="base.definition">
+		<put-attribute name="title" value="Sản phẩm" />
+		<put-attribute name="body" value="/WEB-INF/bodyfragments/product.jsp" />
+	</definition>
+
+	<!-- Product List Page -->
+	<definition name="productList" extends="base.definition">
+		<put-attribute name="title" value="Danh sách sản phẩm" />
+		<put-attribute name="body"
+			value="/WEB-INF/bodyfragments/productList.jsp" />
+	</definition>
+
+	<!-- Shopping Card Page -->
+	<definition name="shoppingCart" extends="base.definition">
+		<put-attribute name="title" value="Giỏ hàng" />
+		<put-attribute name="body"
+			value="/WEB-INF/bodyfragments/shoppingCart.jsp" />
+	</definition>
+
+	<!-- Shopping Cart Customer Page -->
+	<definition name="shoppingCartCustomer" extends="base.definition">
+		<put-attribute name="title" value="Shopping Cart Customer" />
+		<put-attribute name="body"
+			value="/WEB-INF/bodyfragments/shoppingCartCustomer.jsp" />
+	</definition>
+
+	<!-- Shopping Cart Confirmation Page -->
+	<definition name="shoppingCartConfirmation" extends="base.definition">
+		<put-attribute name="title" value="Shopping Cart Customer" />
+		<put-attribute name="body"
+			value="/WEB-INF/bodyfragments/shoppingCartConfirmation.jsp" />
+	</definition>
+
+	<!-- Shopping Cart Finally -->
+	<definition name="shoppingCartFinalize" extends="base.definition">
+		<put-attribute name="title" value="Contact Us" />
+		<put-attribute name="body"
+			value="/WEB-INF/bodyfragments/shoppingCartFinalize.jsp" />
+	</definition>
+
+	<!-- Signup Page -->
+	<definition name="signup" extends="base.definition">
+		<put-attribute name="title" value="Đăng ký" />
+		<put-attribute name="body" value="/WEB-INF/bodyfragments/signup.jsp" />
+	</definition>
+</tiles-definitions>

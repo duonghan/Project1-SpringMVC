@@ -1,0 +1,174 @@
+.content {
+	height:2550px;
+	width:1200px;
+	margin: 0px auto;
+	border: 1px solid #cccccc;
+}
+.Cleft{
+	height:2550px;
+	width:300px;
+	margin: 0px auto;
+	float: left;
+}
+.CL1{
+	width: 290px;
+	height:50px;
+	line-height: 50px;
+	margin: 0px auto;
+	background: #007fff;
+	color: #fff;	
+	text-align: center;
+	border: 1px solid #ccc;
+}
+.CL2 ul{
+	width: 290px;
+	margin: 0px auto;
+	padding: 0;
+	list-style-type: none;
+	border: 1px solid #ccc;
+}
+.CL2  ul li{
+	width:auto;
+	height: 50px;
+	line-height: 50px;
+	background: #fff;
+	border: 1px solid #ccc;
+	position: relative;
+}
+.CL2  ul li a {
+	text-decoration: none;
+	color:#333;
+	display:block;
+	padding-left: 15px;
+	
+}
+.CL2  ul li:hover{
+	background: #cccccc;
+	color: #ffffff;
+}
+.CL2  .CL3 {
+    position: absolute;
+    left: 290px;
+    top:0;
+    display: none;
+}
+.CL2  ul li:hover .CL3 {
+	display:block;
+}
+.Cleft img{
+	margin: 10px 5px;
+	width:290px;
+}
+
+.CL4 img{
+	width: 290px;
+	height:200px;
+	margin: 10px 5px;
+}
+/*===========================*/
+.Cright{
+	height:2550px;
+	width:895px;	
+	float: right;
+}
+.CR1{
+	width: 895px;
+	height:780px;
+	margin: 0 auto;
+
+}
+.title{
+	width: 250px;
+	height:40px;
+	margin-top:0;
+	background: #fff;
+	border-bottom: #ff0000 solid 3px;
+	border-right: #ff0000 solid 3px;
+}
+.title p {
+	font-size: 20px;
+	text-align: center;
+	padding:0px;
+	color:#ff0000; 
+}
+
+.sp{
+	width: 200px;
+	height:315px;
+    
+	margin: 5px 15px 15px 5px;
+	float: left;
+}
+.sp img{
+	width: 190px;
+	height:190px;
+	margin: 5px 5px;
+}
+.sp .sale a{
+	text-decoration: line-through;
+}
+.sp .namesp a:link {
+   color: #000;
+   text-decoration: none;
+}
+.sp .namesp a:visited {
+   text-decoration: none;
+   color: #000;
+}
+.sp .namesp a:hover {
+   text-decoration: underline;
+   color: #990000;
+}
+.sp .namesp a:active {
+   text-decoration: none;
+   color: #000;
+}
+.button {
+	width: 65px;
+	height:40px;
+	line-height: 40px;
+	margin-top:5px;
+	border: 1px solid #000;
+	border-radius: 1em 1em 1em 1em;
+	background-color: #fff;
+	margin-left:55px;
+	padding: 0 10px;
+	outline:0;
+	cursor: pointer;
+	display:block;
+}
+.button a{
+	color:#000;
+	text-align: center;
+	text-decoration: none;
+}
+.button:hover{
+	background:#ff0000;	
+}
+.button:hover a{
+	color:#fff;
+}
+.sp:hover{
+	background:#b2b2b2;
+}
+.CR2 {
+	width: 889px;
+	height:100px;
+	border: 1px solid #cccccc;
+}
+.CR2 .logo{
+	width: 200px;
+	height:90px;
+	background-color: #fff;
+	margin-left:15px;
+	margin-top:5px;
+	float: left;
+	display:block;
+}
+.CR2 .logo img{
+	width: 200px;
+	height:90px;
+}
+.CR2 .logo:hover{
+	border: 1px solid #ff0000;
+}
