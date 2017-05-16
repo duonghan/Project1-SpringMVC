@@ -21,29 +21,8 @@ import com.dnweb.springmvcshoeshop.model.CustomerInfo;
 @Repository
 public class AccountDAO {
 
-	// Neu co Autowire tại day ==> Spring chỉ gán giá trị cho sessionFactory, va
-	// ko lam gi khac
-	// Trươc khi Spring tiem giá trị cho cái này
-	@Autowired // Do thieu cai nay.
+	@Autowired
 	private SessionFactory sessionFactory;  
-
-	// Doan nay chạy, và bị null pointer, vì sessionFactory chua được tiêm
-	// vào==> sessionFactory nul
-	// Loi nullPointerExcption
-	// session = sessionFactory.getCurrentSession();
-	// crit = session.createCriteria(Account.class);
-
-	// Vì vậy viết Autowhire tại đây. để khi spring tiem gia trị vao
-	// ==> Các cái kia sẽ dược khởi tạo giá trị.
-	// Spring no se tu dong goi phuong thuc nay!!
-
-	// Khi do cai nay cung duoc thuc thi!
-	// session = sessionFactory.getCurrentSession(); // Vì vậy gọi trong thơi
-	// điểm DI (Tiêm) là luon trả về null.
-	// crit = session.createCriteria(Account.class);
-
-	// Khong duoc lam the nay.
-	// sessionFactory chưa được tiêm vào AccounDAO.
 
 	// Tim kiem tai khoan theo userName
 	public Account findAccountByUsername(String userName) {
@@ -88,9 +67,6 @@ public class AccountDAO {
 	}
 
 	// dang ky hoac update thong tin nguoi dung
-	//a kiem tra xem chỗ này e viết như thế này ddusng chưa
-	//e xem bài hd của a là trên hibernate 5 còn khi vào hiber nate 4 đúng k nữa
-	
 	
 	public void saveAccount(AccountInfo accountInfo) {
 		Session session = sessionFactory.getCurrentSession();
@@ -117,11 +93,7 @@ public class AccountDAO {
 		account.setPhone(accountInfo.getPhone());
 		account.setGender(accountInfo.getGender());
 
-		// Chay kiem tra đi!
-		//tu tu đẫ a, tại còn nhiều chỗ chưa sửa quá
-		//đầu tiên là dao đã
-		// Trong DAO da co cong them roi
-		account.setRole("USER"); // Spring các ROLE phải có tiếp đầu ngữ là ROLE_
+		account.setRole("USER");
 		account.setActive(true);
 
 		// dua account ve trang thai persistent
@@ -144,31 +116,8 @@ public class AccountDAO {
 
 		return query.list();
 	}
-
-	//Vay con cho xoa tai khoan nay thi sao a
-	
-	//e thay a co làm theo 2 cach
-	
-	//vay nen lam theo cai nao a
 	
 	// Xoa tai khoan
-	// public void deleteAccount(String userName){
-	//
-	// Session session = sessionFactory.getCurrentSession();
-	//
-	// String sql = "Delete " + Account.class.getName() //a e quen no khong phan biet chua hoa thuong
-	
-	// +" a " + "where a.username =: userName";
-	//
-	// Query query = session.createQuery(sql);
-	// query.setParameter("userName", userName);
-	//
-	// query.executeUpdate();
-	// }
-
-	// Cach nao cung dc. Ko quan trong 
-	// Nhung có thể sử dụng cách này cung dc.
-	//ok a
 	public void deleteAccount(String userName) {
 
 		Session session = sessionFactory.getCurrentSession();

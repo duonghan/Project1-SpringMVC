@@ -23,6 +23,7 @@ import org.springframework.web.servlet.view.tiles3.TilesConfigurer;
 import org.springframework.web.servlet.view.tiles3.TilesView;
 
 import com.dnweb.springmvcshoeshop.entities.Account;
+import com.dnweb.springmvcshoeshop.interceptor.MenuInterceptor;
 
 @Configuration
 @ComponentScan("com.dnweb.springmvcshoeshop.*")
@@ -128,5 +129,6 @@ public class ApplicationContextConfig {
 
 		return transactionManager;
 	}
+	
 
 }

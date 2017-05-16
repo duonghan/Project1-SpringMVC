@@ -23,9 +23,11 @@ import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.dnweb.springmvcshoeshop.dao.AccountDAO;
+import com.dnweb.springmvcshoeshop.dao.CategoryDAO;
 import com.dnweb.springmvcshoeshop.dao.OrderDAO;
 import com.dnweb.springmvcshoeshop.dao.ProductDAO;
 import com.dnweb.springmvcshoeshop.model.AccountInfo;
+import com.dnweb.springmvcshoeshop.model.CategoryInfo;
 import com.dnweb.springmvcshoeshop.model.CustomerInfo;
 import com.dnweb.springmvcshoeshop.model.OrderDetailInfo;
 import com.dnweb.springmvcshoeshop.model.OrderInfo;
@@ -35,30 +37,29 @@ import com.dnweb.springmvcshoeshop.validator.ProductInfoValidator;
 
 @Controller
 // Enable Hibernate Transaction.
-// Cần thiết cho Hibernate Transaction.
+// Cáº§n thiáº¿t cho Hibernate Transaction.
 @Transactional
 // Need to use RedirectAttributes
-// Cần thiết để sử dụng RedirectAttributes
+// Cáº§n thiáº¿t Ä‘á»ƒ sá»­ dá»¥ng RedirectAttributes
 @EnableWebMvc
 public class AdminController {
 	
-	// Day la các nhiem vu cua Admin
-	// Admin dang nhap de them SP, nhập giá sản phẩm,....
-	// Còn mainController liên quan tới hiển thị và bán hàng.
+	// Day la cĂ¡c nhiem vu cua Admin
+	// Admin dang nhap de them SP, nháº­p giĂ¡ sáº£n pháº©m,....
+	// CĂ²n mainController liĂªn quan tá»›i hiá»ƒn thá»‹ vĂ  bĂ¡n hĂ ng.
 	@Autowired
 	private OrderDAO orderDAO;
 
 	@Autowired
 	private ProductDAO productDAO;
+	
+	@Autowired
+	private CategoryDAO categoryDAO;
 
 	@Autowired
 	private ProductInfoValidator productInfoValidator;
 	
-	@Autowired
-	private AccountDAO accountDAO;
-
-	// Configurated In ApplicationContextConfig.
-	// Đã cấu hình trong ApplicationContextConfig
+	//Duoc cau hinh ApplicationContextConfig
 	@Autowired
 	private ResourceBundleMessageSource messageSource;
 
@@ -73,13 +74,13 @@ public class AdminController {
 		if (target.getClass() == ProductInfo.class) {
 			dataBinder.setValidator(productInfoValidator);
 			// For upload Image.
-			// Sử dụng cho upload Image.
+			// Sá»­ dá»¥ng cho upload Image.
 			dataBinder.registerCustomEditor(byte[].class, new ByteArrayMultipartFileEditor());
 		}
 	}
 
 	// GET: Show Login Page
-	// GET: Hiển thị trang login
+	// GET: Hiá»ƒn thá»‹ trang login
 	@RequestMapping(value = { "/login" }, method = RequestMethod.GET)
 	public String login(Model model) {
 
@@ -89,12 +90,14 @@ public class AdminController {
 	@RequestMapping(value = { "/accountInfo" }, method = RequestMethod.GET)
 	public String accountInfo(Model model) {
 
-		UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-		System.out.println(userDetails.getPassword());
-		System.out.println(userDetails.getUsername());
-		System.out.println(userDetails.isEnabled());
-	
-		model.addAttribute("userDetails", userDetails);
+//		UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+//		
+//		
+//		System.out.println(userDetails.getPassword());
+//		System.out.println(userDetails.getUsername());
+//		System.out.println(userDetails.isEnabled());
+//	
+//		model.addAttribute("userDetails", userDetails);
 		return "accountInfo";
 	}
 
@@ -115,9 +118,31 @@ public class AdminController {
 		model.addAttribute("paginationResult", paginationResult);
 		return "orderList";
 	}
-
+	
+	//Thay doi category
+	@RequestMapping(value = { "/editcategory" }, method=RequestMethod.GET)
+	public String showCategory(Model model,
+			@RequestParam(value = "id", defaultValue="") String id){
+		CategoryInfo categoryInfo = null;
+		
+		if (id != null && id.length() > 0) {
+			categoryInfo = categoryDAO.findCategoryInfo(id);
+		}
+		if (categoryInfo == null) {
+			categoryInfo = new CategoryInfo();
+			categoryInfo.setNewCategory(true);
+		}
+		
+		model.addAttribute("categoryForm", categoryInfo);
+		return "editcategory";
+	}
+	
+	// No se goi toi phuong thuc nay. Ma phuong thuc nay mình lập trình ko vì mục đích save
+	// ==> Vẫn dc, nó đơn giản là hiển thị SP thay vì save ==> Ko đúng mục đích vậy thôi.
+	//ok e hiểu r ạ
+	// Day la GET ==> Khi người dùng xem một SP.
 	// GET: Show product.
-	// GET: Hiển thị product
+	// GET: Hiá»ƒn thá»‹ product
 	@RequestMapping(value = { "/product" }, method = RequestMethod.GET)
 	public String product(Model model, @RequestParam(value = "id", defaultValue = "") String id) {
 		ProductInfo productInfo = null;
@@ -132,10 +157,32 @@ public class AdminController {
 		model.addAttribute("productForm", productInfo);
 		return "product";
 	}
+	
+	//Luu thong tin sau khi thay doi category
+	
+	@RequestMapping(value = { "/editcategory" }, method = RequestMethod.POST)
+	@Transactional(propagation = Propagation.NEVER)
+	public String categorySave(Model model, //
+			@ModelAttribute("categoryForm") CategoryInfo categoryInfo,
+			BindingResult result,
+			final RedirectAttributes redirectAttributes){
+		
+		if (result.hasErrors()) {
+			return "editcategory";
+		}
+		
+		categoryDAO.saveCategory(categoryInfo);
+		
+		return "redirect:/";
+	}
 
+	// Day la POST (Khi người dùng Submit, de save Product).
 	// POST: Save product
 	@RequestMapping(value = { "/product" }, method = RequestMethod.POST)
-	// Tránh ngoại lệ: UnexpectedRollbackException (Xem giải thích thêm).
+	// Trinh ngoai le: UnexpectedRollbackException.
+	//ngoại lệ này là sao a (Đây chẳng qua là nói rằng nếu có lỗi Save ==> Rollback lại.
+	// Mấy thuộc tính này hơi khó hiểu chút, nhưng có thể bỏ đi ko sao
+	
 	@Transactional(propagation = Propagation.NEVER)
 	public String productSave(Model model, //
 			@ModelAttribute("productForm") @Validated ProductInfo productInfo, //
@@ -149,7 +196,7 @@ public class AdminController {
 			productDAO.save(productInfo);
 		} catch (Exception e) {
 			// Need: Propagation.NEVER?
-			// Cần thiết: Propagation.NEVER?
+			// Cáº§n thiáº¿t: Propagation.NEVER?
 			String message = e.getMessage();
 			model.addAttribute("message", message);
 			// Show product form.

@@ -10,7 +10,9 @@
 	<strong>DANH MỤC SẢN PHẨM</strong>
 </div>
 <div class="CL2">
-	<form:form method="GET">
+<!-- cái này nó sẽ tự động lấy ra, nhưng tạm thời đang bị lỗi -->
+	<form:form modelAttribute="listCategory"
+			action="${pageContext.request.contextPath}/">
 		<ul>
 			<c:forEach var="item" items="${listCategory}">
 				<li><a href="#">${item.name}</a></li>

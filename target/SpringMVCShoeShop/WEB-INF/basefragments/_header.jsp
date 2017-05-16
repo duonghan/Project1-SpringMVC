@@ -63,13 +63,13 @@
 					hệ</strong></a></li>
 		<security:authorize
 			access="hasAnyRole('ROLE_ADMIN','ROLE_USER')">
-			<li><a href="${pageContext.request.contextPath}/orderList">
-					Danh sách đơn hàng </a></li>
+			<li><a href="${pageContext.request.contextPath}/orderList"><strong>
+					Danh sách đơn hàng </strong></a></li>
 		</security:authorize>
 
 		<security:authorize access="hasRole('ROLE_ADMIN')">
-			<li><a href="${pageContext.request.contextPath}/product">
-					Thay đổi sản phẩm </a></li>
+			<li><a href="${pageContext.request.contextPath}/product"><strong>
+					Thay đổi sản phẩm </strong></a></li>
 		</security:authorize>
 		
 		<div class="timkiem">

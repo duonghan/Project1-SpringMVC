@@ -14,7 +14,7 @@
 
 
 		<ul>
-			<li>Họ Tên: ${customerInfo.getName}</li>
+			<li>Họ Tên: ${customerForm.getName}</li>
 			<li>Role:
 				<ul>
 					<c:forEach items="${userDetails.authorities}" var="auth">
@@ -22,6 +22,11 @@
 					</c:forEach>
 				</ul>
 			</li>
+			<li>Email: ${customerForm.getEmail}</li>
+			<li>Địa chỉ: ${customerForm.getAddress}</li>
+			<li>Số điện thoại: ${customerForm.getPhone}</li>
+			<li>Giới tính: ${customerForm.getGender}</li>
+			
 		</ul>
 		
 		</form:form>

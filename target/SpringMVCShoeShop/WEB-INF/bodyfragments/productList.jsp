@@ -18,7 +18,7 @@
 			<li>Mã sản phẩm: ${prodInfo.id}</li>
 			<li>Tên sản phẩm: ${prodInfo.name}</li>
 			<li>Đơn giá: <fmt:formatNumber value="${prodInfo.price}"
-					type="currency" /></li>
+					 /> VNĐ</li>
 			<li><a
 				href="${pageContext.request.contextPath}/buyProduct?id=${prodInfo.id}">
 					Mua</a></li>
@@ -27,7 +27,7 @@
 			<security:authorize access="hasRole('ROLE_ADMIN')">
 				<li><a style="color: red;"
 					href="${pageContext.request.contextPath}/product?id=${prodInfo.id}">
-						Chỉnh sửa sản phẩm</a></li>
+						Chỉnh sửa</a></li>
 			</security:authorize>
 		</ul>
 	</div>

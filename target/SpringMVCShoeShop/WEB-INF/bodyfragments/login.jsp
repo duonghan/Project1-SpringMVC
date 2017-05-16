@@ -5,7 +5,7 @@
 
 <div class="page-title">Đăng nhập (For Employee, Manager)</div>
 
-<div class="login-container">
+<div class="login-container" valign="top">
 
 	<h3>Nhập tài khoản và mật khẩu</h3>
 	<br>

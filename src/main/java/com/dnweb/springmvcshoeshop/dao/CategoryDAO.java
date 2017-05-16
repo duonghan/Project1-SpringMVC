@@ -22,11 +22,6 @@ public class CategoryDAO {
 	@Autowired
 	private SessionFactory sessionFactory;
 
-	// Chú ý: Current Session nó chưa được tạo ra. Trong qua trinh Spring dang
-	// còn tạo Bean, và tiem giá trị
-	// Vì vậy các chỗ này ko dc đâu.
-	// Phải tự tạo trong mỗi phương thức
-
 	//Tim kiem danh muc san pham
 	public Category findCategory(String id) {
 		Session session = sessionFactory.getCurrentSession();
@@ -79,25 +74,14 @@ public class CategoryDAO {
 	public List<Category> getAllCategory() {
 		Session session = sessionFactory.getCurrentSession();
 
-		String sql = "Select c.* " + " from " + CategoryInfo.class.getName()
+		String sql = "Select c" + " from " + Category.class.getName()
 				+ " c ";
 		Query query = session.createQuery(sql);
+		System.out.println(query.list());
 		return query.list();
 	}
 	
 	//Xoa danh muc san pham
-//	public void deleteCategory(String categoryId){
-//		Session session = sessionFactory.getCurrentSession();
-//		
-//		String sql = "Delete " + Category.class.getName().toLowerCase() + " c "
-//				+"where c.id := categoryid";
-//		
-//		Query query = session.createQuery(sql);
-//		query.setParameter("categoryid", categoryId);
-//		
-//		query.executeUpdate();
-//	}
-
 	public void deleteCategory(String categoryId){
 		Session session = this.sessionFactory.getCurrentSession();
 		Category category = this.findCategory(categoryId);

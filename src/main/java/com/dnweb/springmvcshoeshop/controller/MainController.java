@@ -26,6 +26,7 @@ import com.dnweb.springmvcshoeshop.dao.OrderDAO;
 import com.dnweb.springmvcshoeshop.dao.ProductDAO;
 import com.dnweb.springmvcshoeshop.entities.Product;
 import com.dnweb.springmvcshoeshop.model.CartInfo;
+import com.dnweb.springmvcshoeshop.model.CategoryInfo;
 import com.dnweb.springmvcshoeshop.model.CustomerInfo;
 import com.dnweb.springmvcshoeshop.model.PaginationResult;
 import com.dnweb.springmvcshoeshop.model.ProductInfo;
@@ -48,7 +49,7 @@ public class MainController {
 
 	@Autowired
 	private CategoryDAO categoryDAO;
-	
+
 	@Autowired
 	private CustomerInfoValidator customerInfoValidator;
 
@@ -61,7 +62,7 @@ public class MainController {
 		}
 		System.out.println("Target=" + target);
 
-		// TrÆ°á»�ng há»£p update SL trĂªn giá»� hĂ ng.
+		// Rruong hop update tren gio hang
 		// (@ModelAttribute("cartForm") @Validated CartInfo cartForm)
 		if (target.getClass() == CartInfo.class) {
 
@@ -80,7 +81,7 @@ public class MainController {
 	public String accessDenied() {
 		return "403";
 	}
-	
+
 	@RequestMapping("/about")
 	public String about() {
 		return "about";
@@ -88,37 +89,42 @@ public class MainController {
 
 	@RequestMapping("/contactus")
 	public String contactus(Model model) {
-		listCategory(model);
-		return "contactus";
+		// listCategory(model);
+		return "contactusPage";
 	}
-	
+
 	// Vi du trang hom ...
 	@RequestMapping("/")
-	public String home(/*Model model*/) {
-		//model.addAttribute("listCategory", this.categoryDAO.getAllCategory());
-		//listCategory(model);
+	public String home( Model model ) {
+//		 model.addAttribute("listCategory",
+//		this.categoryDAO.getAllCategory());
+		 //listCategory(model);
 		return "index";
 	}
-	
 
-	// Phuong thuc na can duoc goi tai má»�i nÆ¡i, Ä‘á»ƒ nĂ³ táº¡o attribute nay cho _menu.
-	//Hiá»ƒn thá»‹ danh má»¥c sáº£n pháº©m
-	 // Vi du nhu the, khi do trang attribute listCaegory luon co gia tri tai má»�i trang.
+	// Phuong thuc na can duoc goi tai má»�i nÆ¡i, Ä‘á»ƒ nĂ³ táº¡o attribute nay
+	// cho _menu.
+	// Hiá»ƒn thá»‹ danh má»¥c sáº£n pháº©m
+	// Vi du nhu the, khi do trang attribute listCaegory luon co gia tri tai
+	// má»�i trang.
 	// Hoáº·c cĂ³ thá»ƒ lĂ m nĂ³ trong Intercepter.
 	// Hieu khong?
-	//hieu r a ak
-	//lan trc e cu tuong controller nĂ³ cáº§n pháº£i nháº­n Ä‘c cĂ¡i request nĂ o Ä‘Ă³ kia
-	//nhÆ°ng h e hiá»ƒu r
-	//hnay cÅ©ng muá»™n r, hnay e há»�i nhiá»�u quĂ¡
-	//
-	public String listCategory(Model model){
-		model.addAttribute("listCategory", categoryDAO.getAllCategory());
-		return "_menu";
-		 
-	}
+	// hieu r a ak
+	// lan trc e cu tuong controller nĂ³ cáº§n pháº£i nháº­n Ä‘c cĂ¡i request
+	// nĂ o Ä‘Ă³ kia
+	// nhÆ°ng h e hiá»ƒu r
+	// hnay cÅ©ng muá»™n r, hnay e há»�i nhiá»�u quĂ¡
+	// Goi ham nay, listCateogry co the su dung moi noi, ke ca _menu.jsp, _home.jsp, ...
+	// No su dung duoc trong moi View!!
+	//nghia la e chi can minh ham nay thoi
+	//co the k can trong ham nay, ma van có the dung dc a a
 	
 	
-	// Danh sĂ¡ch sáº£n pháº©m.
+//	public void listCategory(Model model) {
+//		model.addAttribute("listCategory", categoryDAO.getAllCategory());
+//	}
+
+	// Danh sach san pham
 	@RequestMapping({ "/productList" })
 	public String listProductHandler(Model model, //
 			@RequestParam(value = "name", defaultValue = "") String likeName,
@@ -133,6 +139,23 @@ public class MainController {
 		return "productList";
 	}
 
+	// Danh sach san pham theo danh muc
+	@RequestMapping(value = { "/category" }, method = RequestMethod.GET)
+	public String category(Model model, 
+			@RequestParam(value = "id", defaultValue = "") String id,
+			@RequestParam(value = "name", defaultValue = "") String likeName,
+			@RequestParam(value = "page", defaultValue = "1") int page) {
+		final int maxResult = 5;
+		final int maxNavigationPage = 10;
+
+		PaginationResult<ProductInfo> result = productDAO.queryProductsCategory(page, //
+				maxResult, maxNavigationPage, id, likeName);
+		
+		model.addAttribute("paginationProductsByCategory", result);
+		
+		return "category";
+	}
+
 	@RequestMapping({ "/buyProduct" })
 	public String listProductHandler(HttpServletRequest request, Model model, //
 			@RequestParam(value = "id", defaultValue = "") String id) {
@@ -143,7 +166,8 @@ public class MainController {
 		}
 		if (product != null) {
 
-			// ThĂ´ng tin giá»� hĂ ng cĂ³ thá»ƒ Ä‘Ă£ lÆ°u vĂ o trong Session trÆ°á»›c Ä‘Ă³.
+			// ThĂ´ng tin giá»� hĂ ng cĂ³ thá»ƒ Ä‘Ă£ lÆ°u vĂ o trong Session
+			// trÆ°á»›c Ä‘Ă³.
 			CartInfo cartInfo = Utils.getCartInSession(request);
 
 			ProductInfo productInfo = new ProductInfo(product);
@@ -164,7 +188,8 @@ public class MainController {
 		}
 		if (product != null) {
 
-			// ThĂ´ng tin giá»� hĂ ng cĂ³ thá»ƒ Ä‘Ă£ lÆ°u vĂ o trong Session trÆ°á»›c Ä‘Ă³.
+			// ThĂ´ng tin giá»� hĂ ng cĂ³ thá»ƒ Ä‘Ă£ lÆ°u vĂ o trong Session
+			// trÆ°á»›c Ä‘Ă³.
 			CartInfo cartInfo = Utils.getCartInSession(request);
 
 			ProductInfo productInfo = new ProductInfo(product);
@@ -177,25 +202,36 @@ public class MainController {
 		return "redirect:/shoppingCart";
 	}
 
-	// POST: Cáº­p nháº­p sá»‘ lÆ°á»£ng cho cĂ¡c sáº£n pháº©m Ä‘Ă£ mua.
+	// POST: Cap nhat so luong cho cac san pham da mua
 	@RequestMapping(value = { "/shoppingCart" }, method = RequestMethod.POST)
 	public String shoppingCartUpdateQty(HttpServletRequest request, //
 			Model model, //
 			@ModelAttribute("cartForm") CartInfo cartForm) {
 
 		CartInfo cartInfo = Utils.getCartInSession(request);
+		
 		cartInfo.updateQuantity(cartForm);
 
 		// Chuyá»ƒn sang trang danh sĂ¡ch cĂ¡c sáº£n pháº©m Ä‘Ă£ mua.
 		return "redirect:/shoppingCart";
 	}
 
-	// GET: Hiá»ƒn thá»‹ giá»� hĂ ng.
+	// GET: Hien thi gio hang
 	@RequestMapping(value = { "/shoppingCart" }, method = RequestMethod.GET)
 	public String shoppingCartHandler(HttpServletRequest request, Model model) {
 		CartInfo myCart = Utils.getCartInSession(request);
 
+		CustomerInfo customerInfo = myCart.getCustomerInfo();
+		
+		if (customerInfo == null) {
+			customerInfo = new CustomerInfo();
+		}
+
+		model.addAttribute("customerForm", customerInfo);
+		
+		
 		model.addAttribute("cartForm", myCart);
+		
 		return "shoppingCart";
 	}
 
@@ -222,7 +258,7 @@ public class MainController {
 		return "shoppingCartCustomer";
 	}
 
-	// POST: Save thĂ´ng tin khĂ¡ch hĂ ng.
+	// POST: Save thông tin khách hàng.
 	@RequestMapping(value = { "/shoppingCartCustomer" }, method = RequestMethod.POST)
 	public String shoppingCartCustomerSave(HttpServletRequest request, //
 			Model model, //
@@ -230,11 +266,11 @@ public class MainController {
 			BindingResult result, //
 			final RedirectAttributes redirectAttributes) {
 
-		// Káº¿t quáº£ Validate CustomerInfo.
+		// Kết quả Validate CustomerInfo.
 		if (result.hasErrors()) {
 			customerForm.setValid(false);
 			// Forward to reenter customer info.
-			// Forward tá»›i trang nháº­p láº¡i.
+			// Forward tới trang nhập lại.
 			return "shoppingCartCustomer";
 		}
 
@@ -243,66 +279,62 @@ public class MainController {
 
 		cartInfo.setCustomerInfo(customerForm);
 
-		// Chuyá»ƒn hÆ°á»›ng sang trang xĂ¡c nháº­n.
+		// Chuyển hướng sang trang xác nhận.
 		return "redirect:/shoppingCartConfirmation";
 	}
 
-	// GET: Xem láº¡i thĂ´ng tin Ä‘á»ƒ xĂ¡c nháº­n.
+	// GET: Xem lại thông tin để xác nhận.
 	@RequestMapping(value = { "/shoppingCartConfirmation" }, method = RequestMethod.GET)
 	public String shoppingCartConfirmationReview(HttpServletRequest request, Model model) {
 		CartInfo cartInfo = Utils.getCartInSession(request);
 
-		// ChÆ°a mua máº·t hĂ ng nĂ o.
+		// Chưa mua mặt hàng nào.
 		if (cartInfo.isEmpty()) {
 
-			// Chuyá»ƒn tá»›i trang danh giá»� hĂ ng
+			// Chuyển tới trang danh giỏ hàng
 			return "redirect:/shoppingCart";
 		} else if (!cartInfo.isValidCustomer()) {
 
-			// Chuyá»ƒn tá»›i trang nháº­p thĂ´ng tin khĂ¡ch hĂ ng.
+			// Chuyển tới trang nhập thông tin khách hàng.
 			return "redirect:/shoppingCartCustomer";
 		}
 
 		return "shoppingCartConfirmation";
 	}
 
-	// POST: Gá»­i Ä‘Æ¡n hĂ ng (Save).
+	// POST: Gửi đơn hàng (Save).
 	@RequestMapping(value = { "/shoppingCartConfirmation" }, method = RequestMethod.POST)
 
-	// Day xá»­ lĂ½, nguoi dung hoan thanh dÆ¡n hang ==> Luu thong tin don hang
-	// VĂ o DB
-	// TrĂ¡nh ngoáº¡i lá»‡: UnexpectedRollbackException (Xem giáº£i thĂ­ch thĂªm).
+	// Tránh ngoại lệ: UnexpectedRollbackException (Xem giải thích thêm).
 	@Transactional(propagation = Propagation.NEVER)
 	public String shoppingCartConfirmationSave(HttpServletRequest request, Model model) {
 		CartInfo cartInfo = Utils.getCartInSession(request);
 
-		// ChÆ°a mua máº·t hĂ ng nĂ o.
+		// Chưa mua mặt hàng nào.
 		if (cartInfo.isEmpty()) {
 
-			// Chuyá»ƒn tá»›i trang danh giá»� hĂ ng
+			// Chuyển tới trang danh giỏ hàng
 			return "redirect:/shoppingCart";
 		} else if (!cartInfo.isValidCustomer()) {
 
-			// Chuyá»ƒn tá»›i trang nháº­p thĂ´ng tin khĂ¡ch hĂ ng.
+			// Chuyển tới trang nhập thông tin khách hàng.
 			return "redirect:/shoppingCartCustomer";
 		}
 		try {
-			// LÆ°u don hang vao DB
 			orderDAO.saveOrder(cartInfo);
 		} catch (Exception e) {
 
-			// Cáº§n thiáº¿t: Propagation.NEVER?
+			// Cần thiết: Propagation.NEVER?
 			return "shoppingCartConfirmation";
 		}
 
-		// XĂ³a rá»� hĂ ng khá»�i session.
+		// Xóa rỏ hàng khỏi session.
 		Utils.removeCartInSession(request);
 
-		// LÆ°u thĂ´ng tin Ä‘Æ¡n hĂ ng Ä‘Ă£ xĂ¡c nháº­n mua.
-		// LÆ°u thong tin don hang vua mua (La don hang cuoi cung, moi nhĂ¡t).
+		// Lưu thông tin đơn hàng đã xác nhận mua.
 		Utils.storeLastOrderedCartInSession(request, cartInfo);
 
-		// Chuyáº¿n hÆ°á»›ng tá»›i trang hoĂ n thĂ nh mua hĂ ng.
+		// Chuyến hướng tới trang hoàn thành mua hàng.
 		return "redirect:/shoppingCartFinalize";
 	}
 
@@ -331,7 +363,5 @@ public class MainController {
 		}
 		response.getOutputStream().close();
 	}
-	
-
 
 }

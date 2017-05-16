@@ -9,7 +9,10 @@ public class ProductInfo {
 	private String id;
 	private String name;
 	private double price;
-
+	private String description;
+	private Float discount;
+	private String categoryId;
+	
 	private boolean newProduct = false;
 
 	// Upload file.
@@ -24,6 +27,9 @@ public class ProductInfo {
 		this.id = product.getId();
 		this.name = product.getName();
 		this.price = product.getPrice();
+		this.description = product.getDescription();
+		this.discount = product.getDiscount();
+		this.categoryId = product.getCategory().getId();
 	}
 
 	//Dung de truy van trong Hibernate
@@ -32,6 +38,15 @@ public class ProductInfo {
 		this.id = id;
 		this.name = name;
 		this.price = price;
+	}
+	
+	public ProductInfo(String id, String name, double price, String description, Float discount, String categoryId) {
+		this.id = id;
+		this.name = name;
+		this.price = price;
+		this.description = description;
+		this.discount = discount;
+		this.categoryId = categoryId;
 	}
 
 	public String getId() {
@@ -73,5 +88,31 @@ public class ProductInfo {
 	public void setNewProduct(boolean newProduct) {
 		this.newProduct = newProduct;
 	}
+
+	public String getDescription() {
+		return description;
+	}
+
+	public void setDescription(String description) {
+		this.description = description;
+	}
+
+	public Float getDiscount() {
+		return discount;
+	}
+
+	public void setDiscount(Float discount) {
+		this.discount = discount;
+	}
+
+	public String getCategoryId() {
+		return categoryId;
+	}
+
+	public void setCategoryId(String categoryId) {
+		this.categoryId = categoryId;
+	}
+	
+	
 	
 }

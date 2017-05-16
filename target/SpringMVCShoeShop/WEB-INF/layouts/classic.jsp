@@ -14,13 +14,17 @@
 <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/header.css">
 </head>
 <body onload="slideA()">
+
+
+	
 	<table width=100%>
+		
 		<tr>
 			<td colspan="2" class="header"><tiles:insertAttribute
 					name="header" /></td>
 		</tr>
 		<tr>
-
+		<!-- còn đây là chia tỉ lệ hiển thị -->
 			<td width="20%" nowrap="nowrap" class="Cleft"><tiles:insertAttribute
 					name="menu" /></td>
 			<td width="80%"><tiles:insertAttribute name="body" /></td>

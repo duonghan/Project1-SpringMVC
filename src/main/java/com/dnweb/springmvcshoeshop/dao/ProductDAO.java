@@ -11,7 +11,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.dnweb.springmvcshoeshop.entities.Category;
 import com.dnweb.springmvcshoeshop.entities.Order;
+import com.dnweb.springmvcshoeshop.entities.OrderDetail;
 import com.dnweb.springmvcshoeshop.entities.Product;
 import com.dnweb.springmvcshoeshop.model.PaginationResult;
 import com.dnweb.springmvcshoeshop.model.ProductInfo;
@@ -22,7 +24,8 @@ public class ProductDAO {
 	@Autowired
 	private SessionFactory sessionFactory;
 
-	// ok
+	@Autowired
+	private CategoryDAO categoryDAO;
 
 	// Tim kiem san pham theo id
 	public Product findProduct(String id) {
@@ -41,7 +44,7 @@ public class ProductDAO {
 		return new ProductInfo(product);
 	}
 
-	//Them hoac sua san pham
+	// Them hoac sua san pham
 	public void save(ProductInfo productInfo) {
 
 		Session session = sessionFactory.getCurrentSession();
@@ -57,13 +60,16 @@ public class ProductDAO {
 		}
 		// Neu chua co no moi tao moi!!
 		if (product == null) {
-			isNew = true;// Cờ báo rằng đây là bản ghi mới
+			isNew = true;
 			product = new Product();
 			product.setCreated(new Date());
 		}
 		product.setId(id);
 		product.setName(productInfo.getName());
 		product.setPrice(productInfo.getPrice());
+		product.setCategory(categoryDAO.findCategory(productInfo.getCategoryId()));
+		product.setDescription(productInfo.getDescription());
+		product.setDiscount(productInfo.getDiscount());
 
 		if (productInfo.getFileData() != null) {
 			byte[] image = productInfo.getFileData().getBytes();
@@ -72,20 +78,19 @@ public class ProductDAO {
 			}
 		}
 		if (isNew) {
-			// Khi la moi thì phải persist!!
+
 			session.persist(product);
 		}
-		// If error in DB, Exceptions will be thrown out immediately
-		// Nếu có lỗi tại DB, ngoại lệ sẽ ném ra ngay lập tức
+	
 		session.flush();
 	}
 
-	// Query sản phẩm theo trag
+	// Query san pham theo trang
 	public PaginationResult<ProductInfo> queryProducts(int page, int maxResult, int maxNavigationPage,
 			String likeName) {
 
 		String sql = "Select new " + ProductInfo.class.getName() //
-				+ "(p.id, p.name, p.price) " + " from "//
+				+ "(p.id, p.name, p.price, p.description, p.discount, p.category.id) " + " from "//
 				+ Product.class.getName() + " p ";
 		if (likeName != null && likeName.length() > 0) {
 			sql += " Where lower(p.name) like :likeName ";
@@ -99,35 +104,76 @@ public class ProductDAO {
 		if (likeName != null && likeName.length() > 0) {
 			query.setParameter("likeName", "%" + likeName.toLowerCase() + "%");
 		}
-		// Rồi đưa vào PaginationResult: Giúp lay ra dung các bản ghi theo phan
-		// trang!
+
 		return new PaginationResult<ProductInfo>(query, page, maxResult, maxNavigationPage);
 	}
 
-	// Xoa san pham
-//	public void deleteProduct(String productId) {
-//		Session session = sessionFactory.getCurrentSession();
-//
-//		String sql = "Delete " + Product.class.getName().toLowerCase() + " p " + "where p.id =: productId ";
-//
-//		Query query = session.createQuery(sql);
-//
-//		query.setParameter("productId", productId);
-//
-//		query.executeUpdate();
-//	}
-	
-	public void deleteProduct(String productId){
+	// Query san pham theo category
+	public PaginationResult<ProductInfo> queryProductsCategory(int page, int maxResult, int maxNavigationPage,
+			String categoryId, String likeName) {
+
+		String sql = "Select new " + ProductInfo.class.getName()
+				+ "((p.id, p.name, p.price, p.description, p.discount, p.category.id)) " + " from "
+				+ Product.class.getName() + " p " + " join " + Category.class.getName() + " c " + " on "
+				+ "p.category.id = c.id";
+
+		if (likeName != null && likeName.length() > 0) {
+			sql += " Where lower(p.name) like :likeName ";
+		}
+		sql += " order by p.created desc ";
+
 		Session session = sessionFactory.getCurrentSession();
-		
-		Product product =  this.findProduct(productId);
+
+		// Co duoc doi tuong Query
+		Query query = session.createQuery(sql);
+		if (likeName != null && likeName.length() > 0) {
+			query.setParameter("likeName", "%" + likeName.toLowerCase() + "%");
+		}
+
+		return new PaginationResult<ProductInfo>(query, page, maxResult, maxNavigationPage);
+	}
+
+	// Danh sach cac san pham moi
+	public PaginationResult<ProductInfo> listNewProduct(int page, int maxResult, int maxNavigationPage) {
+
+		String sql = "Select new " + ProductInfo.class.getName()
+				+ "((p.id, p.name, p.price, p.description, p.discount, p.category.id)) " + " from "
+				+ Product.class.getName() + " p " + " join " + Category.class.getName() + " c " + " on "
+				+ "p.category.id = c.id" + " order by p.created desc ";
+
+		Session session = sessionFactory.getCurrentSession();
+		Query query = session.createQuery(sql);
+
+		return new PaginationResult<ProductInfo>(query, page, maxResult, maxNavigationPage);
+	}
+
+	// Danh sach cac san pham ban chay
+	public PaginationResult<ProductInfo> listPopulerProduct(int page, int maxResult, int maxNavigationPage) {
+
+		String sql = "Select new " + ProductInfo.class.getName()
+				+ "((p.id, p.name, p.price, p.description, p.discount, p.category.id)) " + " from "
+				+ Product.class.getName() + " p " + " join " + OrderDetail.class.getName() 
+				+ " o " + " on " + "p.id = o.product.id" 
+				+ " order by o.quantity desc ";
+
+		Session session = sessionFactory.getCurrentSession();
+		Query query = session.createQuery(sql);
+
+		return new PaginationResult<ProductInfo>(query, page, maxResult, maxNavigationPage);
+	}
+	
+	// Xoa san pham
+	public void deleteProduct(String productId) {
+		Session session = sessionFactory.getCurrentSession();
+
+		Product product = this.findProduct(productId);
 		if (product != null) {
 			session.delete(product);
 		}
-		
+
 	}
 
-	//query san pham theo trang
+	// query san pham theo trang
 	public PaginationResult<ProductInfo> queryProducts(int page, int maxResult, int maxNavigationPage) {
 		return queryProducts(page, maxResult, maxNavigationPage, null);
 	}

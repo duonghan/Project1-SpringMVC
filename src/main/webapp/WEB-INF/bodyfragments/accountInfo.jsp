@@ -14,14 +14,23 @@
 
 
 		<ul>
-			<li>Họ Tên: ${customerInfo.getName}</li>
-			<li>Role:
+			<li>Họ Tên: ${customerForm.getName}</li>
+			
+			<!-- 
+				<li>Role:
 				<ul>
 					<c:forEach items="${userDetails.authorities}" var="auth">
 						<li>${auth.authority }</li>
 					</c:forEach>
 				</ul>
 			</li>
+			 -->
+			 
+			<li>Email: ${customerForm.getEmail}</li>
+			<li>Địa chỉ: ${customerForm.getAddress}</li>
+			<li>Số điện thoại: ${customerForm.getPhone}</li>
+			<li>Giới tính: ${customerForm.getGender}</li>
+			
 		</ul>
 		
 		</form:form>

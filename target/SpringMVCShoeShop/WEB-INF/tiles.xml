@@ -13,7 +13,7 @@
 		<put-attribute name="body" value="" />
 		<put-attribute name="footer" value="/WEB-INF/basefragments/_footer.jsp" />
 	</definition>
-
+    <!-- Day la trang /index -->
 	<!-- Home Page -->
 	<definition name="index" extends="base.definition">
 		<put-attribute name="title" value="Shoe Shop" />
@@ -107,9 +107,13 @@
 			value="/WEB-INF/bodyfragments/shoppingCartFinalize.jsp" />
 	</definition>
 
-	<!-- Signup Page -->
+ 
+
+     <!-- Signup Page -->
 	<definition name="signup" extends="base.definition">
 		<put-attribute name="title" value="Đăng ký" />
-		<put-attribute name="body" value="/WEB-INF/bodyfragments/signup.jsp" />
-	</definition>
+		<put-attribute name="body"
+			value="/WEB-INF/bodyfragments/signup.jsp" />
+	</definition>	
+	
 </tiles-definitions>

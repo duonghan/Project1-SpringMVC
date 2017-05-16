@@ -90,7 +90,7 @@ public class OrderDAO {
 		}
 
 		// Set OrderNum for report.
-		// Set OrderNum để thông báo cho người dùng.
+		// Set OrderNum Ä‘á»ƒ thĂ´ng bĂ¡o cho ngÆ°á»�i dĂ¹ng.
 		cartInfo.setOrderNum(orderNum);
 	}
 
@@ -100,9 +100,10 @@ public class OrderDAO {
 
 		// Chon ra nhieu cot dung hibernate + java bean
 		String sql = "Select new " + OrderInfo.class.getName()//
-				+ "(ord.id, ord.orderDate, ord.orderNum, ord.amount, "//
-				+ " ord.customerName, ord.customerAddress, ord.customerEmail, ord.customerPhone) " + " from "
-				+ Order.class.getName() + " ord "//
+				+ "(ord.id, ord.created, ord.orderNum, ord.amount, "//
+				+ " acc.customerName, acc.customerAddress, acc.customerEmail, acc.customerPhone) " + " from "
+				+ Order.class.getName() + " ord " + " join " + Account.class.getName() //
+				+ " acc " + " on " + " ord.account.username = acc.username"//
 				+ " order by ord.orderNum desc";
 
 		Session session = this.sessionFactory.getCurrentSession();
@@ -147,20 +148,6 @@ public class OrderDAO {
 
 		return query.list();
 	}
-
-	// Xoa don hang
-	// public void deleteOrder(String orderId){
-	// Session session = sessionFactory.getCurrentSession();
-	//
-	// String sql = "Delete " + Order.class.getName().toLowerCase() +" o "
-	// +"where o.id =: orderId ";
-	//
-	// Query query = session.createQuery(sql);
-	//
-	// query.setParameter("orderId", orderId);
-	//
-	// query.executeUpdate();
-	// }
 
 	public void deleteOrder(String orderId) {
 		Session session = this.sessionFactory.getCurrentSession();

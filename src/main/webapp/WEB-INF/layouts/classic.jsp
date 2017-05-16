@@ -12,15 +12,22 @@
 <link rel="shortcut icon" href="${pageContext.request.contextPath}/images/logo15.png">
 <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/index.css">
 <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/header.css">
+<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/styles.css">
+
+<script type="text/javascript" src="${pageContext.request.contextPath}/js/header.js"></script>
 </head>
 <body onload="slideA()">
+
+
+	
 	<table width=100%>
+		
 		<tr>
 			<td colspan="2" class="header"><tiles:insertAttribute
 					name="header" /></td>
 		</tr>
 		<tr>
-
+		<!-- còn đây là chia tỉ lệ hiển thị -->
 			<td width="20%" nowrap="nowrap" class="Cleft"><tiles:insertAttribute
 					name="menu" /></td>
 			<td width="80%"><tiles:insertAttribute name="body" /></td>

@@ -23,7 +23,7 @@ public class OrderInfo {
 	}
 	
 	
-
+	//Truy van trong hibernate
 	public OrderInfo(String id, Date created, int orderNum, double amount, String customerName,
 			String customerAddress, String customerEmail, String customerPhone) {
 

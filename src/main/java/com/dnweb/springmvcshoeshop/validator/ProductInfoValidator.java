@@ -15,7 +15,7 @@ public class ProductInfoValidator implements Validator {
 	@Autowired
 	private ProductDAO productDAO;
 
-	// Validator này chỉ dùng để kiểm tra class ProductInfo.
+	// Validator kiem tra class ProductInfo.
 	public boolean supports(Class<?> clazz) {
 		return clazz == ProductInfo.class;
 	}
@@ -24,19 +24,22 @@ public class ProductInfoValidator implements Validator {
 	public void validate(Object target, Errors errors) {
 		ProductInfo productInfo = (ProductInfo) target;
 
-		// Kiểm tra các trường (field) của ProductInfo.
+		//Kiem tra cac truong cua ProductInfo.
 		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "id", "NotEmpty.productForm.id");
 		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "name", "NotEmpty.productForm.name");
 		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "price", "NotEmpty.productForm.price");
 
 		String code = productInfo.getId();
+		
 		if (code != null && code.length() > 0) {
 			if (code.matches("\\s+")) {
-				errors.rejectValue("code", "Pattern.productForm.code");
+				errors.rejectValue("id", "Pattern.productForm.id");
 			} else if (productInfo.isNewProduct()) {
+				
 				Product product = productDAO.findProduct(code);
+				
 				if (product != null) {
-					errors.rejectValue("code", "Duplicate.productForm.code");
+					errors.rejectValue("id", "Duplicate.productForm.id");
 				}
 			}
 		}
