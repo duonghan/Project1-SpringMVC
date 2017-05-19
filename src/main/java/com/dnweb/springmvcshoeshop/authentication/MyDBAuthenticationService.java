@@ -21,7 +21,9 @@ public class MyDBAuthenticationService implements UserDetailsService {
 	@Autowired
 	private AccountDAO accountDAO;
 	
-	// Dich vu nay khong duoc goi!!
+	// nguoi dung nhap vao username & Password ==> Nhan Submit
+	// ==> Dich vu nay khong duoc goi!!
+	
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 		
 		Account account = accountDAO.findAccountByUsername(username);

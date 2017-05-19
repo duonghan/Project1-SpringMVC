@@ -2,6 +2,8 @@ package com.dnweb.springmvcshoeshop.controller;
 
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.support.ResourceBundleMessageSource;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -33,6 +35,7 @@ import com.dnweb.springmvcshoeshop.model.OrderDetailInfo;
 import com.dnweb.springmvcshoeshop.model.OrderInfo;
 import com.dnweb.springmvcshoeshop.model.PaginationResult;
 import com.dnweb.springmvcshoeshop.model.ProductInfo;
+import com.dnweb.springmvcshoeshop.util.UserUtils;
 import com.dnweb.springmvcshoeshop.validator.ProductInfoValidator;
 
 @Controller
@@ -57,6 +60,9 @@ public class AdminController {
 	private CategoryDAO categoryDAO;
 
 	@Autowired
+	private AccountDAO accountDAO;
+	
+	@Autowired
 	private ProductInfoValidator productInfoValidator;
 	
 	//Duoc cau hinh ApplicationContextConfig
@@ -79,26 +85,88 @@ public class AdminController {
 		}
 	}
 
+	// Day la trang Hien thi de login.
 	// GET: Show Login Page
 	// GET: Hiá»ƒn thá»‹ trang login
 	@RequestMapping(value = { "/login" }, method = RequestMethod.GET)
 	public String login(Model model) {
 
+		
 		return "login";
 	}
 	
+	// Ham nay dau da duoc goi o dau??
+	// Cai nay cho nao goi no???????
+	
+	//chua a 
+	
+	public void saveAcccountSession(HttpServletRequest request){
+		UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		
+		CustomerInfo customerInfo = this.accountDAO.findCustomerInfo(userDetails.getUsername());
+		UserUtils.saveLoginedUser(request, customerInfo);
+	}
+	
 	@RequestMapping(value = { "/accountInfo" }, method = RequestMethod.GET)
-	public String accountInfo(Model model) {
+	public String accountInfo(HttpServletRequest request,Model model) {
 
-//		UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-//		
-//		
-//		System.out.println(userDetails.getPassword());
-//		System.out.println(userDetails.getUsername());
-//		System.out.println(userDetails.isEnabled());
-//	
-//		model.addAttribute("userDetails", userDetails);
+		UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+
+		// Lay ra tu Sesssion.
+		CustomerInfo customerInfo = UserUtils.getLoginedUserFromSession(request);
+		 
+		System.out.println("customerInfo:" + customerInfo);
+		
+		model.addAttribute("loginedUser", customerInfo);
+		
 		return "accountInfo";
+	}
+	
+	
+	//Hien thi trang chinh sua thong tin tai hoan nguoi dung
+	@RequestMapping(value = {"/editAccountInfo"}, method = RequestMethod.GET)
+	public String editAccount(HttpServletRequest request, Model model){
+		
+		UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		
+		if (userDetails == null) {
+			return "redirect:/login";
+		}
+		
+		AccountInfo accountInfo = accountDAO.findAccountInfo(userDetails.getUsername());
+		
+		if (accountInfo == null) {
+			accountInfo = new AccountInfo();
+		}
+		
+		model.addAttribute("userAccountForm", accountInfo);
+		return "editAccountInfo";
+	}
+	
+	//Luu thay doi thong tin nguoi dung
+	@RequestMapping(value = {"/editAccountInfo"}, method = RequestMethod.POST)
+	public String editAccountInfo(Model model,
+			@ModelAttribute("userAccountForm") @Validated AccountInfo accountInfo, //
+			BindingResult result, //
+			final RedirectAttributes redirectAttributes){
+		
+		if (result.hasErrors()) {
+			return "editAccountInfo";
+		}
+		try {
+			accountDAO.saveAccount(accountInfo);
+			
+		} catch (Exception e) {
+			String message = e.getMessage();
+			model.addAttribute("message", message);
+			
+			// Show edit account Info page.
+			return "editAccountInfo";
+
+		}
+		return "redirect:/accountInfo";
+		
+		
 	}
 
 	@RequestMapping(value = { "/orderList" }, method = RequestMethod.GET)
@@ -120,9 +188,10 @@ public class AdminController {
 	}
 	
 	//Thay doi category
-	@RequestMapping(value = { "/editcategory" }, method=RequestMethod.GET)
+	@RequestMapping(value = { "/editCategory" }, method=RequestMethod.GET)
 	public String showCategory(Model model,
 			@RequestParam(value = "id", defaultValue="") String id){
+		
 		CategoryInfo categoryInfo = null;
 		
 		if (id != null && id.length() > 0) {
@@ -134,7 +203,7 @@ public class AdminController {
 		}
 		
 		model.addAttribute("categoryForm", categoryInfo);
-		return "editcategory";
+		return "editCategory";
 	}
 	
 	// No se goi toi phuong thuc nay. Ma phuong thuc nay mình lập trình ko vì mục đích save
@@ -160,7 +229,7 @@ public class AdminController {
 	
 	//Luu thong tin sau khi thay doi category
 	
-	@RequestMapping(value = { "/editcategory" }, method = RequestMethod.POST)
+	@RequestMapping(value = { "/editCategory" }, method = RequestMethod.POST)
 	@Transactional(propagation = Propagation.NEVER)
 	public String categorySave(Model model, //
 			@ModelAttribute("categoryForm") CategoryInfo categoryInfo,
@@ -168,7 +237,7 @@ public class AdminController {
 			final RedirectAttributes redirectAttributes){
 		
 		if (result.hasErrors()) {
-			return "editcategory";
+			return "editCategory";
 		}
 		
 		categoryDAO.saveCategory(categoryInfo);
@@ -180,8 +249,6 @@ public class AdminController {
 	// POST: Save product
 	@RequestMapping(value = { "/product" }, method = RequestMethod.POST)
 	// Trinh ngoai le: UnexpectedRollbackException.
-	//ngoại lệ này là sao a (Đây chẳng qua là nói rằng nếu có lỗi Save ==> Rollback lại.
-	// Mấy thuộc tính này hơi khó hiểu chút, nhưng có thể bỏ đi ko sao
 	
 	@Transactional(propagation = Propagation.NEVER)
 	public String productSave(Model model, //

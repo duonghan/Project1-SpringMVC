@@ -18,6 +18,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.dnweb.springmvcshoeshop.dao.AccountDAO;
 import com.dnweb.springmvcshoeshop.model.AccountInfo;
+import com.dnweb.springmvcshoeshop.util.UserUtils;
 import com.dnweb.springmvcshoeshop.validator.UserAccountValidator;
 
 @Controller
@@ -87,7 +88,7 @@ public class RegisterController {
 
 		// Náº¿u validate cĂ³ lá»—i.
 		if (result.hasErrors()) {
-			System.out.println("áººo:"+ result.toString());
+			System.out.println("Lỗi:"+ result.toString());
 			accountForm.setValid(false);
 
 			return "signup";

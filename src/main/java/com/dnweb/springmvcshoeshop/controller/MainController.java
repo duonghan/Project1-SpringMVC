@@ -30,7 +30,7 @@ import com.dnweb.springmvcshoeshop.model.CategoryInfo;
 import com.dnweb.springmvcshoeshop.model.CustomerInfo;
 import com.dnweb.springmvcshoeshop.model.PaginationResult;
 import com.dnweb.springmvcshoeshop.model.ProductInfo;
-import com.dnweb.springmvcshoeshop.util.Utils;
+import com.dnweb.springmvcshoeshop.util.CartUtils;
 import com.dnweb.springmvcshoeshop.validator.CustomerInfoValidator;
 
 @Controller
@@ -102,24 +102,6 @@ public class MainController {
 		return "index";
 	}
 
-	// Phuong thuc na can duoc goi tai má»�i nÆ¡i, Ä‘á»ƒ nĂ³ táº¡o attribute nay
-	// cho _menu.
-	// Hiá»ƒn thá»‹ danh má»¥c sáº£n pháº©m
-	// Vi du nhu the, khi do trang attribute listCaegory luon co gia tri tai
-	// má»�i trang.
-	// Hoáº·c cĂ³ thá»ƒ lĂ m nĂ³ trong Intercepter.
-	// Hieu khong?
-	// hieu r a ak
-	// lan trc e cu tuong controller nĂ³ cáº§n pháº£i nháº­n Ä‘c cĂ¡i request
-	// nĂ o Ä‘Ă³ kia
-	// nhÆ°ng h e hiá»ƒu r
-	// hnay cÅ©ng muá»™n r, hnay e há»�i nhiá»�u quĂ¡
-	// Goi ham nay, listCateogry co the su dung moi noi, ke ca _menu.jsp, _home.jsp, ...
-	// No su dung duoc trong moi View!!
-	//nghia la e chi can minh ham nay thoi
-	//co the k can trong ham nay, ma van có the dung dc a a
-	
-	
 //	public void listCategory(Model model) {
 //		model.addAttribute("listCategory", categoryDAO.getAllCategory());
 //	}
@@ -168,7 +150,7 @@ public class MainController {
 
 			// ThĂ´ng tin giá»� hĂ ng cĂ³ thá»ƒ Ä‘Ă£ lÆ°u vĂ o trong Session
 			// trÆ°á»›c Ä‘Ă³.
-			CartInfo cartInfo = Utils.getCartInSession(request);
+			CartInfo cartInfo = CartUtils.getCartInSession(request);
 
 			ProductInfo productInfo = new ProductInfo(product);
 
@@ -190,7 +172,7 @@ public class MainController {
 
 			// ThĂ´ng tin giá»� hĂ ng cĂ³ thá»ƒ Ä‘Ă£ lÆ°u vĂ o trong Session
 			// trÆ°á»›c Ä‘Ă³.
-			CartInfo cartInfo = Utils.getCartInSession(request);
+			CartInfo cartInfo = CartUtils.getCartInSession(request);
 
 			ProductInfo productInfo = new ProductInfo(product);
 
@@ -208,7 +190,7 @@ public class MainController {
 			Model model, //
 			@ModelAttribute("cartForm") CartInfo cartForm) {
 
-		CartInfo cartInfo = Utils.getCartInSession(request);
+		CartInfo cartInfo = CartUtils.getCartInSession(request);
 		
 		cartInfo.updateQuantity(cartForm);
 
@@ -219,7 +201,7 @@ public class MainController {
 	// GET: Hien thi gio hang
 	@RequestMapping(value = { "/shoppingCart" }, method = RequestMethod.GET)
 	public String shoppingCartHandler(HttpServletRequest request, Model model) {
-		CartInfo myCart = Utils.getCartInSession(request);
+		CartInfo myCart = CartUtils.getCartInSession(request);
 
 		CustomerInfo customerInfo = myCart.getCustomerInfo();
 		
@@ -239,7 +221,7 @@ public class MainController {
 	@RequestMapping(value = { "/shoppingCartCustomer" }, method = RequestMethod.GET)
 	public String shoppingCartCustomerForm(HttpServletRequest request, Model model) {
 
-		CartInfo cartInfo = Utils.getCartInSession(request);
+		CartInfo cartInfo = CartUtils.getCartInSession(request);
 
 		// ChÆ°a mua máº·t hĂ ng nĂ o.
 		if (cartInfo.isEmpty()) {
@@ -275,7 +257,7 @@ public class MainController {
 		}
 
 		customerForm.setValid(true);
-		CartInfo cartInfo = Utils.getCartInSession(request);
+		CartInfo cartInfo = CartUtils.getCartInSession(request);
 
 		cartInfo.setCustomerInfo(customerForm);
 
@@ -286,7 +268,7 @@ public class MainController {
 	// GET: Xem lại thông tin để xác nhận.
 	@RequestMapping(value = { "/shoppingCartConfirmation" }, method = RequestMethod.GET)
 	public String shoppingCartConfirmationReview(HttpServletRequest request, Model model) {
-		CartInfo cartInfo = Utils.getCartInSession(request);
+		CartInfo cartInfo = CartUtils.getCartInSession(request);
 
 		// Chưa mua mặt hàng nào.
 		if (cartInfo.isEmpty()) {
@@ -308,7 +290,7 @@ public class MainController {
 	// Tránh ngoại lệ: UnexpectedRollbackException (Xem giải thích thêm).
 	@Transactional(propagation = Propagation.NEVER)
 	public String shoppingCartConfirmationSave(HttpServletRequest request, Model model) {
-		CartInfo cartInfo = Utils.getCartInSession(request);
+		CartInfo cartInfo = CartUtils.getCartInSession(request);
 
 		// Chưa mua mặt hàng nào.
 		if (cartInfo.isEmpty()) {
@@ -329,10 +311,10 @@ public class MainController {
 		}
 
 		// Xóa rỏ hàng khỏi session.
-		Utils.removeCartInSession(request);
+		CartUtils.removeCartInSession(request);
 
 		// Lưu thông tin đơn hàng đã xác nhận mua.
-		Utils.storeLastOrderedCartInSession(request, cartInfo);
+		CartUtils.storeLastOrderedCartInSession(request, cartInfo);
 
 		// Chuyến hướng tới trang hoàn thành mua hàng.
 		return "redirect:/shoppingCartFinalize";
@@ -341,7 +323,7 @@ public class MainController {
 	@RequestMapping(value = { "/shoppingCartFinalize" }, method = RequestMethod.GET)
 	public String shoppingCartFinalize(HttpServletRequest request, Model model) {
 
-		CartInfo lastOrderedCart = Utils.getLastOrderedCartInSession(request);
+		CartInfo lastOrderedCart = CartUtils.getLastOrderedCartInSession(request);
 
 		if (lastOrderedCart == null) {
 			return "redirect:/shoppingCart";

@@ -8,6 +8,7 @@ com\dnweb\springmvcshoeshop\model\OrderInfo.class
 com\dnweb\springmvcshoeshop\dao\CategoryDAO.class
 com\dnweb\springmvcshoeshop\entities\Account.class
 com\dnweb\springmvcshoeshop\model\CartInfo.class
+com\dnweb\springmvcshoeshop\handler\AfterLoginSuccessHandler.class
 com\dnweb\springmvcshoeshop\config\WebMvcConfig.class
 com\dnweb\springmvcshoeshop\entities\Category.class
 com\dnweb\springmvcshoeshop\controller\AdminController.class
@@ -17,14 +18,17 @@ com\dnweb\springmvcshoeshop\entities\Product.class
 com\dnweb\springmvcshoeshop\dao\ProductDAO.class
 com\dnweb\springmvcshoeshop\config\SpringSecurityInitializer.class
 com\dnweb\springmvcshoeshop\model\AccountInfo.class
-com\dnweb\springmvcshoeshop\util\Utils.class
+com\dnweb\springmvcshoeshop\validator\CategoryInfoValidator.class
 com\dnweb\springmvcshoeshop\entities\Order.class
 com\dnweb\springmvcshoeshop\controller\MainController.class
 com\dnweb\springmvcshoeshop\model\CategoryInfo.class
 com\dnweb\springmvcshoeshop\model\OrderDetailInfo.class
 com\dnweb\springmvcshoeshop\dao\AccountDAO.class
 com\dnweb\springmvcshoeshop\entities\OrderDetail.class
+com\dnweb\springmvcshoeshop\util\CartUtils.class
+com\dnweb\springmvcshoeshop\util\UserUtils.class
 com\dnweb\springmvcshoeshop\authentication\MyDBAuthenticationService.class
+com\dnweb\springmvcshoeshop\interceptor\MenuInterceptor.class
 com\dnweb\springmvcshoeshop\model\CustomerInfo.class
 com\dnweb\springmvcshoeshop\validator\UserAccountValidator.class
 com\dnweb\springmvcshoeshop\model\CartLineInfo.class

@@ -4,7 +4,7 @@ import javax.servlet.http.HttpServletRequest;
 
 import com.dnweb.springmvcshoeshop.model.CartInfo;
 
-public class Utils {
+public class CartUtils {
 	// Thông tin các mặt hàng đã mua, được lưu trữ trong Session.
 	public static CartInfo getCartInSession(HttpServletRequest request) {
 

@@ -38,17 +38,6 @@ public class MenuInterceptor extends HandlerInterceptorAdapter {
 	@Override
 	public void postHandle(HttpServletRequest request, HttpServletResponse response, Object handler,
 			ModelAndView modelAndView) throws Exception {
-		//System.out.println("\n-------- LogInterception.postHandle --- ");
-		//System.out.println("Request URL: " + request.getRequestURL());
-
-		// Ở đây, bạn có thể add các attribute vào modelAndView
-		// Và sử dụng nó trong các View (jsp,..)
-		
-		
-		 // Tam rào lại, dang test gọi hàm??
-		//e dang test cái interceptor trc a à
-		// Day se la du lieu cho _menu.jsp
-		System.out.println("Interceotpr >>>>>>>>>>>>>>>>>>>>>>>> :"+ categoryDAO );
 		 modelAndView.addObject("listCategory", categoryDAO.getAllCategory());
 	}
 

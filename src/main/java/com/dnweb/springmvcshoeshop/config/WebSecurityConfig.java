@@ -8,6 +8,7 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 
 import com.dnweb.springmvcshoeshop.authentication.MyDBAuthenticationService;
+import com.dnweb.springmvcshoeshop.handler.AfterLoginSuccessHandler;
 
 @Configuration
 
@@ -15,6 +16,9 @@ import com.dnweb.springmvcshoeshop.authentication.MyDBAuthenticationService;
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 	@Autowired
 	MyDBAuthenticationService myDBAauthenticationService;
+	
+	@Autowired
+	private AfterLoginSuccessHandler successHandler;
 
 	@Autowired
 	public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
@@ -44,18 +48,25 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 		// Nhưng truy cập vào trang yêu cầu vai trò YY,
 		// Ngoại lệ AccessDeniedException sẽ ném ra.
 		http.authorizeRequests().and().exceptionHandling().accessDeniedPage("/403");
+		
+		
+		System.out.println(">>>>> successHandler= "+successHandler);
 
+		 
 		// Cấu hình cho Login Form.
 		http.authorizeRequests().and().formLogin()//
-
+		        
 				// Submit URL của trang login
 				.loginProcessingUrl("/j_spring_security_check") // Submit URL
 				.loginPage("/login")//
-				.defaultSuccessUrl("/accountInfo")//
+				.defaultSuccessUrl("/accountInfo")// Nhu cau hinh o day!! (Cai nay mat tac dung neu co SuccessHander)
 				.failureUrl("/login?error=true")//
 				.usernameParameter("userName")//
-				.passwordParameter("password")
-				
+				.passwordParameter("password") 
+				// Dang ky bo dieu khien (handler) khi login thanh cong
+         		// Nhu vay khi Login thanh cong ==> SuccessHnder dc goi ==> Ghi thong tin vao session!
+				// Mac dinh neu khong dang ky Handler ==> Sau khi login thanh cong no nhay toi /accountInfo
+                .successHandler(successHandler)
 				//Cấu hình cho signup page
 				
 

@@ -16,14 +16,14 @@
 			<c:forEach var="cateInfo" items="${listCategory}">
 				<li><a
 					href="${pageContext.request.contextPath}/category?id=${cateInfo.id}">
-						${cateInfo.name}</a></li>
+						${cateInfo.name}</a> 
+				</li>
 			</c:forEach>
-		
-		<security:authorize access="hasRole('ROLE_ADMIN')">
-			<li><a style="color: red;"
-				href="${pageContext.request.contextPath}/editcategory?id=${cateInfo.id}">
-					Chỉnh sửa</a></li>
-		</security:authorize>
+			<security:authorize access="hasRole('ROLE_ADMIN')">
+						<li><a style="color: red;"
+							href="${pageContext.request.contextPath}/editCategory">
+								Chỉnh sửa</a></li>
+			</security:authorize>
 		</ul>
 	</form:form>
 </div>

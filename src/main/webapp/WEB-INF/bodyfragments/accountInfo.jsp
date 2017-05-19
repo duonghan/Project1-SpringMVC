@@ -7,14 +7,13 @@
 <div class="page-title">Account Info</div>
 
 <div class="account-container">
-	<form:form method="POST" modelAttribute="customerForm"
-		action="${pageContext.request.contextPath}/shoppingCartCustomer">
+	<form:form method="POST" modelAttribute="loginedUser">
 
 		<h1>Thông tin tài khoản ${pageContext.request.userPrincipal.name}</h1>
 
 
 		<ul>
-			<li>Họ Tên: ${customerForm.getName}</li>
+			<li>Họ Tên: ${loginedUser.username}</li>
 			
 			<!-- 
 				<li>Role:
@@ -25,11 +24,11 @@
 				</ul>
 			</li>
 			 -->
-			 
-			<li>Email: ${customerForm.getEmail}</li>
-			<li>Địa chỉ: ${customerForm.getAddress}</li>
-			<li>Số điện thoại: ${customerForm.getPhone}</li>
-			<li>Giới tính: ${customerForm.getGender}</li>
+			 <!-- bo get di -->
+			<li>Email: ${loginedUser.email}</li>
+			<li>Địa chỉ: ${loginedUser.address}</li>
+			<li>Số điện thoại: ${loginedUser.phone}</li>
+			<li>Giới tính: ${loginedUser.gender}</li>
 			
 		</ul>
 		

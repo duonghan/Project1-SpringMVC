@@ -7,6 +7,32 @@
 	<div>${errorMessage}</div>
 </c:if>
 
+<!-- Day la trang SP. Khi nguoi dung nhan SAVE ==>> No chuen toi /product. Với POST -->
+<!-- Vay GET duoc the hien o cho nao a, cứ gõ 1 trang bat ky ==> No la GET, 
+
+ POST thuong duoc chi dinh trong <form> thẻ form...==> VÍ dụ:
+ vậy đói với trang này là bao gồm cả POST và get
+ POSt khi mình SUBmit còn get là hiển thị trang à a
+ dung vay
+
+Mọi thao tac cua ngươi dung deu la GET.
+
+Còn khi người ta Click vao Form nhập dữ liệu, .... Rồi nhấn Subit
+nếu form đó chỉ rõ method = POST thì nó sẽ gọi tới trang dc submit với POST!!
+Người dùng ko tự tạo ra POST dc, mà do form này quết đinh
+Mọi thaoo tac ví dụ gõ lên trình dueetj: http://dantri.com ==> Đều là GET!!
+
+vậy giiar sử khi e k có POST mà vẫn submit thì có đc k a ==> Lúc đó nó sẽ gọi tới hàm GET.
+ -->
+ <!-- còn cái này a, cái này cần thiết cho mục đích các form có upload gì đó
+ Trong bài này là upload ảnh. Có thể xem thêm trong ví dụ sau:
+ OK A 
+ Neu khong co cai nay ==> Ko the upload, vi no khong biet cach ma hoa du lieu binary ==> thanh text
+ de chuyen di, cái này nói với trình duyệt chuyển dữ liệu ảnh thành text, đính kèm vào trong 
+ POST để gửi đi. Vì các dữ liệu đính kèm thường rất lớn. Chỉ có khác biệt vậy
+ Nếu là form thông thường, ko liên quan upload, ko cần chỉ định kiểu mã hóa này.
+ ok a ạ
+  -->
 <form:form modelAttribute="productForm" method="POST"
 	enctype="multipart/form-data">
 	<table style="text-align: left;">
@@ -52,7 +78,7 @@
 
 		<tr>
 			<td>&nbsp;</td>
-			<td><input type="submit" value="Submit" /> <input type="reset"
+			<td><input type="submit" value="Gửi" /> <input type="reset"
 				value="Reset" /></td>
 		</tr>
 	</table>

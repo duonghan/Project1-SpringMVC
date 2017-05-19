@@ -12,6 +12,9 @@
 <link rel="shortcut icon" href="${pageContext.request.contextPath}/images/logo15.png">
 <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/index.css">
 <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/header.css">
+<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/styles.css">
+
+<script type="text/javascript" src="${pageContext.request.contextPath}/js/header.js"></script>
 </head>
 <body onload="slideA()">
 

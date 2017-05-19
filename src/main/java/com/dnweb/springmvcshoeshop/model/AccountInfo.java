@@ -2,6 +2,8 @@ package com.dnweb.springmvcshoeshop.model;
 
 import java.util.Date;
 
+import com.dnweb.springmvcshoeshop.entities.Account;
+
 public class AccountInfo {
 
 	private String username;// Ko phai la userName
@@ -35,6 +37,18 @@ public class AccountInfo {
 		this.gender = gender;
 		this.created = created;
 	}
+
+	public AccountInfo(Account account) {
+		this.username = account.getUsername();
+		this.password = account.getPassword();
+		this.role = account.getPassword();
+		this.name = account.getName();
+		this.email = account.getEmail();
+		this.phone = account.getPhone();
+		this.address = account.getAddress();
+		this.gender = account.getGender();
+	}
+
 
 	public String getUsername() {
 		return username;

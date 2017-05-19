@@ -55,7 +55,7 @@
 		</div>
 	</div>
 	<div class="menu">
-		<li><a href="#"><strong>Trang chủ</strong></a></li>
+		<li><a href="${pageContext.request.contextPath}/"><strong>Trang chủ</strong></a></li>
 		<li><a href="${pageContext.request.contextPath}/about"><strong>Giới
 					thiệu</strong></a></li>
 		<li><a href="${pageContext.request.contextPath}/productList"><strong>Sản phẩm </strong></a></li>

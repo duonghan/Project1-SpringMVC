@@ -15,7 +15,6 @@ import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 
-import com.dnweb.springmvcshoeshop.interceptor.CustomerInterceptor;
 import com.dnweb.springmvcshoeshop.interceptor.MenuInterceptor;
 
 @Configuration
@@ -26,9 +25,6 @@ public class WebMvcConfig extends WebMvcConfigurerAdapter {
 
 	@Autowired
 	private MenuInterceptor menuInterceptor;
-
-	@Autowired
-	private CustomerInterceptor customerInterceptor;
 
 	// Cấu hình UTF-8 cho các trang.
 	@Override
@@ -58,9 +54,5 @@ public class WebMvcConfig extends WebMvcConfigurerAdapter {
 
 		// MenuInterceptor áp dụng cho mọi URL.
 		registry.addInterceptor(menuInterceptor);
-		registry.addInterceptor(new CustomerInterceptor())
-			.addPathPatterns("/accountInfo", "/order", "/orderList")
-			.addPathPatterns("/shoppingCartConfirmation","/shoppingCart", "/shoppingCartFinalize")
-			;
 	}
 }

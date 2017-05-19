@@ -48,13 +48,11 @@
 			</div>
 		</c:forEach>
 		<div style="clear: both"></div>
-		<input class="button-update-sc" type="submit" value="Update Quantity" />
+		<input class="button-update-sc" type="submit" value="Cập nhật số lượng" />
 		<a class="navi-item"
-			href="${pageContext.request.contextPath}/shoppingCartCustomer">Enter
-			Customer Info</a>
+			href="${pageContext.request.contextPath}/shoppingCartConfirmation">Xác nhận</a>
 		<a class="navi-item"
-			href="${pageContext.request.contextPath}/productList">Continue
-			Buy</a>
+			href="${pageContext.request.contextPath}/productList">Tiếp tục mua hàng</a>
 	</form:form>
 
 

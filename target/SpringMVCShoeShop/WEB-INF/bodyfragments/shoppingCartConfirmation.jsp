@@ -3,24 +3,24 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 
-<fmt:setLocale value="en_US" scope="session" />
+<fmt:setLocale value="vi_VI" scope="session" />
 
 <div class="page-title">Confirmation</div>
 
 
 
 <div class="customer-info-container">
-	<h3>Customer Information:</h3>
+	<h3>Thông tin khách hàng:</h3>
 	<ul>
-		<li>Name: ${myCart.customerInfo.name}</li>
+		<li>Tên: ${myCart.customerInfo.name}</li>
 		<li>Email: ${myCart.customerInfo.email}</li>
-		<li>Phone: ${myCart.customerInfo.phone}</li>
-		<li>Address: ${myCart.customerInfo.address}</li>
+		<li>Số điện thoại: ${myCart.customerInfo.phone}</li>
+		<li>Địa chỉ: ${myCart.customerInfo.address}</li>
 	</ul>
-	<h3>Cart Summary:</h3>
+	<h3>Chi tiết giỏ hàng:</h3>
 	<ul>
-		<li>Quantity: ${myCart.quantityTotal}</li>
-		<li>Total: <span class="total"> <fmt:formatNumber
+		<li>Số lượng : ${myCart.quantityTotal}</li>
+		<li>Tổng : <span class="total"> <fmt:formatNumber
 					value="${myCart.amountTotal}" type="currency" />
 		</span></li>
 	</ul>
@@ -31,15 +31,17 @@
 
 	<!-- Edit Cart -->
 	<a class="navi-item"
-		href="${pageContext.request.contextPath}/shoppingCart">Edit Cart</a>
+		href="${pageContext.request.contextPath}/shoppingCart">Thay đổi</a>
 
 	<!-- Edit Customer Info -->
+	<!--
 	<a class="navi-item"
 		href="${pageContext.request.contextPath}/shoppingCartCustomer">Edit
 		Customer Info</a>
+	  -->
 
 	<!-- Send/Save -->
-	<input type="submit" value="Send" class="button-send-sc" />
+	<input type="submit" value="Gửi" class="button-send-sc" />
 </form>
 
 <div class="container">
@@ -49,16 +51,16 @@
 			<ul>
 				<li><img class="product-image"
 					src="${pageContext.request.contextPath}/productImage?code=${cartLineInfo.productInfo.code}" /></li>
-				<li>Code: ${cartLineInfo.productInfo.code} <input type="hidden"
+				<li>Mã sản phẩm: ${cartLineInfo.productInfo.code} <input type="hidden"
 					name="code" value="${cartLineInfo.productInfo.code}" />
 				</li>
-				<li>Name: ${cartLineInfo.productInfo.name}</li>
-				<li>Price: <span class="price"> <fmt:formatNumber
+				<li>Tên sản phẩm: ${cartLineInfo.productInfo.name}</li>
+				<li>Đơn giá: <span class="price"> <fmt:formatNumber
 							value="${cartLineInfo.productInfo.price}" type="currency" />
 				</span>
 				</li>
-				<li>Quantity: ${cartLineInfo.quantity}</li>
-				<li>Subtotal: <span class="subtotal"> <fmt:formatNumber
+				<li>Số lượng: ${cartLineInfo.quantity}</li>
+				<li>Tổng : <span class="subtotal"> <fmt:formatNumber
 							value="${cartLineInfo.amount}" type="currency" />
 				</span>
 				</li>

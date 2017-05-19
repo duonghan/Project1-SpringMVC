@@ -22,29 +22,31 @@ import com.dnweb.springmvcshoeshop.model.CustomerInfo;
 public class AccountDAO {
 
 	@Autowired
-	private SessionFactory sessionFactory;  
+	private SessionFactory sessionFactory;
 
 	// Tim kiem tai khoan theo userName
 	public Account findAccountByUsername(String userName) {
-      try {
-    	  // sessionFactory null, vi no chua duoc tiem gia tri vao.
-    	  System.out.println("SessionFactory ="+ this.sessionFactory);
-    	  
-		Session session = sessionFactory.getCurrentSession();// Sau khi spring
-																// OK, no moi
-																// tao ra
-																// Session
-		Criteria crit = session.createCriteria(Account.class);
-		crit.add(Restrictions.eq("username", userName));
-		Account account= (Account) crit.uniqueResult();
-		System.out.println("Account "+ account);
-		
-		return account;
-      }catch(Exception e) {
-    	  System.out.println("Error: "+ e);
-    	  e.printStackTrace( );
-    	  return null;
-      }
+		try {
+			// sessionFactory null, vi no chua duoc tiem gia tri vao.
+			System.out.println("SessionFactory =" + this.sessionFactory);
+
+			Session session = sessionFactory.getCurrentSession();// Sau khi
+																	// spring
+																	// OK, no
+																	// moi
+																	// tao ra
+																	// Session
+			Criteria crit = session.createCriteria(Account.class);
+			crit.add(Restrictions.eq("username", userName));
+			Account account = (Account) crit.uniqueResult();
+			System.out.println("Account " + account);
+
+			return account;
+		} catch (Exception e) {
+			System.out.println("Error: " + e);
+			e.printStackTrace();
+			return null;
+		}
 	}
 
 	// Tim kiem tai khoan theo email
@@ -66,8 +68,18 @@ public class AccountDAO {
 		return new CustomerInfo(account);
 	}
 
+	// Tim kiem thong tin khach hang theo userName
+	public AccountInfo findAccountInfo(String userName) {
+		Account account = this.findAccountByUsername(userName);
+
+		if (account == null) {
+			return null;
+		}
+		return new AccountInfo(account);
+	}
+
 	// dang ky hoac update thong tin nguoi dung
-	
+
 	public void saveAccount(AccountInfo accountInfo) {
 		Session session = sessionFactory.getCurrentSession();
 
@@ -116,7 +128,7 @@ public class AccountDAO {
 
 		return query.list();
 	}
-	
+
 	// Xoa tai khoan
 	public void deleteAccount(String userName) {
 

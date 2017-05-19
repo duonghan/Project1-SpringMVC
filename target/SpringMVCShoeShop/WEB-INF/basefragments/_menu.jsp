@@ -10,13 +10,20 @@
 	<strong>DANH MỤC SẢN PHẨM</strong>
 </div>
 <div class="CL2">
-<!-- cái này nó sẽ tự động lấy ra, nhưng tạm thời đang bị lỗi -->
-	<form:form modelAttribute="listCategory"
-			action="${pageContext.request.contextPath}/">
+
+	<form:form>
 		<ul>
-			<c:forEach var="item" items="${listCategory}">
-				<li><a href="#">${item.name}</a></li>
+			<c:forEach var="cateInfo" items="${listCategory}">
+				<li><a
+					href="${pageContext.request.contextPath}/category?id=${cateInfo.id}">
+						${cateInfo.name}</a> 
+				</li>
 			</c:forEach>
+			<security:authorize access="hasRole('ROLE_ADMIN')">
+						<li><a style="color: red;"
+							href="${pageContext.request.contextPath}/editCategory">
+								Chỉnh sửa</a></li>
+			</security:authorize>
 		</ul>
 	</form:form>
 </div>
