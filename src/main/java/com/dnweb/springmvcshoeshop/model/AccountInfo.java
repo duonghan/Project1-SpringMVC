@@ -6,7 +6,7 @@ import com.dnweb.springmvcshoeshop.entities.Account;
 
 public class AccountInfo {
 
-	private String username;// Ko phai la userName
+	private String username;
 	private String password;
 	private String role;
 	private boolean active;

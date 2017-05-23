@@ -8,10 +8,8 @@
 			<strong> TÀI KHOẢN</strong>
 		</div>
 		<div class="FB1">
-			<a href="${pageContext.request.contextPath}/login"><p>Tài
-					khoản của bạn</p></a> 
-			<a href="${pageContext.request.contextPath}/shoppingCart"><p>Giỏ
-					hàng</p></a>
+			<a href="${pageContext.request.contextPath}/login"><p>Tài khoản của bạn</p></a>
+			<a href="${pageContext.request.contextPath}/shoppingCart"><p>Giỏ hàng</p></a>
 		</div>
 	</div>
 	<div class="F1">
@@ -19,10 +17,11 @@
 			<strong> THÔNG TIN</strong>
 		</div>
 		<div class="FB1">
-			<a href="${pageContext.request.contextPath}/about"><p>Giới
-					thiệu My Shoe Shop</p></a> <a href="huongdanmuahang.html"><p>Hướng
-					dẫn mua hàng</p></a> <a href="giaohang_thanhtoan.html"><p>Giao hàng
-					- Thanh toán</p></a>
+			<a href="${pageContext.request.contextPath}/about"><p>Giới thiệu My Shoe Shop</p></a> 
+			<a href="huongdanmuahang.html"><p>Hướng dẫn mua hàng</p></a>
+			
+			<!-- <a href="giaohang_thanhtoan.html"><p>Giao hàng
+					- Thanh toán</p></a> -->
 		</div>
 	</div>
 	<div class="F1">
@@ -30,8 +29,10 @@
 			<strong> THƯƠNG HIỆU</strong>
 		</div>
 		<div class="FB1">
-			<a href="ThNike.html"><p>Nike</p></a> <a href="ThAdidas.html"><p>Adidas</p></a>
-			<a href="ThConverse.html"><p>Converse</p></a> <a href="ThVans.html"><p>Vans</p></a>
+			<a href="http://www.nike.com/us/en_us/"><p>Nike</p></a>
+			<a href="http://www.adidas.com.vn/"><p>Adidas</p></a> 
+			<a href="http://www.nike.com/us/en_us/c/converse"><p>Converse</p> </a>
+			<a href="https://www.vans.com/"><p>Vans</p></a>
 		</div>
 	</div>
 	<div class="F1">
@@ -39,7 +40,7 @@
 			<strong> KẾT NỐI</strong>
 		</div>
 		<div class="FB2">
-			<a href="#" title=""><img
+			<a href="https://www.facebook.com/Shop-1904713549750858/" title=""><img
 				src="${pageContext.request.contextPath}/images/logo7.png"></a> <a
 				href="#" title=""><img
 				src="${pageContext.request.contextPath}/images/logo9.png"></a> <a

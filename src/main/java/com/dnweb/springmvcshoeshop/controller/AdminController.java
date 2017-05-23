@@ -40,16 +40,12 @@ import com.dnweb.springmvcshoeshop.validator.ProductInfoValidator;
 
 @Controller
 // Enable Hibernate Transaction.
-// Cáº§n thiáº¿t cho Hibernate Transaction.
 @Transactional
 // Need to use RedirectAttributes
-// Cáº§n thiáº¿t Ä‘á»ƒ sá»­ dá»¥ng RedirectAttributes
 @EnableWebMvc
 public class AdminController {
 	
-	// Day la cĂ¡c nhiem vu cua Admin
-	// Admin dang nhap de them SP, nháº­p giĂ¡ sáº£n pháº©m,....
-	// CĂ²n mainController liĂªn quan tá»›i hiá»ƒn thá»‹ vĂ  bĂ¡n hĂ ng.
+	// Day la cac nhiem vu cua Admin
 	@Autowired
 	private OrderDAO orderDAO;
 
@@ -80,25 +76,17 @@ public class AdminController {
 		if (target.getClass() == ProductInfo.class) {
 			dataBinder.setValidator(productInfoValidator);
 			// For upload Image.
-			// Sá»­ dá»¥ng cho upload Image.
 			dataBinder.registerCustomEditor(byte[].class, new ByteArrayMultipartFileEditor());
 		}
 	}
 
-	// Day la trang Hien thi de login.
 	// GET: Show Login Page
-	// GET: Hiá»ƒn thá»‹ trang login
 	@RequestMapping(value = { "/login" }, method = RequestMethod.GET)
 	public String login(Model model) {
 
 		
 		return "login";
 	}
-	
-	// Ham nay dau da duoc goi o dau??
-	// Cai nay cho nao goi no???????
-	
-	//chua a 
 	
 	public void saveAcccountSession(HttpServletRequest request){
 		UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
@@ -110,8 +98,6 @@ public class AdminController {
 	@RequestMapping(value = { "/accountInfo" }, method = RequestMethod.GET)
 	public String accountInfo(HttpServletRequest request,Model model) {
 
-		UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-
 		// Lay ra tu Sesssion.
 		CustomerInfo customerInfo = UserUtils.getLoginedUserFromSession(request);
 		 
@@ -122,53 +108,6 @@ public class AdminController {
 		return "accountInfo";
 	}
 	
-	
-	//Hien thi trang chinh sua thong tin tai hoan nguoi dung
-	@RequestMapping(value = {"/editAccountInfo"}, method = RequestMethod.GET)
-	public String editAccount(HttpServletRequest request, Model model){
-		
-		UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-		
-		if (userDetails == null) {
-			return "redirect:/login";
-		}
-		
-		AccountInfo accountInfo = accountDAO.findAccountInfo(userDetails.getUsername());
-		
-		if (accountInfo == null) {
-			accountInfo = new AccountInfo();
-		}
-		
-		model.addAttribute("userAccountForm", accountInfo);
-		return "editAccountInfo";
-	}
-	
-	//Luu thay doi thong tin nguoi dung
-	@RequestMapping(value = {"/editAccountInfo"}, method = RequestMethod.POST)
-	public String editAccountInfo(Model model,
-			@ModelAttribute("userAccountForm") @Validated AccountInfo accountInfo, //
-			BindingResult result, //
-			final RedirectAttributes redirectAttributes){
-		
-		if (result.hasErrors()) {
-			return "editAccountInfo";
-		}
-		try {
-			accountDAO.saveAccount(accountInfo);
-			
-		} catch (Exception e) {
-			String message = e.getMessage();
-			model.addAttribute("message", message);
-			
-			// Show edit account Info page.
-			return "editAccountInfo";
-
-		}
-		return "redirect:/accountInfo";
-		
-		
-	}
-
 	@RequestMapping(value = { "/orderList" }, method = RequestMethod.GET)
 	public String orderList(Model model, //
 			@RequestParam(value = "page", defaultValue = "1") String pageStr) {

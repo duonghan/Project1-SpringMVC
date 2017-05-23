@@ -31,6 +31,7 @@ import com.dnweb.springmvcshoeshop.model.CustomerInfo;
 import com.dnweb.springmvcshoeshop.model.PaginationResult;
 import com.dnweb.springmvcshoeshop.model.ProductInfo;
 import com.dnweb.springmvcshoeshop.util.CartUtils;
+import com.dnweb.springmvcshoeshop.util.UserUtils;
 import com.dnweb.springmvcshoeshop.validator.CustomerInfoValidator;
 
 @Controller
@@ -111,7 +112,7 @@ public class MainController {
 	public String listProductHandler(Model model, //
 			@RequestParam(value = "name", defaultValue = "") String likeName,
 			@RequestParam(value = "page", defaultValue = "1") int page) {
-		final int maxResult = 5;
+		final int maxResult = 9;
 		final int maxNavigationPage = 10;
 
 		PaginationResult<ProductInfo> result = productDAO.queryProducts(page, //
@@ -122,12 +123,12 @@ public class MainController {
 	}
 
 	// Danh sach san pham theo danh muc
-	@RequestMapping(value = { "/category" }, method = RequestMethod.GET)
+	@RequestMapping(value = { "/category" })
 	public String category(Model model, 
-			@RequestParam(value = "id", defaultValue = "") String id,
+			@RequestParam(value = "id", defaultValue = "1") String id,
 			@RequestParam(value = "name", defaultValue = "") String likeName,
 			@RequestParam(value = "page", defaultValue = "1") int page) {
-		final int maxResult = 5;
+		final int maxResult = 9;
 		final int maxNavigationPage = 10;
 
 		PaginationResult<ProductInfo> result = productDAO.queryProductsCategory(page, //
@@ -148,7 +149,7 @@ public class MainController {
 		}
 		if (product != null) {
 
-			// ThĂ´ng tin giá»� hĂ ng cĂ³ thá»ƒ Ä‘Ă£ lÆ°u vĂ o trong Session
+			// Thong tin gio hang luu vao trong Session
 			// trÆ°á»›c Ä‘Ă³.
 			CartInfo cartInfo = CartUtils.getCartInSession(request);
 
@@ -157,7 +158,7 @@ public class MainController {
 			cartInfo.addProduct(productInfo, 1);
 		}
 
-		// Chuyá»ƒn sang trang danh sĂ¡ch cĂ¡c sáº£n pháº©m Ä‘Ă£ mua.
+		// Chuyển sang danh sách các sản phẩm đã mua
 		return "redirect:/shoppingCart";
 	}
 
@@ -203,13 +204,13 @@ public class MainController {
 	public String shoppingCartHandler(HttpServletRequest request, Model model) {
 		CartInfo myCart = CartUtils.getCartInSession(request);
 
-		CustomerInfo customerInfo = myCart.getCustomerInfo();
+		//CustomerInfo customerInfo = myCart.getCustomerInfo();
 		
-		if (customerInfo == null) {
-			customerInfo = new CustomerInfo();
-		}
+		// if (customerInfo == null) {
+		// customerInfo = new CustomerInfo();
+		// }
 
-		model.addAttribute("customerForm", customerInfo);
+		//model.addAttribute("customerForm", customerInfo);
 		
 		
 		model.addAttribute("cartForm", myCart);
@@ -217,69 +218,22 @@ public class MainController {
 		return "shoppingCart";
 	}
 
-	// GET: Nháº­p thĂ´ng tin khĂ¡ch hĂ ng.
-	@RequestMapping(value = { "/shoppingCartCustomer" }, method = RequestMethod.GET)
-	public String shoppingCartCustomerForm(HttpServletRequest request, Model model) {
-
-		CartInfo cartInfo = CartUtils.getCartInSession(request);
-
-		// ChÆ°a mua máº·t hĂ ng nĂ o.
-		if (cartInfo.isEmpty()) {
-
-			// Chuyá»ƒn tá»›i trang danh giá»� hĂ ng
-			return "redirect:/shoppingCart";
-		}
-
-		CustomerInfo customerInfo = cartInfo.getCustomerInfo();
-		if (customerInfo == null) {
-			customerInfo = new CustomerInfo();
-		}
-
-		model.addAttribute("customerForm", customerInfo);
-
-		return "shoppingCartCustomer";
-	}
-
-	// POST: Save thông tin khách hàng.
-	@RequestMapping(value = { "/shoppingCartCustomer" }, method = RequestMethod.POST)
-	public String shoppingCartCustomerSave(HttpServletRequest request, //
-			Model model, //
-			@ModelAttribute("customerForm") @Validated CustomerInfo customerForm, //
-			BindingResult result, //
-			final RedirectAttributes redirectAttributes) {
-
-		// Kết quả Validate CustomerInfo.
-		if (result.hasErrors()) {
-			customerForm.setValid(false);
-			// Forward to reenter customer info.
-			// Forward tới trang nhập lại.
-			return "shoppingCartCustomer";
-		}
-
-		customerForm.setValid(true);
-		CartInfo cartInfo = CartUtils.getCartInSession(request);
-
-		cartInfo.setCustomerInfo(customerForm);
-
-		// Chuyển hướng sang trang xác nhận.
-		return "redirect:/shoppingCartConfirmation";
-	}
-
 	// GET: Xem lại thông tin để xác nhận.
 	@RequestMapping(value = { "/shoppingCartConfirmation" }, method = RequestMethod.GET)
 	public String shoppingCartConfirmationReview(HttpServletRequest request, Model model) {
+		
+		CustomerInfo customerInfo = UserUtils.getLoginedUserFromSession(request);
+		
 		CartInfo cartInfo = CartUtils.getCartInSession(request);
 
+		cartInfo.setCustomerInfo(customerInfo);
+		
 		// Chưa mua mặt hàng nào.
 		if (cartInfo.isEmpty()) {
 
 			// Chuyển tới trang danh giỏ hàng
 			return "redirect:/shoppingCart";
-		} else if (!cartInfo.isValidCustomer()) {
-
-			// Chuyển tới trang nhập thông tin khách hàng.
-			return "redirect:/shoppingCartCustomer";
-		}
+		} 
 
 		return "shoppingCartConfirmation";
 	}
@@ -290,6 +244,7 @@ public class MainController {
 	// Tránh ngoại lệ: UnexpectedRollbackException (Xem giải thích thêm).
 	@Transactional(propagation = Propagation.NEVER)
 	public String shoppingCartConfirmationSave(HttpServletRequest request, Model model) {
+		
 		CartInfo cartInfo = CartUtils.getCartInSession(request);
 
 		// Chưa mua mặt hàng nào.
@@ -297,11 +252,8 @@ public class MainController {
 
 			// Chuyển tới trang danh giỏ hàng
 			return "redirect:/shoppingCart";
-		} else if (!cartInfo.isValidCustomer()) {
-
-			// Chuyển tới trang nhập thông tin khách hàng.
-			return "redirect:/shoppingCartCustomer";
-		}
+		} 
+		
 		try {
 			orderDAO.saveOrder(cartInfo);
 		} catch (Exception e) {
@@ -328,7 +280,7 @@ public class MainController {
 		if (lastOrderedCart == null) {
 			return "redirect:/shoppingCart";
 		}
-
+		
 		return "shoppingCartFinalize";
 	}
 

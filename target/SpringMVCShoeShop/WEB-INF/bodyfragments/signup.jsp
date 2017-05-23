@@ -29,8 +29,6 @@
 				</tr>
 				<tr>
 					<td>Email *</td>
-					<!-- No se co cac gia tri mac dinh -->
-					<!--  Su dung form va path theo cach cua Spring!! -->
 					<td><form:input path="email" /></td> 
 					<td><form:errors path="email" /></td>
 				</tr>

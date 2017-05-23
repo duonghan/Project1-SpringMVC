@@ -96,23 +96,23 @@ public class AccountDAO {
 			account = new Account();
 			account.setUsername(userName);
 			account.setCreated(new Date());
-		}
+			account.setPassword(accountInfo.getPassword());
+			account.setGender(accountInfo.getGender());
 
-		account.setPassword(accountInfo.getPassword());
+			account.setRole("USER");
+			account.setActive(true);
+		}
 		account.setName(accountInfo.getName());
 		account.setEmail(accountInfo.getEmail());
 		account.setAddress(accountInfo.getAddress());
 		account.setPhone(accountInfo.getPhone());
-		account.setGender(accountInfo.getGender());
 
-		account.setRole("USER");
-		account.setActive(true);
 
 		// dua account ve trang thai persistent
 		if (isNew) {
 			session.persist(account);
 		}
-		// chu dong dua du lieu xung DB
+		// chu dong dua du lieu xuong DB
 		session.flush();
 	}
 

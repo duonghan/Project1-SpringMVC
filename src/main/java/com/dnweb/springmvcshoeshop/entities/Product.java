@@ -45,6 +45,7 @@ public class Product implements java.io.Serializable {
 		this.id = id;
 	}
 
+	// Hibernate su dung cai nay, de biet DK 2 bang JOIN voi nhau.
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "categoryid")
 	public Category getCategory() {

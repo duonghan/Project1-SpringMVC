@@ -10,9 +10,6 @@
 	<h3>Đăng ký tài khoản</h3>
 	<br>
 
-<!-- Thua cai form (Bo di) -->
-
-
 <!--  Day chinh la the form Spring se tao ra tren HTML -->
 		<form:form method="POST" modelAttribute="accountForm"
 			action="${pageContext.request.contextPath}/signup">
@@ -57,11 +54,10 @@
 				<tr>
 					<td>Giới tính</td>
 					<td><form:input name="gender" /></td>
-					<td><form:errors path="phone" /></td>
+					<td><form:errors path="gender" /></td>
 				</tr>
 
 				<tr>
-					<td>&nbsp;</td>
 					<td><form:input type="submit" value="Đăng ký" /></td>
 				</tr>
 			</table>

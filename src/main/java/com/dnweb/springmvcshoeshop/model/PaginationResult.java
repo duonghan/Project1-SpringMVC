@@ -20,7 +20,7 @@ public class PaginationResult<E> {
 	private List<Integer> navigationPages;
 
 	// Truyen vao Query + trang thứ mấy (page), số bản ghi tối đa(maxResult) và số link trag tối đa
-	// ==> Nó tự động query đúng số bản ghi theo trang đó.
+	// ==>  tự động query đúng số bản ghi theo trang đó.
 	// @page: 1, 2, ..
 	public PaginationResult(Query query, int page, int maxResult, int maxNavigationPage) {
 		final int pageIndex = page - 1 < 0 ? 0 : page - 1;

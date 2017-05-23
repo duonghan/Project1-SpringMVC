@@ -3,6 +3,8 @@ package com.dnweb.springmvcshoeshop.controller;
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
@@ -46,49 +48,42 @@ public class RegisterController {
 			// No se set validate vao cho dataBinder!!
 			dataBinder.setValidator(userAccountValidator);
 			// For upload Image.
-			// Sá»­ dá»¥ng cho upload Image.
-			// dataBinder.registerCustomEditor(byte[].class, new ByteArrayMultipartFileEditor());
 		}
 	}
-	
-	
+
 	// Spring se tim kiem template Tile cĂ³ ten signup nhung ko cĂ³ ==> Loi.
 	// Hien thi trang signup
 	@RequestMapping(value = { "/signup" }, method = RequestMethod.GET)
 	public String signup(Model model) {
-       AccountInfo accountForm = new AccountInfo();
-       
-       accountForm.setAddress("Nothing");
-       accountForm.setEmail("abc@gmaiil.com");// Cac gia tri mac dinh 
-       // tren trang jsp: sign.jsp co su dung 
-       // modelAttribute="accountForm"
-       // Vi vay phai cung cap thuoc tinh nay. Mac dinh la rong.
-       // Tuy nhien co the set cĂ¡c gia tri mac dinh neu muon
-       model.addAttribute( "accountForm", accountForm);
+		AccountInfo accountForm = new AccountInfo();
 		
+		accountForm.setName("Nguyễn Văn A");
+		
+		accountForm.setAddress("Hà Nội");
+		accountForm.setEmail("abc@gmaiil.com");// Cac gia tri mac dinh
+		// tren trang jsp: sign.jsp co su dung
+		// modelAttribute="accountForm"
+		// Vi vay phai cung cap thuoc tinh nay. Mac dinh la rong.
+		// Tuy nhien co the set cĂ¡c gia tri mac dinh neu muon
+		model.addAttribute("accountForm", accountForm);
+
 		return "signup";
 	}
-	
-	
+
 	// accountForm
 	@RequestMapping(value = { "/signup" }, method = RequestMethod.POST)
 	public String signup(HttpServletRequest request, Model model,
-			// Sai o cho nay!! accountForm Ä‘Äƒng kĂ½ ráº±ng nĂ³ Ä‘Æ°á»£c Validated bá»Ÿi 1
-			// bá»™ Validate (Validated == Ä�Ă£ Ä‘Æ°á»£c validate truoc do
-			// Truoc khi truyen vao day.
-			// Tuy nhien lai khong cung cap cho no mot bo validate!!
-			// CĂ³ 2 cĂ¡ch - 1: Bá»� @validaed Ä‘i 
-			// 2- Cung cap 1 validate cho no.
 			@ModelAttribute("accountForm") @Validated AccountInfo accountForm //
 
-			, BindingResult result, // Do co cai nay ==> bat buoc phai cung cap validate
+			, BindingResult result, // Do co cai nay ==> bat buoc phai cung cap
+									// validate
 			final RedirectAttributes redirectAttributes
 
 	) {
 
-		// Náº¿u validate cĂ³ lá»—i.
+		// Neu validate co loi
 		if (result.hasErrors()) {
-			System.out.println("Lỗi:"+ result.toString());
+			System.out.println("Lỗi:" + result.toString());
 			accountForm.setValid(false);
 
 			return "signup";
@@ -97,10 +92,55 @@ public class RegisterController {
 		accountForm.setValid(true);
 		System.out.println("Save ..... ");
 		this.accountDAO.saveAccount(accountForm);
-		
+
 		System.out.println("Saved ..... ");
 
 		redirectAttributes.addFlashAttribute("message", "Đăng kí tài khoản không thành công!");
 		return "redirect:/login";
 	}
+
+	// Hien thi trang chinh sua thong tin tai hoan nguoi dung
+	@RequestMapping(value = { "/editprofile" }, method = RequestMethod.GET)
+	public String editAccount(HttpServletRequest request, Model model) {
+
+		UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+
+		if (userDetails == null) {
+			return "redirect:/login";
+		}
+
+		AccountInfo accountInfo = accountDAO.findAccountInfo(userDetails.getUsername());
+
+		if (accountInfo == null) {
+			accountInfo = new AccountInfo();
+		}
+
+		model.addAttribute("userAccountForm", accountInfo);
+
+		return "editProfile";
+	}
+
+	// Luu thay doi thong tin nguoi dung
+	@RequestMapping(value = { "/editprofile" }, method = RequestMethod.POST)
+	public String editAccount(Model model, 
+			@ModelAttribute("userAccountForm") @Validated AccountInfo userAccountForm, //
+			BindingResult result) {
+
+		if (result.hasErrors()) {
+			return "editProfile";
+		}
+		try {
+			accountDAO.saveAccount(userAccountForm);
+
+		} catch (Exception e) {
+			String message = e.getMessage();
+			model.addAttribute("message", message);
+
+			// Show edit account Info page.
+			return "editProfile";
+
+		}
+		return "redirect:/accountInfo";
+	}
+
 }

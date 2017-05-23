@@ -76,6 +76,11 @@ public class UserAccountValidator implements Validator {
 			}
 		}
 		
+		//Gender invalid
+		if (accountInfo.getGender() != "Nam" || accountInfo.getGender() != "Nữ") {
+			errors.rejectValue("gender", "Invalid.customerForm.gender");
+		}
+		
 	}
 
 	

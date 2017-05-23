@@ -3,8 +3,6 @@
 	
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 
-<div class="page-title">Đăng nhập (For Employee, Manager)</div>
-
 <div class="login-container" valign="top">
 
 	<h3>Nhập tài khoản và mật khẩu</h3>
@@ -33,9 +31,10 @@
 			</tr>
 
 			<tr>
-				<td>&nbsp;</td>
-				<td><input type="submit" value="Login" /> <input type="reset"
-					value="Reset" /></td>
+				<td><input type="submit" value="Đăng nhập" /> 
+				<div class="button">
+				<a href="${pageContext.request.contextPath}/signup">Đăng ký</a>
+				</div>
 			</tr>
 		</table>
 	</form>

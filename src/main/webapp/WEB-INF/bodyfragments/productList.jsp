@@ -6,32 +6,46 @@
 <%@ taglib uri="http://www.springframework.org/security/tags"
 	prefix="security"%>
 
-<fmt:setLocale value="en_US" scope="session" />
+<fmt:setLocale value="vi_VI" scope="session" />
 
-<div class="page-title">Danh sách sản phẩm</div>
+<hr style="height: 1px; background: #ccc">
+<div class="CR1">
 
+<div class="title">
+		<p>
+			<strong> DANH SÁCH SẢN PHẨM</strong>
+		</p>
+</div>
 <c:forEach items="${paginationProducts.list}" var="prodInfo">
-	<div class="product-preview-container">
-		<ul>
-			<li><img class="product-image"
-				src="${pageContext.request.contextPath}/productImage?id=${prodInfo.id}" /></li>
-			<li>Mã sản phẩm: ${prodInfo.id}</li>
-			<li>Tên sản phẩm: ${prodInfo.name}</li>
-			<li>Đơn giá: <fmt:formatNumber value="${prodInfo.price}"
-					 /> VNĐ</li>
-			<li><a
-				href="${pageContext.request.contextPath}/buyProduct?id=${prodInfo.id}">
-					Mua</a></li>
-					
-			<!-- For Admin edit Product -->
-			<security:authorize access="hasRole('ROLE_ADMIN')">
-				<li><a style="color: red;"
-					href="${pageContext.request.contextPath}/product?id=${prodInfo.id}">
-						Chỉnh sửa</a></li>
-			</security:authorize>
-		</ul>
-	</div>
 
+	<div class="sp">
+		<img
+			src="${pageContext.request.contextPath}/productImage?id=${prodInfo.id}"
+			alt="${prodInfo.name}">
+
+		<div class="namesp">
+			<a
+				href="${pageContext.request.contextPath}/productImage?id=${prodInfo.id}">${prodInfo.name}</a>
+		</div>
+
+		<a style="margin-left: 50px; color: red;"> <fmt:formatNumber
+				value="${prodInfo.price}" /> VNĐ
+		</a>
+
+		<div class="button">
+			<a
+				href="${pageContext.request.contextPath}/buyProduct?id=${prodInfo.id}">Mua
+				hàng</a>
+		</div>
+
+		<!-- For Admin edit Product -->
+		<security:authorize access="hasRole('ROLE_ADMIN')">
+		<div class="button">
+			<a style="color: red;" href="${pageContext.request.contextPath}/product?id=${prodInfo.id}">
+					Chỉnh sửa</a>
+		</div>
+		</security:authorize>
+	</div>
 </c:forEach>
 <br />
 
@@ -49,3 +63,5 @@
 
 	</div>
 </c:if>
+
+</div>
