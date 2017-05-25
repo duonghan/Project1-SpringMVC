@@ -4,8 +4,6 @@
 <%@taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
 
-<div class="page-title">Account Info</div>
-
 <div class="account-container">
 	<form:form method="POST" modelAttribute="loginedUser">
 
@@ -14,23 +12,12 @@
 
 		<ul>
 			<li>Họ Tên: ${loginedUser.username}</li>
-			
-			<!-- 
-				<li>Role:
-				<ul>
-					<c:forEach items="${userDetails.authorities}" var="auth">
-						<li>${auth.authority }</li>
-					</c:forEach>
-				</ul>
-			</li>
-			 -->
-			 <!-- bo get di -->
 			<li>Email: ${loginedUser.email}</li>
 			<li>Địa chỉ: ${loginedUser.address}</li>
 			<li>Số điện thoại: ${loginedUser.phone}</li>
 			<li>Giới tính: ${loginedUser.gender}</li>
 			
 		</ul>
-		
+		<a href="${pageContext.request.contextPath}/editprofile">Chỉnh sửa thông tin cá nhân</a>
 		</form:form>
 </div>

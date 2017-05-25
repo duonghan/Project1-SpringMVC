@@ -16,7 +16,7 @@
 			<c:forEach var="cateInfo" items="${listCategory}">
 				<li><a
 					href="${pageContext.request.contextPath}/category?id=${cateInfo.id}">
-						${cateInfo.name}</a> 
+						Giầy thể thao ${cateInfo.name}</a> 
 				</li>
 			</c:forEach>
 			<security:authorize access="hasRole('ROLE_ADMIN')">

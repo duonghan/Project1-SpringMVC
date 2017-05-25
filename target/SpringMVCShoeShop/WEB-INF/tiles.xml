@@ -13,16 +13,16 @@
 		<put-attribute name="body" value="" />
 		<put-attribute name="footer" value="/WEB-INF/basefragments/_footer.jsp" />
 	</definition>
-    <!-- Day la trang /index -->
+	
 	<!-- Home Page -->
 	<definition name="index" extends="base.definition">
-		<put-attribute name="title" value="Shoe Shop" />
+		<put-attribute name="title" value="Cửa hàng giầy thể thao Shoe Shop" />
 		<put-attribute name="body" value="/WEB-INF/bodyfragments/index.jsp" />
 	</definition>
 
 	<!-- ContactUs Page -->
 	<definition name="contactusPage" extends="base.definition">
-		<put-attribute name="title" value="Contact Us" />
+		<put-attribute name="title" value="Liên hệ" />
 		<put-attribute name="body"
 			value="/WEB-INF/bodyfragments/contactus.jsp" />
 	</definition>
@@ -43,10 +43,9 @@
 	<!-- About Page -->
 	<definition name="about" extends="base.definition">
 		<put-attribute name="title" value="Về chúng tôi" />
-		<put-attribute name="body"
-			value="/WEB-INF/bodyfragments/about.jsp" />
+		<put-attribute name="body" value="/WEB-INF/bodyfragments/about.jsp" />
 	</definition>
-	
+
 	<!-- Login Page -->
 	<definition name="login" extends="base.definition">
 		<put-attribute name="title" value="Đăng nhập" />
@@ -66,6 +65,13 @@
 			value="/WEB-INF/bodyfragments/orderList.jsp" />
 	</definition>
 
+	<!-- Edit Category Page -->
+	<definition name="editCategory" extends="base.definition">
+		<put-attribute name="title" value="Chỉnh sửa danh mục sản phẩm" />
+		<put-attribute name="body"
+			value="/WEB-INF/bodyfragments/editCategory.jsp" />
+	</definition>
+	
 	<!-- Product Page -->
 	<definition name="product" extends="base.definition">
 		<put-attribute name="title" value="Sản phẩm" />
@@ -79,6 +85,13 @@
 			value="/WEB-INF/bodyfragments/productList.jsp" />
 	</definition>
 
+	<!-- Category Page -->
+	<definition name="category" extends="base.definition">
+		<put-attribute name="title" value="Danh mục sản phẩm" />
+		<put-attribute name="body"
+			value="/WEB-INF/bodyfragments/category.jsp" />
+	</definition>
+	
 	<!-- Shopping Card Page -->
 	<definition name="shoppingCart" extends="base.definition">
 		<put-attribute name="title" value="Giỏ hàng" />
@@ -95,7 +108,7 @@
 
 	<!-- Shopping Cart Confirmation Page -->
 	<definition name="shoppingCartConfirmation" extends="base.definition">
-		<put-attribute name="title" value="Shopping Cart Customer" />
+		<put-attribute name="title" value="Xác nhận đơn hàng" />
 		<put-attribute name="body"
 			value="/WEB-INF/bodyfragments/shoppingCartConfirmation.jsp" />
 	</definition>
@@ -107,13 +120,18 @@
 			value="/WEB-INF/bodyfragments/shoppingCartFinalize.jsp" />
 	</definition>
 
- 
 
-     <!-- Signup Page -->
+
+	<!-- Signup Page -->
 	<definition name="signup" extends="base.definition">
 		<put-attribute name="title" value="Đăng ký" />
+		<put-attribute name="body" value="/WEB-INF/bodyfragments/signup.jsp" />
+	</definition>
+
+	<!-- Edit User Info Page -->
+	<definition name="editProfile" extends="base.definition">
+		<put-attribute name="title" value="Chỉnh sửa thông tin" />
 		<put-attribute name="body"
-			value="/WEB-INF/bodyfragments/signup.jsp" />
-	</definition>	
-	
+			value="/WEB-INF/bodyfragments/editProfile.jsp" />
+	</definition>
 </tiles-definitions>

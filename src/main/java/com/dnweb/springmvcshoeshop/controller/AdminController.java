@@ -28,7 +28,6 @@ import com.dnweb.springmvcshoeshop.dao.AccountDAO;
 import com.dnweb.springmvcshoeshop.dao.CategoryDAO;
 import com.dnweb.springmvcshoeshop.dao.OrderDAO;
 import com.dnweb.springmvcshoeshop.dao.ProductDAO;
-import com.dnweb.springmvcshoeshop.model.AccountInfo;
 import com.dnweb.springmvcshoeshop.model.CategoryInfo;
 import com.dnweb.springmvcshoeshop.model.CustomerInfo;
 import com.dnweb.springmvcshoeshop.model.OrderDetailInfo;
@@ -145,12 +144,7 @@ public class AdminController {
 		return "editCategory";
 	}
 	
-	// No se goi toi phuong thuc nay. Ma phuong thuc nay mình lập trình ko vì mục đích save
-	// ==> Vẫn dc, nó đơn giản là hiển thị SP thay vì save ==> Ko đúng mục đích vậy thôi.
-	//ok e hiểu r ạ
-	// Day la GET ==> Khi người dùng xem một SP.
 	// GET: Show product.
-	// GET: Hiá»ƒn thá»‹ product
 	@RequestMapping(value = { "/product" }, method = RequestMethod.GET)
 	public String product(Model model, @RequestParam(value = "id", defaultValue = "") String id) {
 		ProductInfo productInfo = null;
@@ -167,7 +161,6 @@ public class AdminController {
 	}
 	
 	//Luu thong tin sau khi thay doi category
-	
 	@RequestMapping(value = { "/editCategory" }, method = RequestMethod.POST)
 	@Transactional(propagation = Propagation.NEVER)
 	public String categorySave(Model model, //

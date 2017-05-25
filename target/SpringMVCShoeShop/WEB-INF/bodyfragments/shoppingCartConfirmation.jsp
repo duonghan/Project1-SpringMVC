@@ -5,7 +5,7 @@
 
 <fmt:setLocale value="vi_VI" scope="session" />
 
-<div class="page-title">Confirmation</div>
+<div class="page-title">Xác nhận thông tin đơn hàng</div>
 
 
 

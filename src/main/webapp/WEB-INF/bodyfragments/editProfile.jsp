@@ -2,10 +2,12 @@
 	pageEncoding="UTF-8"%>
 <%@taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
 
+<h2>${erros }</h2>
 
 <div class="page-title">Cập nhật thông tin người dùng</div>
 
-<form:form method="POST" modelAttribute="userAccountForm"
+<form:form method="POST" 
+	modelAttribute="userAccountForm"
 	action="${pageContext.request.contextPath}/editprofile">
 
 	<table>

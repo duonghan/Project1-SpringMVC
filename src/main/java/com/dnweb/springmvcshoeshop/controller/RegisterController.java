@@ -20,7 +20,6 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.dnweb.springmvcshoeshop.dao.AccountDAO;
 import com.dnweb.springmvcshoeshop.model.AccountInfo;
-import com.dnweb.springmvcshoeshop.util.UserUtils;
 import com.dnweb.springmvcshoeshop.validator.UserAccountValidator;
 
 @Controller
@@ -60,11 +59,7 @@ public class RegisterController {
 		accountForm.setName("Nguyễn Văn A");
 		
 		accountForm.setAddress("Hà Nội");
-		accountForm.setEmail("abc@gmaiil.com");// Cac gia tri mac dinh
-		// tren trang jsp: sign.jsp co su dung
-		// modelAttribute="accountForm"
-		// Vi vay phai cung cap thuoc tinh nay. Mac dinh la rong.
-		// Tuy nhien co the set cĂ¡c gia tri mac dinh neu muon
+		accountForm.setEmail("abc@gmaiil.com");
 		model.addAttribute("accountForm", accountForm);
 
 		return "signup";
@@ -126,9 +121,11 @@ public class RegisterController {
 			@ModelAttribute("userAccountForm") @Validated AccountInfo userAccountForm, //
 			BindingResult result) {
 
-		if (result.hasErrors()) {
+		if (result.hasErrors()) { 
+			model.addAttribute("errors", "Đã xảy ra lỗi, vui lòng thử lại!");
 			return "editProfile";
 		}
+		
 		try {
 			accountDAO.saveAccount(userAccountForm);
 
@@ -137,7 +134,7 @@ public class RegisterController {
 			model.addAttribute("message", message);
 
 			// Show edit account Info page.
-			return "editProfile";
+			return "editProfile"; 
 
 		}
 		return "redirect:/accountInfo";

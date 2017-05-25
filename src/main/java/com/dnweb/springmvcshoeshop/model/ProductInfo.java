@@ -1,7 +1,10 @@
 package com.dnweb.springmvcshoeshop.model;
 
+import java.util.Iterator;
+
 import org.springframework.web.multipart.commons.CommonsMultipartFile;
 
+import com.dnweb.springmvcshoeshop.entities.OrderDetail;
 import com.dnweb.springmvcshoeshop.entities.Product;
 
 public class ProductInfo {
@@ -12,6 +15,7 @@ public class ProductInfo {
 	private String description;
 	private Float discount;
 	private String categoryId;
+	private int  totalQuantity; 
 	
 	private boolean newProduct = false;
 
@@ -112,7 +116,22 @@ public class ProductInfo {
 	public void setCategoryId(String categoryId) {
 		this.categoryId = categoryId;
 	}
-	
-	
+
+	public int getTotalQuantity() {
+		return totalQuantity;
+	}
+
+	public void setTotalQuantity(Product product) {
+		
+		int quantity = 0;
+		Iterator<OrderDetail> iterator = product.getOrderdetails().iterator();
+		
+		while (iterator.hasNext()) {	
+			quantity += iterator.next().getQuantity();
+		}
+		
+		System.out.println(">>>>>>>>>>>>>>>>>>>>>>>>>Total quantity:" + quantity);
+		this.totalQuantity = quantity;
+	}
 	
 }

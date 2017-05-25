@@ -27,6 +27,10 @@ public class ProductDAO {
 	@Autowired
 	private CategoryDAO categoryDAO;
 
+//	@Autowired
+//	private ProductInfo productInfo;
+	
+	
 	// Tim kiem san pham theo id
 	public Product findProduct(String id) {
 		Session session = sessionFactory.getCurrentSession();
@@ -81,7 +85,7 @@ public class ProductDAO {
 
 			session.persist(product);
 		}
-	
+
 		session.flush();
 	}
 
@@ -109,32 +113,29 @@ public class ProductDAO {
 	}
 
 	// Query san pham theo category
-	
-	//cai cho nay a ạ
-	//câu truy vấn của e nó bị sai chỗ nà v a
-	//e chạy nó báo lỗi 
-	// Xong roi day
-	//vay ve cach viet la no k sai a nhi
-	
 	public PaginationResult<ProductInfo> queryProductsCategory(int page, int maxResult, int maxNavigationPage,
 			String categoryId, String likeName) {
 
-		// Cach viet 1: (Join 2 bang, ko can dien kien on, vi hibernate tu biet DK).
-		//ok a
-		String sql = "Select new " + ProductInfo.class.getName()
-				+ "(p.id, p.name, p.price, p.description, p.discount, c.id) " + " from "
-				+ Product.class.getName() + " p " + " join p.category c " ;
-		
-	// Cach viet 2: (Cach nay khong can join, su dung thuoc tinh p.category.id ==> De truy van Id cua Category
+		// Cach viet 1: (Join 2 bang, ko can dien kien on, vi hibernate tu biet
+		// DK).
+		// ok a
 		String sql2 = "Select new " + ProductInfo.class.getName()
-				+ "(p.id, p.name, p.price, p.description, p.discount, p.category.id) " + " from "
-				+ Product.class.getName() +" p "  ;
-		
-//				+ Category.class.getName() + " c " + " on "
-			//	+ " p.category.id = c.id";
+				+ "(p.id, p.name, p.price, p.description, p.discount, c.id) " + " from " + Product.class.getName()
+				+ " p " + " join p.category c ";
 
-		if (likeName != null && likeName.length() > 0) {
-			sql += " Where lower(p.name) like :likeName ";
+		// Cach viet 2: (Cach nay khong can join, su dung thuoc tinh
+		// p.category.id ==> De truy van Id cua Category
+		String sql = "Select new " + ProductInfo.class.getName()
+				+ "(p.id, p.name, p.price, p.description, p.discount, p.category.id) " + " from "
+				+ Product.class.getName() + " p ";
+		
+		if (categoryId != null && categoryId.length() > 0) {
+			
+			sql +="Where lower(p.category.id) like :categoryId";
+			
+			if (likeName != null && likeName.length() > 0) {
+				sql += " and lower(p.name) like :likeName ";
+			}
 		}
 		sql += " order by p.created desc ";
 
@@ -142,6 +143,10 @@ public class ProductDAO {
 
 		// Co duoc doi tuong Query
 		Query query = session.createQuery(sql);
+
+		if (categoryId != null) {
+			query.setParameter("categoryId",categoryId);
+		}
 		if (likeName != null && likeName.length() > 0) {
 			query.setParameter("likeName", "%" + likeName.toLowerCase() + "%");
 		}
@@ -150,35 +155,34 @@ public class ProductDAO {
 	}
 
 	// Danh sach cac san pham moi
-	public PaginationResult<ProductInfo> listNewProduct(int page, int maxResult, int maxNavigationPage) {
-
-		String sql = "Select new " + ProductInfo.class.getName()
-				+ "(p.id, p.name, p.price, p.description, p.discount, c.id) " + " from "
-				+ Product.class.getName() + " p "// 
-				+ " join p.category c " // + " on " "p.category.id = c.id" // Khong can dieu kien on! vi p.category (Da tu join roi)
-				+ " order by p.created desc ";
-
-		Session session = sessionFactory.getCurrentSession();
-		Query query = session.createQuery(sql);
-
-		return new PaginationResult<ProductInfo>(query, page, maxResult, maxNavigationPage);
-	}
+//	public PaginationResult<ProductInfo> listNewProduct(int page, int maxResult, int maxNavigationPage) {
+//
+//		String sql = "Select new " + ProductInfo.class.getName()
+//				+ "(p.id, p.name, p.price, p.description, p.discount, c.id) " + " from " + Product.class.getName()
+//				+ " p "//
+//				+ " join p.category c " 
+//				+ " order by p.created desc ";
+//
+//		Session session = sessionFactory.getCurrentSession();
+//		Query query = session.createQuery(sql);
+//
+//		return new PaginationResult<ProductInfo>(query, page, maxResult, maxNavigationPage);
+//	}
 
 	// Danh sach cac san pham ban chay
-	public PaginationResult<ProductInfo> listPopulerProduct(int page, int maxResult, int maxNavigationPage) {
+//	public PaginationResult<ProductInfo> listPopulerProduct(int page, int maxResult, int maxNavigationPage) {
+//
+//		String sql = "Select new " + ProductInfo.class.getName()
+//				+ "(p.id, p.name, p.price, p.description, p.discount, p.category.id) " + " from "
+//				+ Product.class.getName() + " p " 
+//				+ " order by :orderquantity desc ";
+//
+//		Session session = sessionFactory.getCurrentSession();
+//		Query query = session.createQuery(sql);
+//		query.setParameter("orderquantity",productInfo.getTotalQuantity() );
+//		return new PaginationResult<ProductInfo>(query, page, maxResult, maxNavigationPage);
+//	}
 
-		String sql = "Select new " + ProductInfo.class.getName()
-				+ "((p.id, p.name, p.price, p.description, p.discount, p.category.id)) " + " from "
-				+ Product.class.getName() + " p " + " join " + OrderDetail.class.getName() 
-				+ " o " + " on " + "p.id = o.product.id" 
-				+ " order by o.quantity desc ";
-
-		Session session = sessionFactory.getCurrentSession();
-		Query query = session.createQuery(sql);
-
-		return new PaginationResult<ProductInfo>(query, page, maxResult, maxNavigationPage);
-	}
-	
 	// Xoa san pham
 	public void deleteProduct(String productId) {
 		Session session = sessionFactory.getCurrentSession();

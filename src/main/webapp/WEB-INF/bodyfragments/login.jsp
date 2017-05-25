@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-	
+
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 
 <div class="login-container" valign="top">
@@ -31,10 +31,11 @@
 			</tr>
 
 			<tr>
-				<td><input type="submit" value="Đăng nhập" /> 
-				<div class="button">
-				<a href="${pageContext.request.contextPath}/signup">Đăng ký</a>
-				</div>
+				<td><input type="submit" value="Đăng nhập" /></td>
+				<td>
+					<button formaction="${pageContext.request.contextPath}/signup">Đăng
+						ký</button>
+				</td>
 			</tr>
 		</table>
 	</form>

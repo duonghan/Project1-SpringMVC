@@ -45,7 +45,7 @@
 			src="${pageContext.request.contextPath}/images/logo7.png"></a> <a
 			href="#" title=""><img
 			src="${pageContext.request.contextPath}/images/logo9.png"></a> <a
-			href="#" title=""><img
+			href="https://www.instagram.com/kune.store/" title=""><img
 			src="${pageContext.request.contextPath}/images/logo8.png"></a> <a
 			href="#" title=""><img
 			src="${pageContext.request.contextPath}/images/logo10.png"></a>

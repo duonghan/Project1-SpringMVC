@@ -4,14 +4,13 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
 
-<fmt:setLocale value="en_US" scope="session" />
+<fmt:setLocale value="vi_VI" scope="session" />
 
 <div class="page-title">Giỏ hàng</div>
 
 <c:if test="${empty cartForm or empty cartForm.cartLines}">
-	<h2>There is no items in Cart</h2>
-	<a href="${pageContext.request.contextPath}/productList">Show
-		Product List</a>
+	<h2>Không có sản phẩm nào trong giỏ hàng</h2>
+	<a href="${pageContext.request.contextPath}/productList">Xem danh sách sản phẩm</a>
 </c:if>
 
 <c:if test="${not empty cartForm and not empty cartForm.cartLines   }">
@@ -36,8 +35,8 @@
 					</span></li>
 					<li>Số lượng: <form:input
 							path="cartLines[${varStatus.index}].quantity" /></li>
-					<li>Subtotal: <span class="subtotal"> <fmt:formatNumber
-								value="${cartLineInfo.amount}" type="currency" />
+					<li>Tổng: <span class="subtotal"> <fmt:formatNumber
+								value="${cartLineInfo.amount}" type="number" pattern="###.## VNĐ"/>
 
 					</span>
 					</li>
@@ -50,7 +49,7 @@
 		<div style="clear: both"></div>
 		<input class="button-update-sc" type="submit" value="Cập nhật số lượng" />
 		<a class="navi-item"
-			href="${pageContext.request.contextPath}/shoppingCartConfirmation">Xác nhận</a>
+			href="${pageContext.request.contextPath}/shoppingCartConfirmation">Đặt hàng</a>
 		<a class="navi-item"
 			href="${pageContext.request.contextPath}/productList">Tiếp tục mua hàng</a>
 	</form:form>
