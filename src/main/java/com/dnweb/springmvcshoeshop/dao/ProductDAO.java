@@ -59,7 +59,7 @@ public class ProductDAO {
 
 		boolean isNew = false;
 		if (id != null) {
-			// Cho nay no tim xem trong DB co product chua??
+			
 			product = this.findProduct(id);
 		}
 		// Neu chua co no moi tao moi!!
@@ -115,13 +115,6 @@ public class ProductDAO {
 	// Query san pham theo category
 	public PaginationResult<ProductInfo> queryProductsCategory(int page, int maxResult, int maxNavigationPage,
 			String categoryId, String likeName) {
-
-		// Cach viet 1: (Join 2 bang, ko can dien kien on, vi hibernate tu biet
-		// DK).
-		// ok a
-		String sql2 = "Select new " + ProductInfo.class.getName()
-				+ "(p.id, p.name, p.price, p.description, p.discount, c.id) " + " from " + Product.class.getName()
-				+ " p " + " join p.category c ";
 
 		// Cach viet 2: (Cach nay khong can join, su dung thuoc tinh
 		// p.category.id ==> De truy van Id cua Category

@@ -6354,7 +6354,7 @@
 0:0:0:0:0:0:0:1 - - [20/May/2017:17:22:25 +0700] "GET /SpringMVCShoeShop/images/img4.jpg HTTP/1.1" 200 263354 http-bio-8080-exec-7 10
 0:0:0:0:0:0:0:1 - - [20/May/2017:17:22:27 +0700] "GET /SpringMVCShoeShop/images/img1.jpg HTTP/1.1" 200 170700 http-bio-8080-exec-7 5
 0:0:0:0:0:0:0:1 - - [20/May/2017:17:22:29 +0700] "GET /SpringMVCShoeShop/images/img2.jpg HTTP/1.1" 200 192329 http-bio-8080-exec-2 7
-0:0:0:0:0:0:0:1 - - [20/May/2017:17:22:30 +0700] "GET /SpringMVCShoeShop/editCategory HTTP/1.1" 500 5775 http-bio-8080-exec-2 96
+0:0:0:0:0:0:0:1 - - [20/May/2017:17:22:30 +0700] "GET /SpringMVCShoeShop/category/edit HTTP/1.1" 500 5775 http-bio-8080-exec-2 96
 0:0:0:0:0:0:0:1 - - [20/May/2017:17:22:40 +0700] "GET /SpringMVCShoeShop/product HTTP/1.1" 200 9509 http-bio-8080-exec-5 79
 0:0:0:0:0:0:0:1 - - [20/May/2017:17:22:40 +0700] "GET /SpringMVCShoeShop/css/index.css HTTP/1.1" 200 5267 http-bio-8080-exec-5 5
 0:0:0:0:0:0:0:1 - - [20/May/2017:17:22:40 +0700] "GET /SpringMVCShoeShop/css/header.css HTTP/1.1" 200 4533 http-bio-8080-exec-6 4
@@ -6483,7 +6483,7 @@
 0:0:0:0:0:0:0:1 - - [20/May/2017:17:26:36 +0700] "GET /SpringMVCShoeShop/images/img3.jpg HTTP/1.1" 200 172923 http-bio-8080-exec-2 4
 0:0:0:0:0:0:0:1 - - [20/May/2017:17:26:38 +0700] "GET /SpringMVCShoeShop/images/img4.jpg HTTP/1.1" 200 263354 http-bio-8080-exec-2 5
 0:0:0:0:0:0:0:1 - - [20/May/2017:17:26:40 +0700] "GET /SpringMVCShoeShop/images/img1.jpg HTTP/1.1" 200 170700 http-bio-8080-exec-3 6
-0:0:0:0:0:0:0:1 - - [20/May/2017:17:26:41 +0700] "GET /SpringMVCShoeShop/editCategory HTTP/1.1" 500 5775 http-bio-8080-exec-3 90
+0:0:0:0:0:0:0:1 - - [20/May/2017:17:26:41 +0700] "GET /SpringMVCShoeShop/category/edit HTTP/1.1" 500 5775 http-bio-8080-exec-3 90
 0:0:0:0:0:0:0:1 - - [20/May/2017:17:26:43 +0700] "GET /SpringMVCShoeShop/product HTTP/1.1" 200 9509 http-bio-8080-exec-5 72
 0:0:0:0:0:0:0:1 - - [20/May/2017:17:26:43 +0700] "GET /SpringMVCShoeShop/css/index.css HTTP/1.1" 200 5267 http-bio-8080-exec-5 7
 0:0:0:0:0:0:0:1 - - [20/May/2017:17:26:43 +0700] "GET /SpringMVCShoeShop/css/header.css HTTP/1.1" 200 4533 http-bio-8080-exec-9 4

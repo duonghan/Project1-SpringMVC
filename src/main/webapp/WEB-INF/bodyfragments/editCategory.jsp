@@ -3,8 +3,8 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
 
-<form:form modelAttribute="categoryForm" method="POST"
-	enctype="multipart/form-data">
+<form:form modelAttribute="categoryForm" method="POST">
+
 	<table style="text-align: left;">
 		<tr>
 			<td>Mã danh mục *</td>
@@ -12,7 +12,7 @@
 					<form:hidden path="id" /> ${categoryForm.id}
                 </c:if> 
                 <c:if test="${empty categoryForm.id}">
-					<form:input path="id" />
+					<form:hidden path="id" />
 					<form:hidden path="newCategory" />
 				</c:if></td>
 			<td><form:errors path="id" class="error-message" /></td>

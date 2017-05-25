@@ -126,7 +126,7 @@ public class AdminController {
 	}
 	
 	//Thay doi category
-	@RequestMapping(value = { "/editCategory" }, method=RequestMethod.GET)
+	@RequestMapping(value = { "/category/edit" }, method=RequestMethod.GET)
 	public String showCategory(Model model,
 			@RequestParam(value = "id", defaultValue="") String id){
 		
@@ -135,6 +135,7 @@ public class AdminController {
 		if (id != null && id.length() > 0) {
 			categoryInfo = categoryDAO.findCategoryInfo(id);
 		}
+		
 		if (categoryInfo == null) {
 			categoryInfo = new CategoryInfo();
 			categoryInfo.setNewCategory(true);
@@ -161,7 +162,7 @@ public class AdminController {
 	}
 	
 	//Luu thong tin sau khi thay doi category
-	@RequestMapping(value = { "/editCategory" }, method = RequestMethod.POST)
+	@RequestMapping(value = { "/category/edit" }, method = RequestMethod.POST)
 	@Transactional(propagation = Propagation.NEVER)
 	public String categorySave(Model model, //
 			@ModelAttribute("categoryForm") CategoryInfo categoryInfo,

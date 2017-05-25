@@ -133,5 +133,5 @@ public class ProductInfo {
 		System.out.println(">>>>>>>>>>>>>>>>>>>>>>>>>Total quantity:" + quantity);
 		this.totalQuantity = quantity;
 	}
-	
+
 }

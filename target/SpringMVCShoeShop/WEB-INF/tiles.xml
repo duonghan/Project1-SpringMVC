@@ -69,7 +69,7 @@
 	<definition name="editCategory" extends="base.definition">
 		<put-attribute name="title" value="Chỉnh sửa danh mục sản phẩm" />
 		<put-attribute name="body"
-			value="/WEB-INF/bodyfragments/editCategory.jsp" />
+			value="/WEB-INF/bodyfragments/category/edit.jsp" />
 	</definition>
 	
 	<!-- Product Page -->

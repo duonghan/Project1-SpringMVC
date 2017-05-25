@@ -111,14 +111,14 @@ line-height: 20px;
 #H1L{
 	height:400px;
 	width: 100px;
-	position: relative;
+	position: absolute;
 	left:0;
 	top:0;
 }
 #H1R{
 	height:400px;
 	width: 100px;
-	position: relative;
+	position: absolute;
 	right:0;
 	top:0;
 }
@@ -251,6 +251,7 @@ line-height: 20px;
 .sp .namesp a:link {
    color: #000;
    text-decoration: none;
+   text-align: center;
 }
 .sp .namesp a:visited {
    text-decoration: none;

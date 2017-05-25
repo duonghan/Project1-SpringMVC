@@ -21,7 +21,7 @@
 			</c:forEach>
 			<security:authorize access="hasRole('ROLE_ADMIN')">
 						<li><a style="color: red;"
-							href="${pageContext.request.contextPath}/editCategory">
+							href="${pageContext.request.contextPath}/category/edit">
 								Chỉnh sửa</a></li>
 			</security:authorize>
 		</ul>

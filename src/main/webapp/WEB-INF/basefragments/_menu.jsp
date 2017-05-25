@@ -16,13 +16,20 @@
 			<c:forEach var="cateInfo" items="${listCategory}">
 				<li><a
 					href="${pageContext.request.contextPath}/category?id=${cateInfo.id}">
-						Giầy thể thao ${cateInfo.name}</a> 
+						Giầy thể thao ${cateInfo.name}</a>
+						
+				<!-- Can sua chua doan nay -->
+				<security:authorize access="hasRole('ROLE_ADMIN')">
+					<ul class="CL3">
+	            	<li><a style="color: red;" href="${pageContext.request.contextPath}/category/edit?id=${cateInfo.id}">Chỉnh sửa</a></li>
+	            	<li><a style="color: red;" href="${pageContext.request.contextPath}/deleteCategory?id=${cateInfo.id}l">Xóa</a></li>
+	         		</ul>
+				</security:authorize> 
 				</li>
 			</c:forEach>
 			<security:authorize access="hasRole('ROLE_ADMIN')">
-						<li><a style="color: red;"
-							href="${pageContext.request.contextPath}/editCategory">
-								Chỉnh sửa</a></li>
+				<li><a style="color: red;"
+					href="${pageContext.request.contextPath}/category/edit"> Thêm danh mục</a></li>
 			</security:authorize>
 		</ul>
 	</form:form>

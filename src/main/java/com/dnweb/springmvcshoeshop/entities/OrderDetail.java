@@ -30,7 +30,7 @@ public class OrderDetail implements java.io.Serializable {
 
 	@Id
 
-	@Column(name = "id", unique = true, nullable = false, length = 11)
+	@Column(name = "id", unique = true, nullable = false, length = 16)
 	public String getId() {
 		return this.id;
 	}

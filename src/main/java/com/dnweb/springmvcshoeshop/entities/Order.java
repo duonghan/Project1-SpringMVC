@@ -33,7 +33,7 @@ public class Order implements java.io.Serializable {
 	private Set<OrderDetail> orderdetails = new HashSet<OrderDetail>(0);
 
 	@Id
-	@Column(name = "id", unique = true, nullable = false, length = 11)
+	@Column(name = "id", unique = true, nullable = false, length = 16)
 	public String getId() {
 		return this.id;
 	}

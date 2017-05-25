@@ -63,6 +63,7 @@ public class UserAccountValidator implements Validator {
 				return;
 			}
 		}
+		
 
 		// Email already exist
 		account = accountDAO.findAccoutByEmail(accountInfo.getEmail());

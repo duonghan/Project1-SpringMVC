@@ -56,12 +56,31 @@ vậy giiar sử khi e k có POST mà vẫn submit thì có đc k a ==> Lúc đ�
 			<td><form:input path="name" /></td>
 			<td><form:errors path="name" class="error-message" /></td>
 		</tr>
+		
+		<tr>
+			<td>Danh mục sản phẩm *</td>
+			<td><form:input path="categoryId" /></td>
+			<td><form:errors path="categoryId" class="error-message" /></td>
+		</tr>
+		
+		<tr>
+			<td>Mô tả sản phẩm *</td>
+			<td><form:input path="description" /></td>
+			<td><form:errors path="description" class="error-message" /></td>
+		</tr>
 
 		<tr>
 			<td>Đơn giá *</td>
 			<td><form:input path="price" /></td>
 			<td><form:errors path="price" class="error-message" /></td>
 		</tr>
+		
+		<tr>
+			<td>Giảm giá *</td>
+			<td><form:input path="discount" /></td>
+			<td><form:errors path="discount" class="error-message" /></td>
+		</tr>
+		
 		<tr>
 			<td>Hình ảnh</td>
 			<td><img

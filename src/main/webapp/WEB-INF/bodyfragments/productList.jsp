@@ -28,9 +28,23 @@
 				href="${pageContext.request.contextPath}/productImage?id=${prodInfo.id}">${prodInfo.name}</a>
 		</div>
 
-		<a style="margin-left: 50px; color: red;"> <fmt:formatNumber
-				value="${prodInfo.price}" /> VNĐ
-		</a>
+		<c:if test="${prodInfo.discount == 0.0}">
+			<a style="margin-left: 50px; color: red;"> <fmt:formatNumber
+				value="${prodInfo.price} " type="number" pattern="###,###,### VNĐ"
+				maxFractionDigits="0" /></a>
+		</c:if>
+		
+		<c:if test="${prodInfo.discount != 0.0 }">
+			<div class="sale">
+				<a><fmt:formatNumber
+				value="${prodInfo.price}" type="number" pattern="###,###,### VNĐ" /></a> 
+				<span style="color: red;">
+				<fmt:formatNumber value="${prodInfo.price * (1 - prodInfo.discount)}" 
+				type="number" pattern="###,###,### VNĐ"
+				maxFractionDigits="0"/></span>
+			</div>
+		</c:if>
+		
 
 		<div class="button">
 			<a

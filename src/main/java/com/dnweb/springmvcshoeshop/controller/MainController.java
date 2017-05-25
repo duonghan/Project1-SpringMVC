@@ -69,7 +69,6 @@ public class MainController {
 
 		}
 
-		// TrÆ°á»�ng há»£p save thĂ´ng tin khĂ¡ch hĂ ng.
 		// (@ModelAttribute("customerForm") @Validated CustomerInfo
 		// customerForm)
 		else if (target.getClass() == CustomerInfo.class) {
