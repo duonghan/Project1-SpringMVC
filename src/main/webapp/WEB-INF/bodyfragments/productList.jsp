@@ -55,7 +55,7 @@
 		<!-- For Admin edit Product -->
 		<security:authorize access="hasRole('ROLE_ADMIN')">
 		<div class="button">
-			<a style="color: red;" href="${pageContext.request.contextPath}/product?id=${prodInfo.id}">
+			<a style="color: red;" href="${pageContext.request.contextPath}/product/edit?id=${prodInfo.id}">
 					Chỉnh sửa</a>
 		</div>
 		</security:authorize>

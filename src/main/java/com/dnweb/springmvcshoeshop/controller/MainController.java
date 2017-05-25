@@ -96,18 +96,20 @@ public class MainController {
 	// Vi du trang hom ...
 	@RequestMapping("/")
 	public String home( Model model ) {
-//		 model.addAttribute("listCategory",
-//		this.categoryDAO.getAllCategory());
-		 //listCategory(model);
+		
+		PaginationResult<ProductInfo> result = productDAO.queryProducts(1, 9, 10, "");
+		PaginationResult<ProductInfo> lstPopuler = productDAO.listPopulerProduct(1, 9, 10);
+		PaginationResult<ProductInfo> lstSales = productDAO.listSalesProduct(1, 9, 10);
+		
+		model.addAttribute("paginationProducts", result);
+		model.addAttribute("listPopuler", lstPopuler);
+		model.addAttribute("listSales", lstSales);
+		
 		return "index";
 	}
 
-//	public void listCategory(Model model) {
-//		model.addAttribute("listCategory", categoryDAO.getAllCategory());
-//	}
-
 	// Danh sach san pham
-	@RequestMapping({ "/productList" })
+	@RequestMapping({ "/product/list" })
 	public String listProductHandler(Model model, //
 			@RequestParam(value = "name", defaultValue = "") String likeName,
 			@RequestParam(value = "page", defaultValue = "1") int page) {

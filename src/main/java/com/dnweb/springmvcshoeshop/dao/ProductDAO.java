@@ -163,18 +163,31 @@ public class ProductDAO {
 //	}
 
 	// Danh sach cac san pham ban chay
-//	public PaginationResult<ProductInfo> listPopulerProduct(int page, int maxResult, int maxNavigationPage) {
-//
-//		String sql = "Select new " + ProductInfo.class.getName()
-//				+ "(p.id, p.name, p.price, p.description, p.discount, p.category.id) " + " from "
-//				+ Product.class.getName() + " p " 
-//				+ " order by :orderquantity desc ";
-//
-//		Session session = sessionFactory.getCurrentSession();
-//		Query query = session.createQuery(sql);
-//		query.setParameter("orderquantity",productInfo.getTotalQuantity() );
-//		return new PaginationResult<ProductInfo>(query, page, maxResult, maxNavigationPage);
-//	}
+	public PaginationResult<ProductInfo> listPopulerProduct(int page, int maxResult, int maxNavigationPage) {
+
+		String sql = "Select new " + ProductInfo.class.getName()
+				+ "(p.id, p.name, p.price, p.description, p.discount, p.category.id) " + " from "
+				+ Product.class.getName() + " p " 
+				+ " join p.orderdetails o"
+				+ " order by o.quantity desc ";
+
+		Session session = sessionFactory.getCurrentSession();
+		Query query = session.createQuery(sql);
+		return new PaginationResult<ProductInfo>(query, page, maxResult, maxNavigationPage);
+	}
+	
+	// Danh sach cac san pham khuyen mai
+		public PaginationResult<ProductInfo> listSalesProduct(int page, int maxResult, int maxNavigationPage) {
+
+			String sql = "Select new " + ProductInfo.class.getName()
+					+ "(p.id, p.name, p.price, p.description, p.discount, p.category.id) " + " from "
+					+ Product.class.getName() + " p " 
+					+ " where p.discount > 0.0 ";
+
+			Session session = sessionFactory.getCurrentSession();
+			Query query = session.createQuery(sql);
+			return new PaginationResult<ProductInfo>(query, page, maxResult, maxNavigationPage);
+		}
 
 	// Xoa san pham
 	public void deleteProduct(String productId) {

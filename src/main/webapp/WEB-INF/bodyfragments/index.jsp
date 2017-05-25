@@ -1,5 +1,11 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+
+<%@ taglib uri="http://www.springframework.org/security/tags"
+	prefix="security"%>
+	
 <div class="CR1">
 	<div class="title">
 		<p>
@@ -8,96 +14,56 @@
 	</div>
 
 	<br />
-	<div class="sp">
-		<img src="images/01.jpg" alt="">
-		<div class="namesp">
-			<a href="Giay_Nike_Zoom_Vomero_11_Nu.html">Giày Nike Zoom Vomero
-				11 Nữ</a>
+	<!-- New Product -->
+	
+	<c:forEach items="${paginationProducts.list}" var="prodInfo">
+		<div class="sp">
+			<img
+				src="${pageContext.request.contextPath}/productImage?id=${prodInfo.id}"
+				alt="${prodInfo.name}">
+	
+			<div class="namesp">
+				<a
+					href="${pageContext.request.contextPath}/productImage?id=${prodInfo.id}">${prodInfo.name}</a>
+			</div>
+	
+			<c:if test="${prodInfo.discount == 0.0}">
+				<a style="margin-left: 50px; color: red;"> <fmt:formatNumber
+					value="${prodInfo.price} " type="number" pattern="###,###,### VNĐ"
+					maxFractionDigits="0" /></a>
+			</c:if>
+			
+			<c:if test="${prodInfo.discount != 0.0 }">
+				<div class="sale">
+					<a><fmt:formatNumber
+					value="${prodInfo.price}" type="number" pattern="###,###,### VNĐ" /></a> 
+					<span style="color: red;">
+					<fmt:formatNumber value="${prodInfo.price * (1 - prodInfo.discount)}" 
+					type="number" pattern="###,###,### VNĐ"
+					maxFractionDigits="0"/></span>
+				</div>
+			</c:if>
+			
+	
+			<div class="button">
+				<a
+					href="${pageContext.request.contextPath}/buyProduct?id=${prodInfo.id}">Mua
+					hàng</a>
+			</div>
+	
+			<!-- For Admin edit Product -->
+			<security:authorize access="hasRole('ROLE_ADMIN')">
+			<div class="button">
+				<a style="color: red;" href="${pageContext.request.contextPath}/product/edit?id=${prodInfo.id}">
+						Chỉnh sửa</a>
+			</div>
+			</security:authorize>
 		</div>
-		<a style="margin-left: 50px; color: red;">2,990,000 vnđ</a>
-		<div class="button">
-			<a href="">Mua hàng</a>
-		</div>
-	</div>
-	<div class="sp">
-		<img src="images/01.jpg" alt="">
-		<div class="namesp">
-			<a href="Giay_Nike_Zoom_Vomero_11_Nu.html">Giày Nike Zoom Vomero
-				11 Nữ</a>
-		</div>
-		<a style="margin-left: 50px; color: red;">2,990,000 vnđ</a>
-		<div class="button">
-			<a href="">Mua hàng</a>
-		</div>
-	</div>
-	<div class="sp">
-		<img src="images/01.jpg" alt="">
-		<div class="namesp">
-			<a href="Giay_Nike_Zoom_Vomero_11_Nu.html">Giày Nike Zoom Vomero
-				11 Nữ</a>
-		</div>
-		<a style="margin-left: 50px; color: red;">2,990,000 vnđ</a>
-		<div class="button">
-			<a href="">Mua hàng</a>
-		</div>
-	</div>
-	<div class="sp">
-		<img src="images/01.jpg" alt="">
-		<div class="namesp">
-			<a href="Giay_Nike_Zoom_Vomero_11_Nu.html">Giày Nike Zoom Vomero
-				11 Nữ</a>
-		</div>
-		<a style="margin-left: 50px; color: red;">2,990,000 vnđ</a>
-		<div class="button">
-			<a href="">Mua hàng</a>
-		</div>
-	</div>
-	<div class="sp">
-		<img src="images/01.jpg" alt="">
-		<div class="namesp">
-			<a href="Giay_Nike_Zoom_Vomero_11_Nu.html">Giày Nike Zoom Vomero
-				11 Nữ</a>
-		</div>
-		<a style="margin-left: 50px; color: red;">2,990,000 vnđ</a>
-		<div class="button">
-			<a href="">Mua hàng</a>
-		</div>
-	</div>
-	<div class="sp">
-		<img src="images/01.jpg" alt="">
-		<div class="namesp">
-			<a href="Giay_Nike_Zoom_Vomero_11_Nu.html">Giày Nike Zoom Vomero
-				11 Nữ</a>
-		</div>
-		<a style="margin-left: 50px; color: red;">2,990,000 vnđ</a>
-		<div class="button">
-			<a href="">Mua hàng</a>
-		</div>
-	</div>
-	<div class="sp">
-		<img src="images/01.jpg" alt="">
-		<div class="namesp">
-			<a href="Giay_Nike_Zoom_Vomero_11_Nu.html">Giày Nike Zoom Vomero
-				11 Nữ</a>
-		</div>
-		<a style="margin-left: 50px; color: red;">2,990,000 vnđ</a>
-		<div class="button">
-			<a href="">Mua hàng</a>
-		</div>
-	</div>
-
-	<div class="sp">
-		<img src="images/01.jpg" alt="">
-		<div class="namesp">
-			<a href="Giay_Nike_Zoom_Vomero_11_Nu.html">Giày Nike Zoom Vomero
-				11 Nữ</a>
-		</div>
-		<a style="margin-left: 50px; color: red;">2,990,000 vnđ</a>
-		<div class="button">
-			<a href="">Mua hàng</a>
-		</div>
-	</div>
+	</c:forEach>
+	
 </div>
+
+
 <!--NỔI BẬT-->
 <hr style="height: 1px; background: #ccc">
 <div class="CR1">
@@ -108,96 +74,54 @@
 	</div>
 
 	<br />
-	<div class="sp">
-		<img src="images/01.jpg" alt="">
-		<div class="namesp">
-			<a href="Giay_Nike_Zoom_Vomero_11_Nu.html">Giày Nike Zoom Vomero
-				11 Nữ</a>
+	
+	<c:forEach items="${listPopuler.list}" var="prodInfo">
+		<div class="sp">
+			<img
+				src="${pageContext.request.contextPath}/productImage?id=${prodInfo.id}"
+				alt="${prodInfo.name}">
+	
+			<div class="namesp">
+				<a
+					href="${pageContext.request.contextPath}/productImage?id=${prodInfo.id}">${prodInfo.name}</a>
+			</div>
+	
+			<c:if test="${prodInfo.discount == 0.0}">
+				<a style="margin-left: 50px; color: red;"> <fmt:formatNumber
+					value="${prodInfo.price} " type="number" pattern="###,###,### VNĐ"
+					maxFractionDigits="0" /></a>
+			</c:if>
+			
+			<c:if test="${prodInfo.discount != 0.0 }">
+				<div class="sale">
+					<a><fmt:formatNumber
+					value="${prodInfo.price}" type="number" pattern="###,###,### VNĐ" /></a> 
+					<span style="color: red;">
+					<fmt:formatNumber value="${prodInfo.price * (1 - prodInfo.discount)}" 
+					type="number" pattern="###,###,### VNĐ"
+					maxFractionDigits="0"/></span>
+				</div>
+			</c:if>
+			
+	
+			<div class="button">
+				<a
+					href="${pageContext.request.contextPath}/buyProduct?id=${prodInfo.id}">Mua
+					hàng</a>
+			</div>
+	
+			<!-- For Admin edit Product -->
+			<security:authorize access="hasRole('ROLE_ADMIN')">
+			<div class="button">
+				<a style="color: red;" href="${pageContext.request.contextPath}/product/edit?id=${prodInfo.id}">
+						Chỉnh sửa</a>
+			</div>
+			</security:authorize>
 		</div>
-		<a style="margin-left: 50px; color: red;">2,990,000 vnđ</a>
-		<div class="button">
-			<a href="">Mua hàng</a>
-		</div>
-	</div>
-	<div class="sp">
-		<img src="images/01.jpg" alt="">
-		<div class="namesp">
-			<a href="Giay_Nike_Zoom_Vomero_11_Nu.html">Giày Nike Zoom Vomero
-				11 Nữ</a>
-		</div>
-		<a style="margin-left: 50px; color: red;">2,990,000 vnđ</a>
-		<div class="button">
-			<a href="">Mua hàng</a>
-		</div>
-	</div>
-	<div class="sp">
-		<img src="images/01.jpg" alt="">
-		<div class="namesp">
-			<a href="Giay_Nike_Zoom_Vomero_11_Nu.html">Giày Nike Zoom Vomero
-				11 Nữ</a>
-		</div>
-		<a style="margin-left: 50px; color: red;">2,990,000 vnđ</a>
-		<div class="button">
-			<a href="">Mua hàng</a>
-		</div>
-	</div>
-	<div class="sp">
-		<img src="images/01.jpg" alt="">
-		<div class="namesp">
-			<a href="Giay_Nike_Zoom_Vomero_11_Nu.html">Giày Nike Zoom Vomero
-				11 Nữ</a>
-		</div>
-		<a style="margin-left: 50px; color: red;">2,990,000 vnđ</a>
-		<div class="button">
-			<a href="">Mua hàng</a>
-		</div>
-	</div>
-	<div class="sp">
-		<img src="images/01.jpg" alt="">
-		<div class="namesp">
-			<a href="Giay_Nike_Zoom_Vomero_11_Nu.html">Giày Nike Zoom Vomero
-				11 Nữ</a>
-		</div>
-		<a style="margin-left: 50px; color: red;">2,990,000 vnđ</a>
-		<div class="button">
-			<a href="">Mua hàng</a>
-		</div>
-	</div>
-	<div class="sp">
-		<img src="images/01.jpg" alt="">
-		<div class="namesp">
-			<a href="Giay_Nike_Zoom_Vomero_11_Nu.html">Giày Nike Zoom Vomero
-				11 Nữ</a>
-		</div>
-		<a style="margin-left: 50px; color: red;">2,990,000 vnđ</a>
-		<div class="button">
-			<a href="">Mua hàng</a>
-		</div>
-	</div>
-	<div class="sp">
-		<img src="images/01.jpg" alt="">
-		<div class="namesp">
-			<a href="Giay_Nike_Zoom_Vomero_11_Nu.html">Giày Nike Zoom Vomero
-				11 Nữ</a>
-		</div>
-		<a style="margin-left: 50px; color: red;">2,990,000 vnđ</a>
-		<div class="button">
-			<a href="">Mua hàng</a>
-		</div>
-	</div>
-
-	<div class="sp">
-		<img src="images/01.jpg" alt="">
-		<div class="namesp">
-			<a href="Giay_Nike_Zoom_Vomero_11_Nu.html">Giày Nike Zoom Vomero
-				11 Nữ</a>
-		</div>
-		<a style="margin-left: 50px; color: red;">2,990,000 vnđ</a>
-		<div class="button">
-			<a href="">Mua hàng</a>
-		</div>
-	</div>
+	</c:forEach>
 </div>
+
+<!-- Sale Product -->
 <hr style="height: 1px; background: #ccc">
 <div class="CR1">
 	<div class="title">
@@ -206,110 +130,52 @@
 		</p>
 	</div>
 	<br />
-	<div class="sp">
-		<img src="images/01.jpg" alt="">
-		<div class="namesp">
-			<a href="Giay_Nike_Zoom_Vomero_11_Nu.html">Giày Nike Zoom Vomero
-				11 Nữ</a>
+	
+	<c:forEach items="${listSales.list}" var="prodInfo">
+		<div class="sp">
+			<img
+				src="${pageContext.request.contextPath}/productImage?id=${prodInfo.id}"
+				alt="${prodInfo.name}">
+	
+			<div class="namesp">
+				<a
+					href="${pageContext.request.contextPath}/productImage?id=${prodInfo.id}">${prodInfo.name}</a>
+			</div>
+	
+			<c:if test="${prodInfo.discount == 0.0}">
+				<a style="margin-left: 50px; color: red;"> <fmt:formatNumber
+					value="${prodInfo.price} " type="number" pattern="###,###,### VNĐ"
+					maxFractionDigits="0" /></a>
+			</c:if>
+			
+			<c:if test="${prodInfo.discount != 0.0 }">
+				<div class="sale">
+					<a><fmt:formatNumber
+					value="${prodInfo.price}" type="number" pattern="###,###,### VNĐ" /></a> 
+					<span style="color: red;">
+					<fmt:formatNumber value="${prodInfo.price * (1 - prodInfo.discount)}" 
+					type="number" pattern="###,###,### VNĐ"
+					maxFractionDigits="0"/></span>
+				</div>
+			</c:if>
+			
+	
+			<div class="button">
+				<a
+					href="${pageContext.request.contextPath}/buyProduct?id=${prodInfo.id}">Mua
+					hàng</a>
+			</div>
+	
+			<!-- For Admin edit Product -->
+			<security:authorize access="hasRole('ROLE_ADMIN')">
+			<div class="button">
+				<a style="color: red;" href="${pageContext.request.contextPath}/product/edit?id=${prodInfo.id}">
+						Chỉnh sửa</a>
+			</div>
+			</security:authorize>
 		</div>
-		<div class="sale">
-			<a>4,390,000 vnđ</a> <span style="color: red;">2,990,000 vnđ</span>
-		</div>
-		<div class="button">
-			<a href="">Mua hàng</a>
-		</div>
-	</div>
-	<div class="sp">
-		<img src="images/01.jpg" alt="">
-		<div class="namesp">
-			<a href="Giay_Nike_Zoom_Vomero_11_Nu.html">Giày Nike Zoom Vomero
-				11 Nữ</a>
-		</div>
-		<div class="sale">
-			<a>4,390,000 vnđ</a> <span style="color: red;">2,990,000 vnđ</span>
-		</div>
-		<div class="button">
-			<a href="">Mua hàng</a>
-		</div>
-	</div>
-	<div class="sp">
-		<img src="images/01.jpg" alt="">
-		<div class="namesp">
-			<a href="Giay_Nike_Zoom_Vomero_11_Nu.html">Giày Nike Zoom Vomero
-				11 Nữ</a>
-		</div>
-		<div class="sale">
-			<a>4,390,000 vnđ</a> <span style="color: red;">2,990,000 vnđ</span>
-		</div>
-		<div class="button">
-			<a href="">Mua hàng</a>
-		</div>
-	</div>
-	<div class="sp">
-		<img src="images/01.jpg" alt="">
-		<div class="namesp">
-			<a href="Giay_Nike_Zoom_Vomero_11_Nu.html">Giày Nike Zoom Vomero
-				11 Nữ</a>
-		</div>
-		<div class="sale">
-			<a>4,390,000 vnđ</a> <span style="color: red;">2,990,000 vnđ</span>
-		</div>
-		<div class="button">
-			<a href="">Mua hàng</a>
-		</div>
-	</div>
-	<div class="sp">
-		<img src="images/01.jpg" alt="">
-		<div class="namesp">
-			<a href="Giay_Nike_Zoom_Vomero_11_Nu.html">Giày Nike Zoom Vomero
-				11 Nữ</a>
-		</div>
-		<div class="sale">
-			<a>4,390,000 vnđ</a> <span style="color: red;">2,990,000 vnđ</span>
-		</div>
-		<div class="button">
-			<a href="">Mua hàng</a>
-		</div>
-	</div>
-	<div class="sp">
-		<img src="images/01.jpg" alt="">
-		<div class="namesp">
-			<a href="Giay_Nike_Zoom_Vomero_11_Nu.html">Giày Nike Zoom Vomero
-				11 Nữ</a>
-		</div>
-		<div class="sale">
-			<a>4,390,000 vnđ</a> <span style="color: red;">2,990,000 vnđ</span>
-		</div>
-		<div class="button">
-			<a href="">Mua hàng</a>
-		</div>
-	</div>
-	<div class="sp">
-		<img src="images/01.jpg" alt="">
-		<div class="namesp">
-			<a href="Giay_Nike_Zoom_Vomero_11_Nu.html">Giày Nike Zoom Vomero
-				11 Nữ</a>
-		</div>
-		<div class="sale">
-			<a>4,390,000 vnđ</a> <span style="color: red;">2,990,000 vnđ</span>
-		</div>
-		<div class="button">
-			<a href="">Mua hàng</a>
-		</div>
-	</div>
-	<div class="sp">
-		<img src="images/01.jpg" alt="">
-		<div class="namesp">
-			<a href="Giay_Nike_Zoom_Vomero_11_Nu.html">Giày Nike Zoom Vomero
-				11 Nữ</a>
-		</div>
-		<div class="sale">
-			<a>4,390,000 vnđ</a> <span style="color: red;">2,990,000 vnđ</span>
-		</div>
-		<div class="button">
-			<a href="">Mua hàng</a>
-		</div>
-	</div>
+	</c:forEach>
+	
 </div>
 
 <!-- Link -->

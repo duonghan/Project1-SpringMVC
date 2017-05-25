@@ -146,7 +146,7 @@ public class AdminController {
 	}
 	
 	// GET: Show product.
-	@RequestMapping(value = { "/product" }, method = RequestMethod.GET)
+	@RequestMapping(value = { "/product/edit" }, method = RequestMethod.GET)
 	public String product(Model model, @RequestParam(value = "id", defaultValue = "") String id) {
 		ProductInfo productInfo = null;
 
@@ -180,7 +180,7 @@ public class AdminController {
 
 	// Day la POST (Khi người dùng Submit, de save Product).
 	// POST: Save product
-	@RequestMapping(value = { "/product" }, method = RequestMethod.POST)
+	@RequestMapping(value = { "/product/edit" }, method = RequestMethod.POST)
 	// Trinh ngoai le: UnexpectedRollbackException.
 	
 	@Transactional(propagation = Propagation.NEVER)
@@ -203,7 +203,7 @@ public class AdminController {
 			return "product";
 
 		}
-		return "redirect:/productList";
+		return "redirect:/product/list";
 	}
 
 	@RequestMapping(value = { "/order" }, method = RequestMethod.GET)

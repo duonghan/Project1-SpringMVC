@@ -26,9 +26,22 @@
 					href="${pageContext.request.contextPath}/productImage?id=${prodByCate.id}">${prodByCate.name}</a>
 			</div>
 
+			<c:if test="${prodByCate.discount == 0.0}">
 			<a style="margin-left: 50px; color: red;"> <fmt:formatNumber
-					value="${prodByCate.price}" /> VNĐ
-			</a>
+				value="${prodByCate.price} " type="number" pattern="###,###,### VNĐ"
+				maxFractionDigits="0" /></a>
+			</c:if>
+		
+			<c:if test="${prodByCate.discount != 0.0 }">
+				<div class="sale">
+					<a><fmt:formatNumber
+					value="${prodByCate.price}" type="number" pattern="###,###,### VNĐ" /></a> 
+					<span style="color: red;">
+					<fmt:formatNumber value="${prodByCate.price * (1 - prodByCate.discount)}" 
+					type="number" pattern="###,###,### VNĐ"
+					maxFractionDigits="0"/></span>
+				</div>
+			</c:if>
 
 			<div class="button">
 				<a
@@ -40,7 +53,7 @@
 			<security:authorize access="hasRole('ROLE_ADMIN')">
 				<div class="button">
 					<a style="color: red;"
-						href="${pageContext.request.contextPath}/product?id=${prodByCate.id}">
+						href="${pageContext.request.contextPath}/product/edit?id=${prodByCate.id}">
 						Chỉnh sửa</a>
 				</div>
 			</security:authorize>

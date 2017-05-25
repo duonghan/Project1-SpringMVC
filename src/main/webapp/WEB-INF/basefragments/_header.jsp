@@ -59,7 +59,7 @@
 				chủ</strong></a></li>
 	<li><a href="${pageContext.request.contextPath}/about"><strong>Giới
 				thiệu</strong></a></li>
-	<li><a href="${pageContext.request.contextPath}/productList"><strong>Sản
+	<li><a href="${pageContext.request.contextPath}/product/list"><strong>Sản
 				phẩm </strong></a></li>
 	<li><a href="${pageContext.request.contextPath}/contactus"><strong>Liên
 				hệ</strong></a></li>
@@ -69,7 +69,7 @@
 	</security:authorize>
 
 	<security:authorize access="hasRole('ROLE_ADMIN')">
-		<li><a href="${pageContext.request.contextPath}/product"><strong>
+		<li><a href="${pageContext.request.contextPath}/product/edit"><strong>
 					Thay đổi sản phẩm </strong></a></li>
 	</security:authorize>
 	<div class="timkiem">
