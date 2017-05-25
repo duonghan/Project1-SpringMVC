@@ -28,12 +28,16 @@ import com.dnweb.springmvcshoeshop.dao.AccountDAO;
 import com.dnweb.springmvcshoeshop.dao.CategoryDAO;
 import com.dnweb.springmvcshoeshop.dao.OrderDAO;
 import com.dnweb.springmvcshoeshop.dao.ProductDAO;
+import com.dnweb.springmvcshoeshop.entities.Category;
+import com.dnweb.springmvcshoeshop.entities.Product;
+import com.dnweb.springmvcshoeshop.model.CartInfo;
 import com.dnweb.springmvcshoeshop.model.CategoryInfo;
 import com.dnweb.springmvcshoeshop.model.CustomerInfo;
 import com.dnweb.springmvcshoeshop.model.OrderDetailInfo;
 import com.dnweb.springmvcshoeshop.model.OrderInfo;
 import com.dnweb.springmvcshoeshop.model.PaginationResult;
 import com.dnweb.springmvcshoeshop.model.ProductInfo;
+import com.dnweb.springmvcshoeshop.util.CartUtils;
 import com.dnweb.springmvcshoeshop.util.UserUtils;
 import com.dnweb.springmvcshoeshop.validator.ProductInfoValidator;
 
@@ -94,7 +98,7 @@ public class AdminController {
 		UserUtils.saveLoginedUser(request, customerInfo);
 	}
 	
-	@RequestMapping(value = { "/accountInfo" }, method = RequestMethod.GET)
+	@RequestMapping(value = { "/profile" }, method = RequestMethod.GET)
 	public String accountInfo(HttpServletRequest request,Model model) {
 
 		// Lay ra tu Sesssion.
@@ -145,22 +149,6 @@ public class AdminController {
 		return "editCategory";
 	}
 	
-	// GET: Show product.
-	@RequestMapping(value = { "/product/edit" }, method = RequestMethod.GET)
-	public String product(Model model, @RequestParam(value = "id", defaultValue = "") String id) {
-		ProductInfo productInfo = null;
-
-		if (id != null && id.length() > 0) {
-			productInfo = productDAO.findProductInfo(id);
-		}
-		if (productInfo == null) {
-			productInfo = new ProductInfo();
-			productInfo.setNewProduct(true);
-		}
-		model.addAttribute("productForm", productInfo);
-		return "product";
-	}
-	
 	//Luu thong tin sau khi thay doi category
 	@RequestMapping(value = { "/category/edit" }, method = RequestMethod.POST)
 	@Transactional(propagation = Propagation.NEVER)
@@ -178,7 +166,40 @@ public class AdminController {
 		return "redirect:/";
 	}
 
-	// Day la POST (Khi người dùng Submit, de save Product).
+	//Xoa danh muc san pham
+	@RequestMapping( value ={"/category/delete"})
+	public String deleteCategory(HttpServletRequest request,Model model,//
+			@RequestParam(value = "id", defaultValue = "") String id){
+		
+		Category category = null;
+		
+		if (id != null && id.length() > 0) {
+			category = categoryDAO.findCategory(id);
+		}
+		if (category != null) {
+			
+			categoryDAO.deleteCategory(id);
+		}
+		
+		return "redirect:/";
+	}
+	
+	// GET: Show product.
+	@RequestMapping(value = { "/product/edit" }, method = RequestMethod.GET)
+	public String product(Model model, @RequestParam(value = "id", defaultValue = "") String id) {
+		ProductInfo productInfo = null;
+
+		if (id != null && id.length() > 0) {
+			productInfo = productDAO.findProductInfo(id);
+		}
+		if (productInfo == null) {
+			productInfo = new ProductInfo();
+			productInfo.setNewProduct(true);
+		}
+		model.addAttribute("productForm", productInfo);
+		return "product";
+	}
+	
 	// POST: Save product
 	@RequestMapping(value = { "/product/edit" }, method = RequestMethod.POST)
 	// Trinh ngoai le: UnexpectedRollbackException.
@@ -203,6 +224,24 @@ public class AdminController {
 			return "product";
 
 		}
+		return "redirect:/product/list";
+	}
+	
+	//Xoa san pham
+	@RequestMapping( value ={"/product/delete"})
+	public String deleteProduct(HttpServletRequest request,Model model,//
+			@RequestParam(value = "id", defaultValue = "") String id){
+		
+		Product product = null;
+		
+		if (id != null && id.length() > 0) {
+			product = productDAO.findProduct(id);
+		}
+		if (product != null) {
+			
+			productDAO.deleteProduct(id);
+		}
+		
 		return "redirect:/product/list";
 	}
 

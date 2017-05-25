@@ -23,7 +23,7 @@
 				<li><img style="margin-right: 10px;"
 					src="${pageContext.request.contextPath}/images/icon1.png"
 					height="15" width="15" /> <a
-					href="${pageContext.request.contextPath}/accountInfo">
+					href="${pageContext.request.contextPath}/profile">
 						${pageContext.request.userPrincipal.name} </a></li>
 
 				<li><a href="${pageContext.request.contextPath}/logout">Đăng

@@ -24,42 +24,45 @@
 			
 			<tr>
 				<td>Email *</td>
-				<td><form:input name="email" /></td>
+				<td><form:input path="email" /></td>
 				<td><form:errors path="email" /></td>
 			</tr>
 
 			<tr>
 				<td>Tài khoản *</td>
-				<td><form:input name="username" /></td>
+				<td><form:input path="username" /></td>
 				<td><form:errors path="username" /></td>
 			</tr>
 
 			<tr>
 				<td>Mật khẩu *</td>
-				<td><form:input type="password" name="password" /></td>
+				<td><form:input type="password" path="password" /></td>
 				<td><form:errors path="password" /></td>
 			</tr>
 			
 			<tr>
 				<td>Số điện thoại</td>
-				<td><form:input name="phone" /></td>
+				<td><form:input path="phone" /></td>
 				<td><form:errors path="phone" /></td>
 			</tr>
 			
 			<tr>
 				<td>Địa chỉ</td>
-				<td><form:input name="address" /></td>
+				<td><form:input path="address" /></td>
 				<td><form:errors path="address" /></td>
 			</tr>
 			
 			<tr>
 				<td>Giới tính</td>
-				<td><form:input name="gender" /></td>
+				<td><form:select path="gender">
+					<form:option value="" label="- Chọn một -" />
+	                <form:options items="${genderMap}" />
+            	</form:select></td>
 				<td><form:errors path="gender" /></td>
 			</tr>
 
 			<tr>
-				<td><form:input type="submit" value="Đăng ký" /></td>
+				<td><input type="submit" value="Đăng ký" /></td>
 			</tr>
 		</table>
 

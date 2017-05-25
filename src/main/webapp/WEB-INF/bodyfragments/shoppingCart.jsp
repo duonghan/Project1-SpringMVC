@@ -30,18 +30,18 @@
 					</li>
 					<li>Tên sản phẩm: ${cartLineInfo.productInfo.name}</li>
 					<li>Đơn giá: <span class="price"> <fmt:formatNumber
-								value="${cartLineInfo.productInfo.price}" type="currency" />
+								value="${cartLineInfo.productInfo.price}" type="number" pattern="###,###,### VNĐ" maxFractionDigits="0"/>
 
 					</span></li>
 					<li>Số lượng: <form:input
 							path="cartLines[${varStatus.index}].quantity" /></li>
 					<li>Tổng: <span class="subtotal"> <fmt:formatNumber
-								value="${cartLineInfo.amount}" type="number" pattern="###.## VNĐ"/>
+								value="${cartLineInfo.amount}" type="number" pattern="###,###,### VNĐ" maxFractionDigits="0"/>
 
 					</span>
 					</li>
 					<li><a
-						href="${pageContext.request.contextPath}/shoppingCartRemoveProduct?id=${cartLineInfo.productInfo.id}">
+						href="${pageContext.request.contextPath}/shoppingCart/remove/product?id=${cartLineInfo.productInfo.id}">
 							Xóa </a></li>
 				</ul>
 			</div>
@@ -49,7 +49,7 @@
 		<div style="clear: both"></div>
 		<input class="button-update-sc" type="submit" value="Cập nhật số lượng" />
 		<a class="navi-item"
-			href="${pageContext.request.contextPath}/shoppingCartConfirmation">Đặt hàng</a>
+			href="${pageContext.request.contextPath}/shoppingCart/confim">Đặt hàng</a>
 		<a class="navi-item"
 			href="${pageContext.request.contextPath}/productList">Tiếp tục mua hàng</a>
 	</form:form>

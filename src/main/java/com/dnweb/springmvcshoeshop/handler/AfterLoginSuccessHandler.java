@@ -29,16 +29,9 @@ public class AfterLoginSuccessHandler implements AuthenticationSuccessHandler {
 	// Sau khi login xong, chuyen huong tiep
 	private RedirectStrategy redirectStrategy = new DefaultRedirectStrategy();
 
-	// Va phuong thuc nay duoc goi
-	// Cai handler khong duoc goi. Cho chut kiem tra
-	// Giai thich:
-	// Khi login thanh cong ==> Class  nay duoc goii 
-	// ==> Ham nay dc goi ==> Luu thong tin vao Session
-	// Nhung phai tu chuyen huong toi 1 trang nao do.
-	// Lam trong day!!
 	public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response,
 			Authentication authentication) throws IOException, ServletException {
-		// Sao no chua goi vao day??
+
 		System.out.println("???? Call in SuccesssHander:");
 		
 		UserDetails userDetails =	(UserDetails) authentication.getPrincipal();
@@ -51,8 +44,8 @@ public class AfterLoginSuccessHandler implements AuthenticationSuccessHandler {
 		// Va luu vao session
 		UserUtils.saveLoginedUser(request, customerInfo);
 		
-		// Chuyen sang /accountInfo  (Tu chuyen huong sang trang nao do)..
-		redirectStrategy.sendRedirect(request, response, "/accountInfo");
+		// Chuyen sang /profile  (Tu chuyen huong sang trang nao do)..
+		redirectStrategy.sendRedirect(request, response, "/profile");
 	}
 
 }

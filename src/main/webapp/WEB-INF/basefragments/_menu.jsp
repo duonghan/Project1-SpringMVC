@@ -22,7 +22,7 @@
 				<security:authorize access="hasRole('ROLE_ADMIN')">
 					<ul class="CL3">
 	            	<li><a style="color: red;" href="${pageContext.request.contextPath}/category/edit?id=${cateInfo.id}">Chỉnh sửa</a></li>
-	            	<li><a style="color: red;" href="${pageContext.request.contextPath}/deleteCategory?id=${cateInfo.id}l">Xóa</a></li>
+	            	<li><a style="color: red;" href="${pageContext.request.contextPath}/category/delete?id=${cateInfo.id}">Xóa</a></li>
 	         		</ul>
 				</security:authorize> 
 				</li>

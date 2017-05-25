@@ -1,5 +1,8 @@
 package com.dnweb.springmvcshoeshop.controller;
 
+import java.util.LinkedHashMap;
+import java.util.Map;
+
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,11 +18,14 @@ import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.dnweb.springmvcshoeshop.dao.AccountDAO;
 import com.dnweb.springmvcshoeshop.model.AccountInfo;
+import com.dnweb.springmvcshoeshop.model.CustomerInfo;
+import com.dnweb.springmvcshoeshop.util.UserUtils;
 import com.dnweb.springmvcshoeshop.validator.UserAccountValidator;
 
 @Controller
@@ -50,17 +56,29 @@ public class RegisterController {
 		}
 	}
 
-	// Spring se tim kiem template Tile cĂ³ ten signup nhung ko cĂ³ ==> Loi.
+	//Gioi tinh
+	 private Map<String, String> dataGender() {
+	       Map<String, String> genderMap = new LinkedHashMap<String, String>();
+	       genderMap.put("Nam", "Nam");
+	       genderMap.put("Nữ", "Nữ");
+	       genderMap.put("Khác", "Khác");
+	       return genderMap;
+	  }
+	 
 	// Hien thi trang signup
 	@RequestMapping(value = { "/signup" }, method = RequestMethod.GET)
 	public String signup(Model model) {
 		AccountInfo accountForm = new AccountInfo();
 		
+		Map<String, String> genderMap = this.dataGender();
+		
 		accountForm.setName("Nguyễn Văn A");
 		
 		accountForm.setAddress("Hà Nội");
 		accountForm.setEmail("abc@gmaiil.com");
+		
 		model.addAttribute("accountForm", accountForm);
+		model.addAttribute("genderMap", genderMap);
 
 		return "signup";
 	}
@@ -95,8 +113,8 @@ public class RegisterController {
 	}
 
 	// Hien thi trang chinh sua thong tin tai hoan nguoi dung
-	@RequestMapping(value = { "/editprofile" }, method = RequestMethod.GET)
-	public String editAccount(HttpServletRequest request, Model model) {
+	@RequestMapping(value = { "/profile/edit" }, method = RequestMethod.GET)
+	public String updateAccount(HttpServletRequest request, Model model) {
 
 		UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 
@@ -110,18 +128,24 @@ public class RegisterController {
 			accountInfo = new AccountInfo();
 		}
 
+		Map<String, String> genderMap = this.dataGender();
 		model.addAttribute("userAccountForm", accountInfo);
-
+		model.addAttribute("genderMap", genderMap);
+		
 		return "editProfile";
+		
 	}
 
 	// Luu thay doi thong tin nguoi dung
-	@RequestMapping(value = { "/editprofile" }, method = RequestMethod.POST)
-	public String editAccount(Model model, 
+	@RequestMapping(value = { "/profile/edit" }, method = RequestMethod.POST)
+	public String updateAccount(HttpServletRequest request,Model model, 
 			@ModelAttribute("userAccountForm") @Validated AccountInfo userAccountForm, //
 			BindingResult result) {
 
+		// Nếu validate có lỗi.
 		if (result.hasErrors()) { 
+			
+			System.out.println(">>>>>>>>>>>>>>>>>>>>>>>>>>Error:" + result.toString());
 			model.addAttribute("errors", "Đã xảy ra lỗi, vui lòng thử lại!");
 			return "editProfile";
 		}
@@ -137,7 +161,12 @@ public class RegisterController {
 			return "editProfile"; 
 
 		}
-		return "redirect:/accountInfo";
+		
+		//Luu thong tin sau khi cap nhat vao trong sesion
+		
+		CustomerInfo customerInfo = new CustomerInfo(userAccountForm);
+		UserUtils.saveLoginedUser(request, customerInfo);
+		return "redirect:/profile";
 	}
 
 }

@@ -18,6 +18,6 @@
 			<li>Giới tính: ${loginedUser.gender}</li>
 			
 		</ul>
-		<a href="${pageContext.request.contextPath}/editprofile">Chỉnh sửa thông tin cá nhân</a>
+		<a href="${pageContext.request.contextPath}/profile/edit">Chỉnh sửa thông tin cá nhân</a>
 		</form:form>
 </div>

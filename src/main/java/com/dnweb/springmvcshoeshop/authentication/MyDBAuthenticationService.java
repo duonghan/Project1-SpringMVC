@@ -21,9 +21,6 @@ public class MyDBAuthenticationService implements UserDetailsService {
 	@Autowired
 	private AccountDAO accountDAO;
 	
-	// nguoi dung nhap vao username & Password ==> Nhan Submit
-	// ==> Dich vu nay khong duoc goi!!
-	
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 		
 		Account account = accountDAO.findAccountByUsername(username);
@@ -43,16 +40,7 @@ public class MyDBAuthenticationService implements UserDetailsService {
 		// ROLE_ADMIN, ROLE_USER
 		GrantedAuthority authority = new SimpleGrantedAuthority("ROLE_" + role);
 		grantList.add(authority);
-
-		// ??
-		//may cai tham so duoi la mac dinh a a
-		//e thay trong bai login k co
-		// Thuc ra vi du Login bang Account khong co 
-		// may truong nonExpiri (Khong bao gio het han)
-		/// credentialsNonExpired: Giay phep khong bao go het han
-		// Tai khoan ko bi khoa,...
-		// Spring nos dưa ra một quy tắc Tổng quát nhát (Van de ứng dụng cua minh ko 
-		// Sử dụng tới.
+		
 		boolean enabled = account.isActive();
 		boolean accountNonExpired = true;
 		boolean credentialsNonExpired = true;

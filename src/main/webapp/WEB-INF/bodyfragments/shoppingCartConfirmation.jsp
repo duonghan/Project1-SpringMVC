@@ -20,27 +20,19 @@
 	<h3>Chi tiết giỏ hàng:</h3>
 	<ul>
 		<li>Số lượng : ${myCart.quantityTotal}</li>
-		<li>Tổng : <span class="total"> <fmt:formatNumber
-					value="${myCart.amountTotal}" type="currency" />
+		<li>Tổng : <span> <fmt:formatNumber
+					value="${myCart.amountTotal}" type="number" pattern="###,###,### VNĐ" maxFractionDigits="0"/>
 		</span></li>
 	</ul>
 </div>
 
 <form method="POST"
-	action="${pageContext.request.contextPath}/shoppingCartConfirmation">
+	action="${pageContext.request.contextPath}/shoppingCart/confim">
 
 	<!-- Edit Cart -->
 	<a class="navi-item"
 		href="${pageContext.request.contextPath}/shoppingCart">Thay đổi</a>
 
-	<!-- Edit Customer Info -->
-	<!--
-	<a class="navi-item"
-		href="${pageContext.request.contextPath}/shoppingCartCustomer">Edit
-		Customer Info</a>
-	  -->
-
-	<!-- Send/Save -->
 	<input type="submit" value="Gửi" class="button-send-sc" />
 </form>
 
@@ -49,16 +41,21 @@
 	<c:forEach items="${myCart.cartLines}" var="cartLineInfo">
 		<div class="product-preview-container">
 			<ul>
-				<li><img class="product-image"
-					src="${pageContext.request.contextPath}/productImage?code=${cartLineInfo.productInfo.code}" /></li>
-				<li>Mã sản phẩm: ${cartLineInfo.productInfo.code} <input type="hidden"
-					name="code" value="${cartLineInfo.productInfo.code}" />
+				<li><img class="sp"
+					src="${pageContext.request.contextPath}/productImage?id=${cartLineInfo.productInfo.id}" /></li>
+				<li>Mã sản phẩm: ${cartLineInfo.productInfo.id} <input type="hidden"
+					name="id" value="${cartLineInfo.productInfo.id}" />
 				</li>
 				<li>Tên sản phẩm: ${cartLineInfo.productInfo.name}</li>
 				<li>Đơn giá: <span class="price"> <fmt:formatNumber
 							value="${cartLineInfo.productInfo.price}" type="currency" />
 				</span>
 				</li>
+				<c:if test="${cartLineInfo.productInfo.discount > 0.0}">
+					<li>Giảm giá: <span><fmt:formatNumber
+							value="${cartLineInfo.productInfo.discount *100}" type="percent" /></span>
+				</li>
+				</c:if>
 				<li>Số lượng: ${cartLineInfo.quantity}</li>
 				<li>Tổng : <span class="subtotal"> <fmt:formatNumber
 							value="${cartLineInfo.amount}" type="currency" />

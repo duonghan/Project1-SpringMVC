@@ -163,7 +163,7 @@ public class MainController {
 		return "redirect:/shoppingCart";
 	}
 
-	@RequestMapping({ "/shoppingCartRemoveProduct" })
+	@RequestMapping({ "/shoppingCart/remove/product" })
 	public String removeProductHandler(HttpServletRequest request, Model model, //
 			@RequestParam(value = "id", defaultValue = "") String id) {
 		Product product = null;
@@ -220,7 +220,7 @@ public class MainController {
 	}
 
 	// GET: Xem lại thông tin để xác nhận.
-	@RequestMapping(value = { "/shoppingCartConfirmation" }, method = RequestMethod.GET)
+	@RequestMapping(value = { "/shoppingCart/confim" }, method = RequestMethod.GET)
 	public String shoppingCartConfirmationReview(HttpServletRequest request, Model model) {
 		
 		CustomerInfo customerInfo = UserUtils.getLoginedUserFromSession(request);
@@ -240,7 +240,7 @@ public class MainController {
 	}
 
 	// POST: Gửi đơn hàng (Save).
-	@RequestMapping(value = { "/shoppingCartConfirmation" }, method = RequestMethod.POST)
+	@RequestMapping(value = { "/shoppingCart/confim" }, method = RequestMethod.POST)
 
 	// Tránh ngoại lệ: UnexpectedRollbackException (Xem giải thích thêm).
 	@Transactional(propagation = Propagation.NEVER)

@@ -31,25 +31,23 @@ public class UserAccountValidator implements Validator {
 		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "email", "NotEmpty.userAccountForm.email");
 		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "username", "NotEmpty.userAccountForm.userName");
 		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "name", "NotEmpty.userAccountForm.name");
-		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "password", "NotEmpty.userAccountForm.pasword");
+		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "password", "NotEmpty.userAccountForm.password");
 		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "address", "NotEmpty.userAccountForm.address");
 		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "gender", "NotEmpty.userAccountForm.gender");
 		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "phone", "NotEmpty.userAccountForm.phone");
 
 		if (errors.hasErrors()) {
-			return;
 		}
 
 		// Email is invalid
 		if (!emailValidator.isValid(accountInfo.getEmail())) {
 
 			errors.rejectValue("email", "Pattern.userAccountForm.email");
-			return;
 		}
 
 		// Password is invalid
 		if (accountInfo.getPassword().length() < 5 ||accountInfo.getPassword().length() > 20) {
-			errors.rejectValue("password", "Pattern.userAccountForm.email");
+			errors.rejectValue("password", "Pattern.userAccountForm.password");
 		}
 
 		// Account already exist
@@ -57,10 +55,8 @@ public class UserAccountValidator implements Validator {
 		if (account != null) {
 			if (accountInfo.getUsername() == null) {
 				errors.rejectValue("userName", "Pattern.userAccountForm.userName");
-				return;
 			} else if (!accountInfo.getUsername().equals(account.getUsername())) {
 				errors.rejectValue("userName", "Duplicate.userAccountForm.userName");
-				return;
 			}
 		}
 		
@@ -70,17 +66,15 @@ public class UserAccountValidator implements Validator {
 		if (account != null) {
 			if (account.getEmail() == null ) {
 				errors.rejectValue("email", "Pattern.userAccountForm.email");
-				return;
 			} else if (!account.getEmail().equals(accountInfo.getEmail())) {
 				errors.rejectValue("email", "Duplicate.userAccountForm.email");
-				return;
 			}
 		}
 		
 		//Gender invalid
-		if (accountInfo.getGender() != "Nam" || accountInfo.getGender() != "Nữ") {
-			errors.rejectValue("gender", "Invalid.customerForm.gender");
-		}
+//		if (accountInfo.getGender() != "Nam" || accountInfo.getGender() != "Nữ") {
+//			errors.rejectValue("gender", "Invalid.customerForm.gender");
+//		}
 		
 	}
 

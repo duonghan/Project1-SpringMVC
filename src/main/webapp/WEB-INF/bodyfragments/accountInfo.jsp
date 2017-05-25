@@ -11,13 +11,13 @@
 
 
 		<ul>
-			<li>Họ Tên: ${loginedUser.username}</li>
+			<li>Họ Tên: ${loginedUser.name}</li>
 			<li>Email: ${loginedUser.email}</li>
 			<li>Địa chỉ: ${loginedUser.address}</li>
 			<li>Số điện thoại: ${loginedUser.phone}</li>
 			<li>Giới tính: ${loginedUser.gender}</li>
 			
 		</ul>
-		<a href="${pageContext.request.contextPath}/editprofile">Chỉnh sửa thông tin cá nhân</a>
+		<a href="${pageContext.request.contextPath}/profile/edit">Chỉnh sửa thông tin cá nhân</a>
 		</form:form>
 </div>

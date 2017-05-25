@@ -8,7 +8,7 @@
 
 <form:form method="POST" 
 	modelAttribute="userAccountForm"
-	action="${pageContext.request.contextPath}/editprofile">
+	action="${pageContext.request.contextPath}/profile/edit">
 
 	<table>
 		<tr>

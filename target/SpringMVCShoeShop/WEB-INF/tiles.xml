@@ -132,6 +132,6 @@
 	<definition name="editProfile" extends="base.definition">
 		<put-attribute name="title" value="Chỉnh sửa thông tin" />
 		<put-attribute name="body"
-			value="/WEB-INF/bodyfragments/editProfile.jsp" />
+			value="/WEB-INF/bodyfragments/profile/edit.jsp" />
 	</definition>
 </tiles-definitions>

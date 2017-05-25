@@ -55,9 +55,14 @@
 		<!-- For Admin edit Product -->
 		<security:authorize access="hasRole('ROLE_ADMIN')">
 		<div class="button">
-			<a style="color: red;" href="${pageContext.request.contextPath}/product/edit?id=${prodInfo.id}">
+			<a href="${pageContext.request.contextPath}/product/edit?id=${prodInfo.id}">
 					Chỉnh sửa</a>
 		</div>
+		
+		<div class="button">
+			<a href="${pageContext.request.contextPath}/product/delete?id=${prodInfo.id}">Xóa</a>
+		</div>
+			
 		</security:authorize>
 	</div>
 </c:forEach>

@@ -23,7 +23,7 @@
 				<li><img style="margin-right: 10px;"
 					src="${pageContext.request.contextPath}/images/icon1.png"
 					height="15" width="15" /> <a
-					href="${pageContext.request.contextPath}/accountInfo">
+					href="${pageContext.request.contextPath}/profile">
 						${pageContext.request.userPrincipal.name} </a></li>
 
 				<li><a href="${pageContext.request.contextPath}/logout">Đăng
@@ -33,7 +33,8 @@
 			<c:if test="${pageContext.request.userPrincipal.name == null}">
 				<li><img style="margin-right: 10px;"
 					src="${pageContext.request.contextPath}/images/icon1.png"
-					height="15" width="15" /><a class="L1" href="login" target="_self">Đăng
+					height="15" width="15" />
+					<a class="L1" href="${pageContext.request.contextPath}/login" target="_self">Đăng
 						nhập</a></li>
 				<li>
 				<li><img style="margin-right: 10px;"
@@ -54,6 +55,8 @@
 	</div>
 </div>
 
+
+<!--  -->
 <div class="menu">
 	<li><a href="${pageContext.request.contextPath}/"><strong>Trang
 				chủ</strong></a></li>
@@ -70,7 +73,7 @@
 
 	<security:authorize access="hasRole('ROLE_ADMIN')">
 		<li><a href="${pageContext.request.contextPath}/product/edit"><strong>
-					Thay đổi sản phẩm </strong></a></li>
+					Thêm sản phẩm </strong></a></li>
 	</security:authorize>
 	<div class="timkiem">
 		<input class="input" type="text" placeholder="Tìm kiếm...">

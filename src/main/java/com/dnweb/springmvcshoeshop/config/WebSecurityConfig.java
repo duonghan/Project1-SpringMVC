@@ -38,7 +38,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
 		// Các yêu cầu phải login với vai trò USER hoặc ADMIN.
 		// Nếu chưa login, nó sẽ redirect tới trang /login.
-		http.authorizeRequests().antMatchers("/orderList", "/order", "/accountInfo")//
+		http.authorizeRequests().antMatchers("/orderList", "/order", "/profile")//
 				.access("hasAnyRole('ROLE_USER', 'ROLE_ADMIN')"); // Cho nay!!
 
 		// Trang chỉ dành cho ADMIN
@@ -59,13 +59,13 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 				// Submit URL của trang login
 				.loginProcessingUrl("/j_spring_security_check") // Submit URL
 				.loginPage("/login")//
-				.defaultSuccessUrl("/accountInfo")// Nhu cau hinh o day!! (Cai nay mat tac dung neu co SuccessHander)
+				.defaultSuccessUrl("/profile")// Nhu cau hinh o day!! (Cai nay mat tac dung neu co SuccessHander)
 				.failureUrl("/login?error=true")//
 				.usernameParameter("userName")//
 				.passwordParameter("password") 
 				// Dang ky bo dieu khien (handler) khi login thanh cong
          		// Nhu vay khi Login thanh cong ==> SuccessHnder dc goi ==> Ghi thong tin vao session!
-				// Mac dinh neu khong dang ky Handler ==> Sau khi login thanh cong no nhay toi /accountInfo
+				// Mac dinh neu khong dang ky Handler ==> Sau khi login thanh cong no nhay toi /profile
                 .successHandler(successHandler)
 				//Cấu hình cho signup page
 				

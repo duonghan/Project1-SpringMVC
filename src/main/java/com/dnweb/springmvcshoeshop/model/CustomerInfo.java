@@ -36,6 +36,15 @@ public class CustomerInfo {
 		this.address = address;
 		this.gender = gender;
 	}
+	
+	public CustomerInfo(AccountInfo accountInfo) {
+		this.username = accountInfo.getUsername();
+		this.name = accountInfo.getName();
+		this.email = accountInfo.getEmail();
+		this.phone = accountInfo.getPhone();
+		this.address = accountInfo.getAddress();
+		this.gender = accountInfo.getGender();
+	}
 
 	public String getName() {
 		return name;
