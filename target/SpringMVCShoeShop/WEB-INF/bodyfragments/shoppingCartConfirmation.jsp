@@ -27,7 +27,7 @@
 </div>
 
 <form method="POST"
-	action="${pageContext.request.contextPath}/shoppingCart/confim">
+	action="${pageContext.request.contextPath}/shoppingCart/confirm">
 
 	<!-- Edit Cart -->
 	<a class="navi-item"

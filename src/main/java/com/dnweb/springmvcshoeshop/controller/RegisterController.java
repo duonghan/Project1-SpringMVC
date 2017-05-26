@@ -65,6 +65,7 @@ public class RegisterController {
 	       return genderMap;
 	  }
 	 
+	 // Day la trang hien thi signup
 	// Hien thi trang signup
 	@RequestMapping(value = { "/signup" }, method = RequestMethod.GET)
 	public String signup(Model model) {
@@ -75,7 +76,7 @@ public class RegisterController {
 		accountForm.setName("Nguyễn Văn A");
 		
 		accountForm.setAddress("Hà Nội");
-		accountForm.setEmail("abc@gmaiil.com");
+		accountForm.setEmail("example@gmail.com");
 		
 		model.addAttribute("accountForm", accountForm);
 		model.addAttribute("genderMap", genderMap);
@@ -83,13 +84,13 @@ public class RegisterController {
 		return "signup";
 	}
 
+	// Day la trang Submit signup ==> Neu co loi ==> No tra ve "signup"
 	// accountForm
 	@RequestMapping(value = { "/signup" }, method = RequestMethod.POST)
 	public String signup(HttpServletRequest request, Model model,
 			@ModelAttribute("accountForm") @Validated AccountInfo accountForm //
 
-			, BindingResult result, // Do co cai nay ==> bat buoc phai cung cap
-									// validate
+			, BindingResult result, 
 			final RedirectAttributes redirectAttributes
 
 	) {
@@ -98,7 +99,12 @@ public class RegisterController {
 		if (result.hasErrors()) {
 			System.out.println("Lỗi:" + result.toString());
 			accountForm.setValid(false);
-
+            // ==> No tra ve "signup" ==> Mo lai trang signup.jsp
+			// Thiet lap các du lieu cho Form!! Chay lai di
+			Map<String, String> genderMap = this.dataGender();
+			model.addAttribute("genderMap", genderMap);
+			model.addAttribute("accountForm", accountForm);
+			
 			return "signup";
 		}
 
@@ -163,7 +169,6 @@ public class RegisterController {
 		}
 		
 		//Luu thong tin sau khi cap nhat vao trong sesion
-		
 		CustomerInfo customerInfo = new CustomerInfo(userAccountForm);
 		UserUtils.saveLoginedUser(request, customerInfo);
 		return "redirect:/profile";

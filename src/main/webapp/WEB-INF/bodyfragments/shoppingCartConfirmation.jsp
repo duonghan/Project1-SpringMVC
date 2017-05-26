@@ -27,7 +27,7 @@
 </div>
 
 <form method="POST"
-	action="${pageContext.request.contextPath}/shoppingCart/confim">
+	action="${pageContext.request.contextPath}/shoppingCart/confirm">
 
 	<!-- Edit Cart -->
 	<a class="navi-item"
@@ -48,17 +48,17 @@
 				</li>
 				<li>Tên sản phẩm: ${cartLineInfo.productInfo.name}</li>
 				<li>Đơn giá: <span class="price"> <fmt:formatNumber
-							value="${cartLineInfo.productInfo.price}" type="currency" />
+							value="${cartLineInfo.productInfo.price}" type="number" pattern="###,###,### VNĐ" maxFractionDigits="0"/>
 				</span>
 				</li>
 				<c:if test="${cartLineInfo.productInfo.discount > 0.0}">
 					<li>Giảm giá: <span><fmt:formatNumber
-							value="${cartLineInfo.productInfo.discount *100}" type="percent" /></span>
+							value="${cartLineInfo.productInfo.discount}" type="percent"/></span>
 				</li>
 				</c:if>
 				<li>Số lượng: ${cartLineInfo.quantity}</li>
 				<li>Tổng : <span class="subtotal"> <fmt:formatNumber
-							value="${cartLineInfo.amount}" type="currency" />
+							value="${cartLineInfo.amount}" type="number" pattern="###,###,### VNĐ" maxFractionDigits="0" />
 				</span>
 				</li>
 			</ul>

@@ -6,6 +6,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
@@ -144,6 +146,12 @@ public class MainController {
 	public String listProductHandler(HttpServletRequest request, Model model, //
 			@RequestParam(value = "id", defaultValue = "") String id) {
 
+//		UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+//		
+//		if (userDetails == null) {
+//			return "redirect:/login";
+//		}
+		
 		Product product = null;
 		if (id != null && id.length() > 0) {
 			product = productDAO.findProduct(id);
@@ -220,7 +228,7 @@ public class MainController {
 	}
 
 	// GET: Xem lại thông tin để xác nhận.
-	@RequestMapping(value = { "/shoppingCart/confim" }, method = RequestMethod.GET)
+	@RequestMapping(value = { "/shoppingCart/confirm" }, method = RequestMethod.GET)
 	public String shoppingCartConfirmationReview(HttpServletRequest request, Model model) {
 		
 		CustomerInfo customerInfo = UserUtils.getLoginedUserFromSession(request);
@@ -240,9 +248,9 @@ public class MainController {
 	}
 
 	// POST: Gửi đơn hàng (Save).
-	@RequestMapping(value = { "/shoppingCart/confim" }, method = RequestMethod.POST)
+	@RequestMapping(value = { "/shoppingCart/confirm" }, method = RequestMethod.POST)
 
-	// Tránh ngoại lệ: UnexpectedRollbackException (Xem giải thích thêm).
+	// Tránh ngoại lệ: UnexpectedRollbackException.
 	@Transactional(propagation = Propagation.NEVER)
 	public String shoppingCartConfirmationSave(HttpServletRequest request, Model model) {
 		
@@ -258,12 +266,13 @@ public class MainController {
 		try {
 			orderDAO.saveOrder(cartInfo);
 		} catch (Exception e) {
-
+            e.printStackTrace();
+			// Neu co gi loi ==> Chuyen lai sang 
 			// Cần thiết: Propagation.NEVER?
 			return "shoppingCartConfirmation";
 		}
 
-		// Xóa rỏ hàng khỏi session.
+		// Xóa giỏ hàng khỏi session.
 		CartUtils.removeCartInSession(request);
 
 		// Lưu thông tin đơn hàng đã xác nhận mua.

@@ -8,6 +8,7 @@ import org.hibernate.Criteria;
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -40,26 +41,46 @@ public class OrderDAO {
 
 	// Lay ra so hieu ban ghi lon nhat hien tai
 	private int getMaxOrderNum() {
-		String sql = "Select max(o.id) from " + Order.class.getName() + " o ";
-
+		// O day no co 1 vai cai hieu nham.
+		// Khi viet Hibernate SQL thi no the nay:
+		 String sql = "Select max(o.ordernum) from " + Order.class.getName() + " o ";
+        // Hibernate tu dong chuyen thanh SQL Trong Hibernate la the nay:
+		 //  
+		 // Ten bang la Order, bi hieu nham la order (by) 
+		 // MySQL ko hieu dc
+		 
 		Session session = sessionFactory.getCurrentSession();
-
+		
+		// Bo cai nay di, vi cai nay cua Hibernate 4 (Hibenate 5 bo roi)
+		//Criteria criteria = session
+		//	    .createCriteria(Order.class)
+		//	    .setProjection(Projections.max("ordernum"));
 		Query query = session.createQuery(sql);
-		Integer value = (Integer) query.uniqueResult();
+		Number value = (Number)query.uniqueResult();
+		
+		// Nen lay ra Number (Class cha cua Integer, Long, Float,..).
+		// Number value = (Number)criteria.uniqueResult();
+		System.out.println(">>>>>>>>>>>>>>>>>>>>>MAX:" + value);
+		
+		//Query query = session.createQuery(sql);
+		//Integer value = (Integer) query.uniqueResult();
+		
 		if (value == null) {
 			return 0;
 		}
-		return value;
+		
+		return value.intValue(); 
 	}
 
 	// Luu hoa don moi
+	// Roi chay di
 	public void saveOrder(CartInfo cartInfo) {
 		Session session = sessionFactory.getCurrentSession();
 
 		int orderNum = this.getMaxOrderNum() + 1;
 		Order order = new Order();
 
-		order.setId(UUID.randomUUID().toString());
+		order.setId(UUID.randomUUID().toString()); // UUID tao ra day so co 36 ky tu ngau nhien (DB cos 16 ky tu ==> Loi).
 		order.setOrdernum(orderNum);
 		order.setCreated(new Date());
 		order.setAmount(cartInfo.getAmountTotal());
@@ -90,7 +111,6 @@ public class OrderDAO {
 		}
 
 		// Set OrderNum for report.
-		// Set OrderNum Ä‘á»ƒ thĂ´ng bĂ¡o cho ngÆ°á»�i dĂ¹ng.
 		cartInfo.setOrderNum(orderNum);
 	}
 
@@ -101,9 +121,9 @@ public class OrderDAO {
 		// Chon ra nhieu cot dung hibernate + java bean
 		String sql = "Select new " + OrderInfo.class.getName()//
 				+ "(ord.id, ord.created, ord.orderNum, ord.amount, "//
-				+ " acc.customerName, acc.customerAddress, acc.customerEmail, acc.customerPhone) " + " from "
-				+ Order.class.getName() + " ord " + " join " + Account.class.getName() //
-				+ " acc " + " on " + " ord.account.username = acc.username"//
+				+ " ord.account.customerName, ord.account.customerAddress, "
+				+ "ord.account.customerEmail, ord.account.customerPhone) "
+				+ " from " + Order.class.getName() + " ord " 
 				+ " order by ord.orderNum desc";
 
 		Session session = this.sessionFactory.getCurrentSession();

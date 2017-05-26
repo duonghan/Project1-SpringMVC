@@ -13,7 +13,7 @@
 	<a href="${pageContext.request.contextPath}/productList">Xem danh sách sản phẩm</a>
 </c:if>
 
-<c:if test="${not empty cartForm and not empty cartForm.cartLines   }">
+<c:if test="${not empty cartForm and not empty cartForm.cartLines}">
 	<form:form method="POST" modelAttribute="cartForm"
 		action="${pageContext.request.contextPath}/shoppingCart">
 
@@ -46,10 +46,13 @@
 				</ul>
 			</div>
 		</c:forEach>
+		
 		<div style="clear: both"></div>
 		<input class="button-update-sc" type="submit" value="Cập nhật số lượng" />
+		
 		<a class="navi-item"
-			href="${pageContext.request.contextPath}/shoppingCart/confim">Đặt hàng</a>
+			href="${pageContext.request.contextPath}/shoppingCart/confirm">Đặt hàng</a>
+		
 		<a class="navi-item"
 			href="${pageContext.request.contextPath}/productList">Tiếp tục mua hàng</a>
 	</form:form>

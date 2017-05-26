@@ -20,17 +20,16 @@ public class MenuInterceptor extends HandlerInterceptorAdapter {
 
 	@Autowired
 	private CategoryDAO categoryDAO;
-	
-	
+
 	@Override
 	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler)
 			throws Exception {
-		//long startTime = System.currentTimeMillis();
-		//System.out.println("\n-------- LogInterception.preHandle --- ");
-		//System.out.println("Request URL: " + request.getRequestURL());
-		//System.out.println("Start Time: " + System.currentTimeMillis());
+		// long startTime = System.currentTimeMillis();
+		// System.out.println("\n-------- LogInterception.preHandle --- ");
+		// System.out.println("Request URL: " + request.getRequestURL());
+		// System.out.println("Start Time: " + System.currentTimeMillis());
 
-		//request.setAttribute("startTime", startTime);
+		// request.setAttribute("startTime", startTime);
 
 		return true;
 	}
@@ -38,20 +37,26 @@ public class MenuInterceptor extends HandlerInterceptorAdapter {
 	@Override
 	public void postHandle(HttpServletRequest request, HttpServletResponse response, Object handler,
 			ModelAndView modelAndView) throws Exception {
-		 modelAndView.addObject("listCategory", categoryDAO.getAllCategory());
+		// Loi xay ra o day, ko lien quan toi cai kia.
+		System.out.println("modelAndView=" + modelAndView);
+		System.out.println("categoryDAO=" + categoryDAO);
+		if (modelAndView != null) {
+			modelAndView.addObject("listCategory", categoryDAO.getAllCategory());
+		}
 	}
 
 	@Override
 	public void afterCompletion(HttpServletRequest request, HttpServletResponse response, Object handler, Exception ex)
 			throws Exception {
-		//System.out.println("\n-------- LogInterception.afterCompletion --- ");
+		// System.out.println("\n-------- LogInterception.afterCompletion ---
+		// ");
 
-		//long startTime = (Long) request.getAttribute("startTime");
-		//long endTime = System.currentTimeMillis();
-		//System.out.println("Request URL: " + request.get RequestURL());
-		//System.out.println("End Time: " + endTime);
+		// long startTime = (Long) request.getAttribute("startTime");
+		// long endTime = System.currentTimeMillis();
+		// System.out.println("Request URL: " + request.get RequestURL());
+		// System.out.println("End Time: " + endTime);
 
-		//System.out.println("Time Taken: " + (endTime - startTime));
+		// System.out.println("Time Taken: " + (endTime - startTime));
 	}
 
 }
