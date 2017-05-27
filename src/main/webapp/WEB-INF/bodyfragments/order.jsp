@@ -37,19 +37,21 @@
 		<tr>
 			<td>${orderDetailInfo.productid}</td>
 			<td>${orderDetailInfo.productname}</td>
-			<td>${orderDetailInfo.quanity}</td>
+			<td>${orderDetailInfo.quantity}</td>
 			<td><fmt:formatNumber value="${orderDetailInfo.price}"
-					type="currency" /></td>
+					type="number" pattern="###,###,### VNĐ" maxFractionDigits="0"/></td>
 			<td><fmt:formatNumber value="${orderDetailInfo.amount}"
-					type="currency" /></td>
+					type="number" pattern="###,###,### VNĐ" maxFractionDigits="0" /></td>
 		</tr>
 	</c:forEach>
 </table>
+
+
 <c:if test="${paginationResult.totalPages > 1}">
 	<div>
 		<c:forEach items="${paginationResult.navigationPages}" var="page">
 			<c:if test="${page != -1 }">
-				<a href="orderList?page=${page}">${page}</a>
+				<a href="${pageContext.request.contextPath}/order/list?page=${page}">${page}</a>
 			</c:if>
 			<c:if test="${page == -1 }">
 				<span> ... </span>

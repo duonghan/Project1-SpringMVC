@@ -30,14 +30,12 @@ import com.dnweb.springmvcshoeshop.dao.OrderDAO;
 import com.dnweb.springmvcshoeshop.dao.ProductDAO;
 import com.dnweb.springmvcshoeshop.entities.Category;
 import com.dnweb.springmvcshoeshop.entities.Product;
-import com.dnweb.springmvcshoeshop.model.CartInfo;
 import com.dnweb.springmvcshoeshop.model.CategoryInfo;
 import com.dnweb.springmvcshoeshop.model.CustomerInfo;
 import com.dnweb.springmvcshoeshop.model.OrderDetailInfo;
 import com.dnweb.springmvcshoeshop.model.OrderInfo;
 import com.dnweb.springmvcshoeshop.model.PaginationResult;
 import com.dnweb.springmvcshoeshop.model.ProductInfo;
-import com.dnweb.springmvcshoeshop.util.CartUtils;
 import com.dnweb.springmvcshoeshop.util.UserUtils;
 import com.dnweb.springmvcshoeshop.validator.ProductInfoValidator;
 
@@ -111,7 +109,7 @@ public class AdminController {
 		return "accountInfo";
 	}
 	
-	@RequestMapping(value = { "/orderList" }, method = RequestMethod.GET)
+	@RequestMapping(value = { "/order/list" }, method = RequestMethod.GET)
 	public String orderList(Model model, //
 			@RequestParam(value = "page", defaultValue = "1") String pageStr) {
 		int page = 1;
@@ -217,7 +215,6 @@ public class AdminController {
 			productDAO.save(productInfo);
 		} catch (Exception e) {
 			// Need: Propagation.NEVER?
-			// Cáº§n thiáº¿t: Propagation.NEVER?
 			String message = e.getMessage();
 			model.addAttribute("message", message);
 			// Show product form.
@@ -246,13 +243,13 @@ public class AdminController {
 	}
 
 	@RequestMapping(value = { "/order" }, method = RequestMethod.GET)
-	public String orderView(Model model, @RequestParam("orderId") String orderId) {
+	public String orderView(Model model, @RequestParam("id") String orderId) {
 		OrderInfo orderInfo = null;
 		if (orderId != null) {
 			orderInfo = this.orderDAO.getOrderInfo(orderId);
 		}
 		if (orderInfo == null) {
-			return "redirect:/orderList";
+			return "redirect:/order/list";
 		}
 		List<OrderDetailInfo> details = this.orderDAO.listOrderDetailInfos(orderId);
 		orderInfo.setDetails(details);

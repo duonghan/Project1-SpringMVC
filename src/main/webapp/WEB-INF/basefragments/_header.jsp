@@ -67,7 +67,7 @@
 	<li><a href="${pageContext.request.contextPath}/contactus"><strong>Liên
 				hệ</strong></a></li>
 	<security:authorize access="hasAnyRole('ROLE_ADMIN','ROLE_USER')">
-		<li><a href="${pageContext.request.contextPath}/orderList"><strong>
+		<li><a href="${pageContext.request.contextPath}/order/list"><strong>
 					Danh sách đơn hàng </strong></a></li>
 	</security:authorize>
 

@@ -1,5 +1,4 @@
 package com.dnweb.springmvcshoeshop.entities;
-// Generated Apr 30, 2017 10:28:13 AM by Hibernate Tools 4.3.5.Final
 
 import java.util.Date;
 import java.util.HashSet;
@@ -22,9 +21,10 @@ import javax.persistence.TemporalType;
 @Table(name = "product")
 public class Product implements java.io.Serializable {
 
-
-	private static final long serialVersionUID = 6621430703439619229L;
-	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -7276129326732797543L;
 	private String id;
 	private Category category;
 	private String name;
@@ -36,6 +36,7 @@ public class Product implements java.io.Serializable {
 	private Set<OrderDetail> orderdetails = new HashSet<OrderDetail>(0);
 
 	@Id
+
 	@Column(name = "id", unique = true, nullable = false, length = 16)
 	public String getId() {
 		return this.id;
@@ -45,7 +46,6 @@ public class Product implements java.io.Serializable {
 		this.id = id;
 	}
 
-	// Hibernate su dung cai nay, de biet DK 2 bang JOIN voi nhau.
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "categoryid")
 	public Category getCategory() {
@@ -102,7 +102,7 @@ public class Product implements java.io.Serializable {
 		this.created = created;
 	}
 
-	@Column(name = "image", nullable = false)
+	@Column(name = "image")
 	public byte[] getImage() {
 		return this.image;
 	}

@@ -12,7 +12,6 @@ import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.dnweb.springmvcshoeshop.entities.Category;
-import com.dnweb.springmvcshoeshop.entities.Order;
 import com.dnweb.springmvcshoeshop.entities.OrderDetail;
 import com.dnweb.springmvcshoeshop.entities.Product;
 import com.dnweb.springmvcshoeshop.model.PaginationResult;
@@ -147,25 +146,10 @@ public class ProductDAO {
 		return new PaginationResult<ProductInfo>(query, page, maxResult, maxNavigationPage);
 	}
 
-	// Danh sach cac san pham moi
-//	public PaginationResult<ProductInfo> listNewProduct(int page, int maxResult, int maxNavigationPage) {
-//
-//		String sql = "Select new " + ProductInfo.class.getName()
-//				+ "(p.id, p.name, p.price, p.description, p.discount, c.id) " + " from " + Product.class.getName()
-//				+ " p "//
-//				+ " join p.category c " 
-//				+ " order by p.created desc ";
-//
-//		Session session = sessionFactory.getCurrentSession();
-//		Query query = session.createQuery(sql);
-//
-//		return new PaginationResult<ProductInfo>(query, page, maxResult, maxNavigationPage);
-//	}
-
 	// Danh sach cac san pham ban chay
 	public PaginationResult<ProductInfo> listPopulerProduct(int page, int maxResult, int maxNavigationPage) {
 
-		String sql = "Select new " + ProductInfo.class.getName()
+		String sql = "Select distinct new " + ProductInfo.class.getName()
 				+ "(p.id, p.name, p.price, p.description, p.discount, p.category.id) " + " from "
 				+ Product.class.getName() + " p " 
 				+ " join p.orderdetails o"

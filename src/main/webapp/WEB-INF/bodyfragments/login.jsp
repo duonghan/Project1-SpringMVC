@@ -3,7 +3,7 @@
 
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 
-<div class="login-container" valign="top">
+<div class="login-container">
 
 	<h3>Nhập tài khoản và mật khẩu</h3>
 	<br>

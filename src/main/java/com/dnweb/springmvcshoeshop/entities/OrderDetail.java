@@ -1,5 +1,4 @@
 package com.dnweb.springmvcshoeshop.entities;
-// Generated Apr 30, 2017 10:28:13 AM by Hibernate Tools 4.3.5.Final
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -16,17 +15,17 @@ import javax.persistence.Table;
 @Table(name = "orderdetail")
 public class OrderDetail implements java.io.Serializable {
 
-
-	private static final long serialVersionUID = -3703076345783114791L;
-	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -5232424760332903714L;
 	private String id;
-	private Order order;
+	private CustomerOrder customerOrder;
 	private Product product;
 	private double price;
 	private int quantity;
 	private double amount;
 	private String description;
-
 
 	@Id
 
@@ -41,12 +40,12 @@ public class OrderDetail implements java.io.Serializable {
 
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "orderid", nullable = false)
-	public Order getOrder() {
-		return this.order;
+	public CustomerOrder getCustomerOrder() {
+		return this.customerOrder;
 	}
 
-	public void setOrder(Order order) {
-		this.order = order;
+	public void setCustomerOrder(CustomerOrder customerOrder) {
+		this.customerOrder = customerOrder;
 	}
 
 	@ManyToOne(fetch = FetchType.LAZY)
@@ -57,6 +56,15 @@ public class OrderDetail implements java.io.Serializable {
 
 	public void setProduct(Product product) {
 		this.product = product;
+	}
+
+	@Column(name = "price", nullable = false, precision = 22, scale = 0)
+	public double getPrice() {
+		return this.price;
+	}
+
+	public void setPrice(double price) {
+		this.price = price;
 	}
 
 	@Column(name = "quantity", nullable = false)
@@ -84,16 +92,6 @@ public class OrderDetail implements java.io.Serializable {
 
 	public void setDescription(String description) {
 		this.description = description;
-	}
-
-
-	public double getPrice() {
-		return price;
-	}
-
-
-	public void setPrice(double price) {
-		this.price = price;
 	}
 
 }

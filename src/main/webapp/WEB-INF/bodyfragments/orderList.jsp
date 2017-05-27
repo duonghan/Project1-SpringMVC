@@ -5,16 +5,16 @@
 
 <fmt:setLocale value="en_US" scope="session" />
 
-<div class="page-title">Order List</div>
+<div class="page-title">Danh sách đơn hàng</div>
 
-<div>Total Order Count: ${paginationResult.totalRecords}</div>
+<div>Tổng đơn hàng: ${paginationResult.totalRecords}</div>
 
 <table border="1" style="width: 100%">
 	<tr>
-		<th>Số hiệu đơn hàng</th>
+		<th>Mã đơn hàng</th>
 		<th>Ngày tháng</th>
 		<th>Tên khách hàng</th>
-		<th>Địa chỉ khách hàng</th>
+		<th>Địa chỉ</th>
 		<th>Email</th>
 		<th>Giá trị</th>
 		<th>Xem chi tiết</th>
@@ -28,13 +28,17 @@
 			<td>${orderInfo.customerAddress}</td>
 			<td>${orderInfo.customerEmail}</td>
 			<td style="color: red;"><fmt:formatNumber
-					value="${orderInfo.amount}" type="currency" /></td>
+					value="${orderInfo.amount}" type="number" 
+					pattern="###,###,### VNĐ" maxFractionDigits="0"/>
+			</td>
+			
 			<td><a
-				href="${pageContext.request.contextPath}/order?orderId=${orderInfo.id}">
+				href="${pageContext.request.contextPath}/order?id=${orderInfo.id}">
 					Xem chi tiết</a></td>
 		</tr>
 	</c:forEach>
 </table>
+
 <c:if test="${paginationResult.totalPages > 1}">
 	<div>
 		<c:forEach items="${paginationResult.navigationPages}" var="page">

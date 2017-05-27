@@ -8,7 +8,6 @@ import org.hibernate.Criteria;
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
-import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -17,7 +16,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.dnweb.springmvcshoeshop.dao.AccountDAO;
 import com.dnweb.springmvcshoeshop.dao.ProductDAO;
 import com.dnweb.springmvcshoeshop.entities.Account;
-import com.dnweb.springmvcshoeshop.entities.Order;
+import com.dnweb.springmvcshoeshop.entities.CustomerOrder;
 import com.dnweb.springmvcshoeshop.entities.OrderDetail;
 import com.dnweb.springmvcshoeshop.entities.Product;
 import com.dnweb.springmvcshoeshop.model.CartInfo;
@@ -41,24 +40,16 @@ public class OrderDAO {
 
 	// Lay ra so hieu ban ghi lon nhat hien tai
 	private int getMaxOrderNum() {
-		// O day no co 1 vai cai hieu nham.
-		// Khi viet Hibernate SQL thi no the nay:
-		 String sql = "Select max(o.ordernum) from " + Order.class.getName() + " o ";
-        // Hibernate tu dong chuyen thanh SQL Trong Hibernate la the nay:
-		 //  
-		 // Ten bang la Order, bi hieu nham la order (by) 
-		 // MySQL ko hieu dc
+		 String sql = "Select max(o.ordernum) from " + CustomerOrder.class.getName() + " o ";
 		 
 		Session session = sessionFactory.getCurrentSession();
 		
-		// Bo cai nay di, vi cai nay cua Hibernate 4 (Hibenate 5 bo roi)
 		//Criteria criteria = session
 		//	    .createCriteria(Order.class)
 		//	    .setProjection(Projections.max("ordernum"));
 		Query query = session.createQuery(sql);
 		Number value = (Number)query.uniqueResult();
 		
-		// Nen lay ra Number (Class cha cua Integer, Long, Float,..).
 		// Number value = (Number)criteria.uniqueResult();
 		System.out.println(">>>>>>>>>>>>>>>>>>>>>MAX:" + value);
 		
@@ -73,14 +64,13 @@ public class OrderDAO {
 	}
 
 	// Luu hoa don moi
-	// Roi chay di
 	public void saveOrder(CartInfo cartInfo) {
 		Session session = sessionFactory.getCurrentSession();
 
 		int orderNum = this.getMaxOrderNum() + 1;
-		Order order = new Order();
+		CustomerOrder order = new CustomerOrder();
 
-		order.setId(UUID.randomUUID().toString()); // UUID tao ra day so co 36 ky tu ngau nhien (DB cos 16 ky tu ==> Loi).
+		order.setId(UUID.randomUUID().toString()); 
 		order.setOrdernum(orderNum);
 		order.setCreated(new Date());
 		order.setAmount(cartInfo.getAmountTotal());
@@ -98,7 +88,7 @@ public class OrderDAO {
 			OrderDetail detail = new OrderDetail();
 
 			detail.setId(UUID.randomUUID().toString());
-			detail.setOrder(order);
+			detail.setCustomerOrder(order);
 			detail.setAmount(line.getAmount());
 			detail.setPrice(line.getProductInfo().getPrice());
 			detail.setQuantity(line.getQuantity());
@@ -120,11 +110,11 @@ public class OrderDAO {
 
 		// Chon ra nhieu cot dung hibernate + java bean
 		String sql = "Select new " + OrderInfo.class.getName()//
-				+ "(ord.id, ord.created, ord.orderNum, ord.amount, "//
-				+ " ord.account.customerName, ord.account.customerAddress, "
-				+ "ord.account.customerEmail, ord.account.customerPhone) "
-				+ " from " + Order.class.getName() + " ord " 
-				+ " order by ord.orderNum desc";
+				+ "(ord.id, ord.created, ord.ordernum, ord.amount, "//
+				+ " ord.account.name, ord.account.address, "
+				+ "ord.account.email, ord.account.phone) "
+				+ " from " + CustomerOrder.class.getName() + " ord " 
+				+ " order by ord.ordernum desc";
 
 		Session session = this.sessionFactory.getCurrentSession();
 
@@ -134,16 +124,16 @@ public class OrderDAO {
 	}
 
 	// Tim kiem don hang theo id
-	public Order findOrder(String orderId) {
+	public CustomerOrder findOrder(String orderId) {
 		Session session = sessionFactory.getCurrentSession();
-		Criteria crit = session.createCriteria(Order.class);
+		Criteria crit = session.createCriteria(CustomerOrder.class);
 		crit.add(Restrictions.eq("id", orderId));
-		return (Order) crit.uniqueResult();
+		return (CustomerOrder) crit.uniqueResult();
 	}
 
 	// Lay ra thong tin don hang
 	public OrderInfo getOrderInfo(String orderId) {
-		Order order = this.findOrder(orderId);
+		CustomerOrder order = this.findOrder(orderId);
 		if (order == null) {
 			return null;
 		}
@@ -157,9 +147,9 @@ public class OrderDAO {
 	public List<OrderDetailInfo> listOrderDetailInfos(String orderId) {
 
 		String sql = "Select new " + OrderDetailInfo.class.getName() //
-				+ "(d.id, d.product.id, d.product.name , d.quanity,d.price,d.amount) "//
+				+ "(d.id, d.product.id, d.product.name , d.quantity,d.price,d.amount) "//
 				+ " from " + OrderDetail.class.getName() + " d "//
-				+ " where d.order.id = :orderId ";
+				+ " where d.customerOrder.id = :orderId ";
 
 		Session session = this.sessionFactory.getCurrentSession();
 
@@ -172,7 +162,7 @@ public class OrderDAO {
 	public void deleteOrder(String orderId) {
 		Session session = this.sessionFactory.getCurrentSession();
 
-		Order order = this.findOrder(orderId);
+		CustomerOrder order = this.findOrder(orderId);
 
 		if (order != null) {
 			session.delete(order);
