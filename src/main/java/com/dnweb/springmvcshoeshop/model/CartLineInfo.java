@@ -27,7 +27,7 @@ public class CartLineInfo {//Danh sach moi loai san pham trong gio hang
 
 	//Tong thanh toan cua gio hang
 	public double getAmount() {
-		return this.productInfo.getPrice() * this.quantity;
+		return this.productInfo.getCost() * this.quantity;
 	}
 
 }

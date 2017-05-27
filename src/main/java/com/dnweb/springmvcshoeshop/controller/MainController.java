@@ -6,6 +6,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
@@ -61,8 +63,6 @@ public class MainController {
 
 		}
 
-		// (@ModelAttribute("customerForm") @Validated CustomerInfo
-		// customerForm)
 		else if (target.getClass() == CustomerInfo.class) {
 			dataBinder.setValidator(customerInfoValidator);
 		}
@@ -81,11 +81,9 @@ public class MainController {
 
 	@RequestMapping("/contactus")
 	public String contactus(Model model) {
-		// listCategory(model);
 		return "contactusPage";
 	}
 
-	// Vi du trang hom ...
 	@RequestMapping("/")
 	public String home( Model model ) {
 		
@@ -136,11 +134,12 @@ public class MainController {
 	public String listProductHandler(HttpServletRequest request, Model model, //
 			@RequestParam(value = "id", defaultValue = "") String id) {
 
-//		UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-//		
-//		if (userDetails == null) {
-//			return "redirect:/login";
-//		}
+		CustomerInfo customerInfo = UserUtils.getLoginedUserFromSession(request);
+		
+		if (customerInfo == null) {
+			model.addAttribute("msg", "Vui lòng đăng nhập để tiếp tục!!!");
+			return "redirect:/login";
+		}
 		
 		Product product = null;
 		if (id != null && id.length() > 0) {

@@ -209,4 +209,3 @@
 		<a href="https://www.vans.com/"><img src="images/logo6.jpg" alt=""></a>
 	</div>
 </div>
-</div>

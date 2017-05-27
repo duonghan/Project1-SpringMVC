@@ -33,6 +33,8 @@
 								value="${cartLineInfo.productInfo.price}" type="number" pattern="###,###,### VNĐ" maxFractionDigits="0"/>
 
 					</span></li>
+					<li>Khuyến mại: <fmt:formatNumber
+					 value="${cartLineInfo.productInfo.discount }" type="percent"/></li>
 					<li>Số lượng: <form:input
 							path="cartLines[${varStatus.index}].quantity" /></li>
 					<li>Tổng: <span class="subtotal"> <fmt:formatNumber

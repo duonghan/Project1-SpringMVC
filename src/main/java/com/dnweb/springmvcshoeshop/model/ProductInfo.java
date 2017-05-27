@@ -134,4 +134,8 @@ public class ProductInfo {
 		this.totalQuantity = quantity;
 	}
 
+	public double getCost() {
+		return this.price - this.price*this.discount;
+	}
+
 }

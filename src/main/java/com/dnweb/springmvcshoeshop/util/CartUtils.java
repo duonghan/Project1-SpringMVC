@@ -30,11 +30,6 @@ public class CartUtils {
 		request.getSession().setAttribute("lastOrderedCart", cartInfo);
 	}
 
-	// Sau khi người dùng mua xong 1 đơn hàng ==> Nó lưu cái đơn hàng cuối cùng
-	// Vào session, 
-	// Giúp người dùng có thể xem lại đơn hàng cuối cùng đã mua. Vậy thôi.
-	// Neu người dùng chưa mua và ththanh toán đơn hàng nào trong session đó
-	///==> Cai nay null.
 	public static CartInfo getLastOrderedCartInSession(HttpServletRequest request) {
 		return (CartInfo) request.getSession().getAttribute("lastOrderedCart");
 	}

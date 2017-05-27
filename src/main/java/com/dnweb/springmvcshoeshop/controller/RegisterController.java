@@ -18,7 +18,6 @@ import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
@@ -84,8 +83,6 @@ public class RegisterController {
 		return "signup";
 	}
 
-	// Day la trang Submit signup ==> Neu co loi ==> No tra ve "signup"
-	// accountForm
 	@RequestMapping(value = { "/signup" }, method = RequestMethod.POST)
 	public String signup(HttpServletRequest request, Model model,
 			@ModelAttribute("accountForm") @Validated AccountInfo accountForm //
@@ -99,9 +96,8 @@ public class RegisterController {
 		if (result.hasErrors()) {
 			System.out.println("Lỗi:" + result.toString());
 			accountForm.setValid(false);
-            // ==> No tra ve "signup" ==> Mo lai trang signup.jsp
-			// Thiet lap các du lieu cho Form!! Chay lai di
 			Map<String, String> genderMap = this.dataGender();
+			
 			model.addAttribute("genderMap", genderMap);
 			model.addAttribute("accountForm", accountForm);
 			
@@ -123,11 +119,12 @@ public class RegisterController {
 	public String updateAccount(HttpServletRequest request, Model model) {
 
 		UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-
-		if (userDetails == null) {
+		CustomerInfo customerInfo = UserUtils.getLoginedUserFromSession(request);
+		if (customerInfo == null) {
+			
 			return "redirect:/login";
 		}
-
+		
 		AccountInfo accountInfo = accountDAO.findAccountInfo(userDetails.getUsername());
 
 		if (accountInfo == null) {
