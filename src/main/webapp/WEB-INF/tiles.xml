@@ -32,7 +32,14 @@
 		<put-attribute name="title" value="Truy cập bị từ chối" />
 		<put-attribute name="body" value="/WEB-INF/bodyfragments/403.jsp" />
 	</definition>
-
+	
+	<!-- 404 Page -->
+	<definition name="404" extends="base.definition">
+		<put-attribute name="title" value="Không tìm thấy trang bạn yêu cầu" />
+		<put-attribute name="menu" value="" />
+		<put-attribute name="body" value="/WEB-INF/bodyfragments/404.jsp" />
+	</definition>
+	
 	<!-- Acccount Info Page -->
 	<definition name="accountInfo" extends="base.definition">
 		<put-attribute name="title" value="Thông tin cá nhân" />
@@ -78,6 +85,12 @@
 		<put-attribute name="body" value="/WEB-INF/bodyfragments/product.jsp" />
 	</definition>
 
+	<!-- Product Infomation -->
+	<definition name="productInfo" extends="base.definition">
+		<put-attribute name="title" value="Chi tiết sản phẩm" />
+		<put-attribute name="body" value="/WEB-INF/bodyfragments/productInfo.jsp" />
+	</definition>
+	
 	<!-- Product List Page -->
 	<definition name="productList" extends="base.definition">
 		<put-attribute name="title" value="Danh sách sản phẩm" />
@@ -98,12 +111,12 @@
 		<put-attribute name="body"
 			value="/WEB-INF/bodyfragments/shoppingCart.jsp" />
 	</definition>
-
-	<!-- Shopping Cart Customer Page -->
-	<definition name="shoppingCartCustomer" extends="base.definition">
-		<put-attribute name="title" value="Shopping Cart Customer" />
+	
+	<!-- Shopping Cart Other Information Page -->
+	<definition name="shoppingCartOtherInfo" extends="base.definition">
+		<put-attribute name="title" value="Thông tin khác" />
 		<put-attribute name="body"
-			value="/WEB-INF/bodyfragments/shoppingCartCustomer.jsp" />
+			value="/WEB-INF/bodyfragments/shoppingCartOtherInfo.jsp" />
 	</definition>
 
 	<!-- Shopping Cart Confirmation Page -->
@@ -115,7 +128,7 @@
 
 	<!-- Shopping Cart Finally -->
 	<definition name="shoppingCartFinalize" extends="base.definition">
-		<put-attribute name="title" value="Contact Us" />
+		<put-attribute name="title" value="Hoàn tất vieejc mua hàng" />
 		<put-attribute name="body"
 			value="/WEB-INF/bodyfragments/shoppingCartFinalize.jsp" />
 	</definition>

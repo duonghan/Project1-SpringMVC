@@ -135,7 +135,7 @@ public class ProductInfo {
 	}
 
 	public double getCost() {
-		return this.price - this.price*this.discount;
+		return this.price*(1 - this.discount);
 	}
 
 }

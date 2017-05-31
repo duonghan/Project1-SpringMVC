@@ -7,5 +7,5 @@ encoding//src/main/java/com/dnweb/springmvcshoeshop/dao/OrderDAO.java=UTF-8
 encoding//src/main/java/com/dnweb/springmvcshoeshop/dao/ProductDAO.java=UTF-8
 encoding//src/main/java/com/dnweb/springmvcshoeshop/interceptor/MenuInterceptor.java=UTF-8
 encoding//src/main/java/com/dnweb/springmvcshoeshop/validator/ProductInfoValidator.java=UTF-8
-encoding//src/main/webapp/WEB-INF/bodyfragments/shoppingCartFinalize.jsp=UTF-8
+encoding//src/main/webapp/WEB-INF/bodyfragments/shopping-cartFinalize.jsp=UTF-8
 encoding/<project>=UTF-8

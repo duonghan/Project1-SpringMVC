@@ -8,7 +8,7 @@
 	<div class="FB1">
 		<a href="${pageContext.request.contextPath}/login"><p>Tài
 				khoản của bạn</p></a> <a
-			href="${pageContext.request.contextPath}/shoppingCart"><p>Giỏ
+			href="${pageContext.request.contextPath}/shopping-cart"><p>Giỏ
 				hàng</p></a>
 	</div>
 </div>

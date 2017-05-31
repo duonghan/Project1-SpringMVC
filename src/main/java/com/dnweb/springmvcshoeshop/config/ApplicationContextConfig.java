@@ -23,7 +23,6 @@ import org.springframework.web.servlet.view.tiles3.TilesConfigurer;
 import org.springframework.web.servlet.view.tiles3.TilesView;
 
 import com.dnweb.springmvcshoeshop.entities.Account;
-import com.dnweb.springmvcshoeshop.interceptor.MenuInterceptor;
 
 @Configuration
 @ComponentScan("com.dnweb.springmvcshoeshop.*")
@@ -103,7 +102,6 @@ public class ApplicationContextConfig {
 			String pkgName = pkg.getName();
 
 			// Package chứa các entity class.
-			//  "com.dnweb.springmvcshoeshop.entities" 
 			//   com.dnweb.springmvcshoeshop.entities
 			factoryBean.setPackagesToScan(new String[] {pkgName});
 			factoryBean.setDataSource(dataSource);

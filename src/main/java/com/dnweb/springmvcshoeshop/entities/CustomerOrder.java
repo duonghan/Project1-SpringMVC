@@ -31,6 +31,7 @@ public class CustomerOrder implements java.io.Serializable {
 	private Boolean status;
 	private double amount;
 	private Date created;
+	private String other;
 	private Set<OrderDetail> orderdetails = new HashSet<OrderDetail>(0);
 
 	@Id
@@ -90,7 +91,16 @@ public class CustomerOrder implements java.io.Serializable {
 	public void setCreated(Date created) {
 		this.created = created;
 	}
+	
+	@Column(name = "other")
+	public String getOther() {
+		return this.other;
+	}
 
+	public void setOther(String other) {
+		this.other = other;
+	}
+	
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "customerOrder")
 	public Set<OrderDetail> getOrderdetails() {
 		return this.orderdetails;

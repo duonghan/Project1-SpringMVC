@@ -44,17 +44,10 @@ public class OrderDAO {
 		 
 		Session session = sessionFactory.getCurrentSession();
 		
-		//Criteria criteria = session
-		//	    .createCriteria(Order.class)
-		//	    .setProjection(Projections.max("ordernum"));
 		Query query = session.createQuery(sql);
 		Number value = (Number)query.uniqueResult();
 		
-		// Number value = (Number)criteria.uniqueResult();
 		System.out.println(">>>>>>>>>>>>>>>>>>>>>MAX:" + value);
-		
-		//Query query = session.createQuery(sql);
-		//Integer value = (Integer) query.uniqueResult();
 		
 		if (value == null) {
 			return 0;
@@ -72,9 +65,11 @@ public class OrderDAO {
 
 		order.setId(UUID.randomUUID().toString()); 
 		order.setOrdernum(orderNum);
+		order.setStatus(true);
 		order.setCreated(new Date());
 		order.setAmount(cartInfo.getAmountTotal());
-
+		order.setOther(cartInfo.getDescription());
+		
 		CustomerInfo customerInfo = cartInfo.getCustomerInfo();
 		Account account = this.accountDAO.findAccountByUsername(customerInfo.getUsername());
 
@@ -92,7 +87,7 @@ public class OrderDAO {
 			detail.setAmount(line.getAmount());
 			detail.setPrice(line.getProductInfo().getPrice());
 			detail.setQuantity(line.getQuantity());
-
+			
 			String code = line.getProductInfo().getId();
 			Product product = this.productDAO.findProduct(code);
 			detail.setProduct(product);

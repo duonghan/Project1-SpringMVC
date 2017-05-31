@@ -8,6 +8,7 @@ public class CartInfo {//Thong tin ve gio hang: nguoi mua, ds cac san pham
 	private int orderNum;
 	
 	private CustomerInfo customerInfo;
+	private String description;
 	
 	private final List<CartLineInfo> cartLines = new ArrayList<CartLineInfo>();
 
@@ -29,6 +30,14 @@ public class CartInfo {//Thong tin ve gio hang: nguoi mua, ds cac san pham
 
 	public List<CartLineInfo> getCartLines() {
 		return cartLines;
+	}
+	
+	public String getDescription() {
+		return description;
+	}
+
+	public void setDescription(String description) {
+		this.description = description;
 	}
 
 	//Tim kiem thong tin san pham theo id
@@ -117,4 +126,5 @@ public class CartInfo {//Thong tin ve gio hang: nguoi mua, ds cac san pham
 		}
 
 	}
+	
 }

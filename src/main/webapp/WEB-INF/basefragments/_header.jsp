@@ -49,7 +49,7 @@
 			<li><img style="margin-right: 10px;"
 				src="${pageContext.request.contextPath}/images/icon3.png"
 				height="15" width="15" /><a class="L3"
-				href="${pageContext.request.contextPath}/shoppingCart"
+				href="${pageContext.request.contextPath}/shopping-cart"
 				target="_self">Giỏ hàng</a></li>
 		</ul>
 	</div>
@@ -66,7 +66,7 @@
 				phẩm </strong></a></li>
 	<li><a href="${pageContext.request.contextPath}/contactus"><strong>Liên
 				hệ</strong></a></li>
-	<security:authorize access="hasAnyRole('ROLE_ADMIN','ROLE_USER')">
+	<security:authorize access="hasAnyRole('ROLE_ADMIN')">
 		<li><a href="${pageContext.request.contextPath}/order/list"><strong>
 					Danh sách đơn hàng </strong></a></li>
 	</security:authorize>
@@ -76,10 +76,12 @@
 					Thêm sản phẩm </strong></a></li>
 	</security:authorize>
 	<div class="timkiem">
-		<input class="input" type="text" placeholder="Tìm kiếm...">
+		<input class="input" type="text" name="prodname" placeholder="Tìm kiếm...">
 		<button>
+		
+		<a href="${pageContext.request.contextPath}/product/search?name=${prodname}">
 			<img src="${pageContext.request.contextPath}/images/icon6.png"
-				height="15" width="15">
+				height="15" width="15"></a>
 		</button>
 	</div>
 </div>

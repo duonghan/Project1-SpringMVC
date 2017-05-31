@@ -43,7 +43,7 @@
 	<div>
 		<c:forEach items="${paginationResult.navigationPages}" var="page">
 			<c:if test="${page != -1 }">
-				<a href="orderList?page=${page}" class="nav-item">${page}</a>
+				<a href="${pageContext.request.contextPath}/order/list?page=${page}" class="nav-item">${page}</a>
 			</c:if>
 			<c:if test="${page == -1 }">
 				<span class="nav-item"> ... </span>

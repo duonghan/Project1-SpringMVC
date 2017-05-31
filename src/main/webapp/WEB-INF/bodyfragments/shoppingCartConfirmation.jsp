@@ -2,8 +2,7 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
-
-<fmt:setLocale value="vi_VI" scope="session" />
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 
 <div class="page-title">Xác nhận thông tin đơn hàng</div>
 
@@ -16,6 +15,9 @@
 		<li>Email: ${myCart.customerInfo.email}</li>
 		<li>Số điện thoại: ${myCart.customerInfo.phone}</li>
 		<li>Địa chỉ: ${myCart.customerInfo.address}</li>
+		<c:if test="${not empty myCart.description}">
+		<li>Thông tin khác: ${myCart.description}</li>		
+		</c:if>
 	</ul>
 	<h3>Chi tiết giỏ hàng:</h3>
 	<ul>
@@ -26,20 +28,19 @@
 	</ul>
 </div>
 
-<form method="POST"
-	action="${pageContext.request.contextPath}/shoppingCart/confirm">
-
+<form method="POST" 
+	action="${pageContext.request.contextPath}/shopping-cart/confirm">
+	
 	<!-- Edit Cart -->
 	<a class="navi-item"
-		href="${pageContext.request.contextPath}/shoppingCart">Thay đổi</a>
-
+		href="${pageContext.request.contextPath}/shopping-cart">Thay đổi</a>
 	<input type="submit" value="Gửi" class="button-send-sc" />
 </form>
 
 <div class="container">
 
 	<c:forEach items="${myCart.cartLines}" var="cartLineInfo">
-		<div class="product-preview-container">
+		<div class="sp">
 			<ul>
 				<li><img class="sp"
 					src="${pageContext.request.contextPath}/productImage?id=${cartLineInfo.productInfo.id}" /></li>

@@ -25,7 +25,6 @@ public class OrderDetail implements java.io.Serializable {
 	private double price;
 	private int quantity;
 	private double amount;
-	private String description;
 
 	@Id
 
@@ -83,15 +82,6 @@ public class OrderDetail implements java.io.Serializable {
 
 	public void setAmount(double amount) {
 		this.amount = amount;
-	}
-
-	@Column(name = "description", length = 65535)
-	public String getDescription() {
-		return this.description;
-	}
-
-	public void setDescription(String description) {
-		this.description = description;
 	}
 
 }

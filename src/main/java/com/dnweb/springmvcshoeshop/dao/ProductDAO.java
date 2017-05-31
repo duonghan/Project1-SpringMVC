@@ -184,7 +184,7 @@ public class ProductDAO {
 
 	}
 
-	// query san pham theo trang
+	// Query san pham theo trang
 	public PaginationResult<ProductInfo> queryProducts(int page, int maxResult, int maxNavigationPage) {
 		return queryProducts(page, maxResult, maxNavigationPage, null);
 	}

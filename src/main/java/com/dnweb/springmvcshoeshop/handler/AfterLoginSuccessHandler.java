@@ -32,7 +32,7 @@ public class AfterLoginSuccessHandler implements AuthenticationSuccessHandler {
 	public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response,
 			Authentication authentication) throws IOException, ServletException {
 
-		System.out.println("???? Call in SuccesssHander:");
+		System.out.println(">>>>>>>>> Call in SuccesssHander:");
 		
 		UserDetails userDetails =	(UserDetails) authentication.getPrincipal();
 		
@@ -45,7 +45,7 @@ public class AfterLoginSuccessHandler implements AuthenticationSuccessHandler {
 		UserUtils.saveLoginedUser(request, customerInfo);
 		
 		// Chuyen sang /profile  (Tu chuyen huong sang trang nao do)..
-		redirectStrategy.sendRedirect(request, response, "/profile");
+		redirectStrategy.sendRedirect(request, response, "/");
 	}
 
 }

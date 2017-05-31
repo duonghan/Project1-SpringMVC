@@ -18,7 +18,8 @@
 	<h3>Tổng giá trị đơn hàng:</h3>
 	<ul>
 		<li>Tổng: <span> <fmt:formatNumber
-					value="${orderInfo.amount}" type="currency" />
+					value="${orderInfo.amount}" type="number"
+					 pattern="###,###,### VNĐ" maxFractionDigits="0"/>
 		</span></li>
 	</ul>
 </div>
