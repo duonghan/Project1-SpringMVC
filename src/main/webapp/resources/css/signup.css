@@ -1,0 +1,172 @@
+.Cright{
+	height:940px;
+	width:895px;	
+	float: right;
+}
+.CRS0{
+	width: 895px;
+	height: 700px;
+}
+
+.CRS1{
+	width: 430px;
+	height: 700px;
+	background:#e5e5e5;
+	margin-right:20px;
+	float: right;
+	
+}
+.loginS{
+	font-family:"Arial";
+	font-size: 60px;
+	color: #00BFFF;
+	margin-left:85px;
+	
+}
+.nameS{
+	font-size: 15px;
+	margin-left:20px;
+}
+
+.form-inputS input{
+	height: 30px;
+	width:300px;
+	font-size: 15px;
+	margin-bottom: 20px;
+	margin-top: 10px;
+	margin-left:40px;
+	border: 2px solid #ccc;
+	padding-left: 30px;
+}
+.CRS11:link {
+   color: #000;
+   text-decoration: none;
+}
+.CRS11:visited {
+   text-decoration: none;
+   color: #000;
+}
+.CRS11:hover {
+   text-decoration: underline;
+   color: #0000ff;
+}
+.CRS11:active {
+   text-decoration: none;
+   color: #000;
+}
+.button1 {
+	width: 80px;
+	height:40px;
+	line-height: 40px;
+	margin-top:15px;
+	border: 1px solid #000;
+	border-radius: 1em 1em 1em 1em;
+	background-color: #fff;
+	margin-left:165px;
+	padding: 0 10px;
+	outline:0;
+	cursor: pointer;
+	display:block;
+}
+.button1 a{
+	color:#000;
+	margin-left: 12px;
+	text-decoration: none;
+}
+.button1:hover{
+	background:#ff0000;	
+}
+.button1:hover a{
+	color:#fff;
+}
+.CRS3{
+	width: 430px;
+	height:700px;
+	background:#e5e5e5;
+	float: left;
+}
+.CRS3 p{
+	font-size: 20px;
+	margin-left: 30px;
+	margin-right: 30px;
+}
+.button2 {
+	width: 80px;
+	height:40px;
+	line-height: 40px;
+	margin-top:15px;
+	border: 1px solid #000;
+	border-radius: 1em 1em 1em 1em;
+	background-color: #fff;
+	margin-left:300px;
+	padding: 0 10px;
+	outline:0;
+	cursor: pointer;
+	display:block;
+	
+}
+.button2 a{
+	font-size: 14px;
+	color:#000;
+	margin-left:6px;
+	text-decoration: none;
+}
+.button2:hover{
+	background:#ff0000;	
+}
+.button2:hover a{
+	color:#fff;
+}
+.CR2 {
+	width: 889px;
+	height:100px;
+	border: 1px solid #cccccc;
+}
+.CR2 .logo{
+	width: 200px;
+	height:90px;
+	background-color: #fff;
+	margin-left:18px;
+	margin-top:5px;
+	float: left;
+	display:block;
+}
+.CR2 .logo img{
+	width: 200px;
+	height:90px;
+}
+.CR2 .logo:hover{
+	border: 1px solid #ff0000;
+}
+/*======cho nay cua gioi tinh===*/
+.CR5{
+	height: 65px;
+	width:230px;
+	float:left;
+}
+.form-input1 input{
+	height: 30px;
+	width:150px;
+	font-size: 15px;
+	margin-bottom: 20px;
+	margin-top: 10px;
+	margin-left:40px;
+	border: 2px solid #ccc;
+	padding-left: 30px;
+	
+}
+.CR6{
+	height: 65px;
+	width:200px;
+}
+.gt{
+	height: 35px;
+	width:125px;
+	font-size: 15px;
+	margin-bottom: 20px;
+	margin-top: 10px;
+	margin-left:44px;
+	border: 2px solid #ccc;
+	padding-left: 10px;
+}
+	

@@ -1,0 +1,79 @@
+.CREP0{
+	height:600px;
+	line-heiht:600px;
+	width:800px;
+	background:#ccc;
+	margin-left45px;
+	margin-top:15px;
+}
+.CREP1{
+	margin-left: 70px;
+}
+.nameEP{
+	font-size: 15px;
+	margin-left:20px;
+}
+
+.form-inputEP input{
+	height: 30px;
+	width:300px;
+	font-size: 15px;
+	margin-bottom: 20px;
+	margin-top: 10px;
+	margin-left:40px;
+	border: 2px solid #ccc;
+	padding-left: 30px;
+}
+.buttonEP1 {
+	width: 80px;
+	height:40px;
+	line-height: 40px;
+	margin-top:15px;
+	border: 1px solid #000;
+	border-radius: 1em 1em 1em 1em;
+	background-color: #fff;
+	margin-left:200px;
+	padding: 0 10px;
+	outline:0;
+	cursor: pointer;
+	display:block;
+	float:left;
+}
+.buttonEP1 a{
+	color:#000;
+	margin-left: 20px;
+	text-decoration: none;
+}
+.buttonEP1:hover{
+	background:#ff0000;	
+}
+.buttonEP1:hover a{
+	color:#fff;
+}
+.buttonEP2 {
+	width: 80px;
+	height:40px;
+	line-height: 40px;
+	margin-top:15px;
+	border: 1px solid #000;
+	border-radius: 1em 1em 1em 1em;
+	background-color: #fff;
+	margin-right:130px;
+	padding: 0 10px;
+	outline:0;
+	cursor: pointer;
+	display:block;
+	float:right;
+}
+.buttonEP2 a{
+	color:#000;
+	margin-left: 20px;
+	text-decoration: none;
+	text-align: center;
+}
+.buttonEP2:hover{
+	background:#ff0000;	
+}
+.buttonEP1:hover a{
+	color:#fff;
+	

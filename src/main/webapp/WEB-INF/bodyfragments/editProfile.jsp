@@ -4,63 +4,64 @@
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 
 <h2>${erros }</h2>
-
-<div class="page-title">Cập nhật thông tin người dùng</div>
-
+<div class="Cright">
+<div class="CREP0">
+<br>
+<br> 
+<a style="font-size: 25px; color: #ff0000; padding: 50px;"><strong>CẬP NHẬT THÔNG TIN NGƯỜI DÙNG</strong></a>
+<br>
+<br>
+<br>
 <form:form method="POST" 
 	modelAttribute="userAccountForm"
 	action="${pageContext.request.contextPath}/profile/edit">
 
-	<table>
-		<tr>
-		<c:if test="${not empty userAccountForm.username }">
-			<td><form:hidden path="username"/></td>
-			<td><form:hidden path="password"/></td>
-			<td><form:hidden path="role"/></td>
-			<td><form:hidden path="active"/></td>
-		</c:if>
-		</tr>
 		
-		<tr>
-			<td>Họ tên*</td>
-			<td><form:input path="name" /></td>
-			<td><form:errors path="name" /></td>
-		</tr>
-
-		<tr>
-			<td>Email *</td>
-			<td><form:input path="email" /></td>
-			<td><form:errors path="email"/></td>
-		</tr>
-
-		<tr>
-			<td>Giới tính *</td>
-			<td>
-			<form:select path="gender">
-                <form:option value="" label="- Chọn một -" />
-                <form:options items="${genderMap}" />
-            </form:select>
-            </td>
+		<div class="CREP1">
+		    <a class="nameEP"><strong>Họ tên: </strong><span style="color: #ff0000;">*</span></a>
+			<div class="form-inputEP">
+			  <form:input path="name" />
+			  <form:errors path="name" />
+			</div>
 			
-			<td><form:errors path="gender"/></td>
-		</tr>
+			<a class="nameEP"><strong>Email: </strong><span style="color: #ff0000;">*</span></a>
+			<div class="form-inputEP">
+			<form:input path="email" />
+			<form:errors path="email"/>
+			</div>
+
+
+			<a class="nameEP"><strong>Giới tính:</strong></a>
+
+					<div >
+						<form:select path="gender" class="gt">
+							<form:option value="" label="- Chọn một -" />
+							<form:options items="${genderMap}" />
+						</form:select>
+					</div>
 		
-		<tr>
-			<td>Số điện thoại *</td>
-			<td><form:input path="phone" /></td>
-			<td><form:errors path="phone"/></td>
-		</tr>
+			<a class="nameEP" ><strong>Số điện thoại: </strong><span style="color: #ff0000;">*</span></a>
+			<div class="form-inputEP">
+			<form:input path="phone" />
+			<form:errors path="phone"/>
+			</div>
+		
 
-		<tr>
-			<td>Địa chỉ *</td>
-			<td><form:input path="address" /></td>
-			<td><form:errors path="address"/></td>
-		</tr>
-
-		<tr>
-			<td><input type="submit" value="Gửi" /> <input type="reset"
-				value="Reset" /></td>
-		</tr>
-	</table>
-
+		
+			<a class="nameEP"><strong>Địa chỉ: </strong><span style="color: #ff0000;">*</span></a>
+			<div class="form-inputEP">
+			<form:input path="address" />
+			<form:errors path="address"/>
+			</div>
+		</div>
+        <div class="CREP2">
+	      <div class="buttonEP1">
+			 <a href="${pageContext.request.contextPath}/login">Gửi</a>
+		  </div>
+		  <div class="buttonEP2">
+			 <a href="${pageContext.request.contextPath}/login">Reset</a>
+		  </div>
+	    </div>
 </form:form>
+</div>
+</div>

@@ -25,6 +25,7 @@ public class OrderDetail implements java.io.Serializable {
 	private double price;
 	private int quantity;
 	private double amount;
+	private int size;
 
 	@Id
 
@@ -82,6 +83,15 @@ public class OrderDetail implements java.io.Serializable {
 
 	public void setAmount(double amount) {
 		this.amount = amount;
+	}
+	
+	@Column(name = "size", nullable = false)
+	public int getSize() {
+		return this.size;
+	}
+
+	public void setSize(int size) {
+		this.size = size;
 	}
 
 }

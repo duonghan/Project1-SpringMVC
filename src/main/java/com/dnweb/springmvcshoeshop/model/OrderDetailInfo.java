@@ -7,6 +7,7 @@ public class OrderDetailInfo {
 	private String productid;
 	private String productname;
 	private double price;
+	private int size;
 	
 	private int quantity;
 	private double amount;
@@ -18,12 +19,13 @@ public class OrderDetailInfo {
 	}
 
 	public OrderDetailInfo(String id, String productid, String productname,//
-			 int quantity, double price, double amount) {
+			 int quantity, int size, double price, double amount) {
 		
 		this.id = id;
 		this.productid = productid;
 		this.productname = productname;
 		this.price = price;
+		this.size = size;
 		this.quantity = quantity;
 		this.amount = amount;
 	}
@@ -83,6 +85,13 @@ public class OrderDetailInfo {
 	public void setDescription(String description) {
 		this.description = description;
 	}
-	
+
+	public int getSize() {
+		return size;
+	}
+
+	public void setSize(int size) {
+		this.size = size;
+	}
 	
 }

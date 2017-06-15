@@ -58,31 +58,23 @@
 
 <!--  -->
 <div class="menu">
-	<li><a href="${pageContext.request.contextPath}/"><strong>Trang
-				chủ</strong></a></li>
-	<li><a href="${pageContext.request.contextPath}/about"><strong>Giới
-				thiệu</strong></a></li>
-	<li><a href="${pageContext.request.contextPath}/product/list"><strong>Sản
-				phẩm </strong></a></li>
-	<li><a href="${pageContext.request.contextPath}/contactus"><strong>Liên
-				hệ</strong></a></li>
+	<li><a href="${pageContext.request.contextPath}/"><strong>TRANG CHỦ</strong></a></li>
+	<li><a href="${pageContext.request.contextPath}/about"><strong>GIỚI THIỆU</strong></a></li>
+	<li><a href="${pageContext.request.contextPath}/product/list"><strong>SẢN PHẨM</strong></a></li>
+	<li><a href="${pageContext.request.contextPath}/contactus"><strong>LIÊN HỆ</strong></a></li>
+	
 	<security:authorize access="hasAnyRole('ROLE_ADMIN')">
-		<li><a href="${pageContext.request.contextPath}/order/list"><strong>
-					Danh sách đơn hàng </strong></a></li>
+		<li><a href="${pageContext.request.contextPath}/order/list"><strong>ĐƠN HÀNG</strong></a></li>
 	</security:authorize>
 
 	<security:authorize access="hasRole('ROLE_ADMIN')">
-		<li><a href="${pageContext.request.contextPath}/product/edit"><strong>
-					Thêm sản phẩm </strong></a></li>
+		<li><a href="${pageContext.request.contextPath}/product/edit"><strong>THÊM SẢN PHẨM </strong></a></li>
 	</security:authorize>
+	
 	<div class="timkiem">
-		<input class="input" type="text" name="prodname" placeholder="Tìm kiếm...">
-		<button>
-		
-		<a href="${pageContext.request.contextPath}/product/search?name=${prodname}">
-			<img src="${pageContext.request.contextPath}/images/icon6.png"
-				height="15" width="15"></a>
-		</button>
+  		<input class="input" type="text" name="prodname" placeholder="Tìm kiếm..." >
+  		<a href="${pageContext.request.contextPath}/product/search?name=${prodname}" class="search" target="_self">
+  		<img src="${pageContext.request.contextPath}/images/icon6.png" ></a>
 	</div>
 </div>
 

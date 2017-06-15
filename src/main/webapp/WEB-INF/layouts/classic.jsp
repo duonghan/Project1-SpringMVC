@@ -10,7 +10,15 @@
 <title><tiles:getAsString name="title" /></title>
 
 <link rel="shortcut icon" href="${pageContext.request.contextPath}/images/logo15.png">
-<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/style.css">
+
+
+<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/index.css">
+<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/login.css">
+<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/signup.css">
+<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/sanpham.css">
+<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/accountInfo.css">
+<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/editProfile.css">
+
 <script type="text/javascript" src="${pageContext.request.contextPath}/js/header.js"></script>
 </head>
 <body onload="slideA()">

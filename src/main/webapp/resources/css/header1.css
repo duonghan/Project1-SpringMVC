@@ -1,0 +1,72 @@
+.footer{
+	height:365px;
+	width:1200px;
+	margin: 0px auto;
+	border: 1px solid #cccccc;
+	background: #333;
+}
+.F1{
+	height:200px;
+	width:280px;
+	margin: 20px 10px;
+	float: left;
+}
+.FN{
+	height:50px;
+	width:200px;
+	line-height: 50px;
+	text-align: center;
+	background: #fff;
+	color: #bf0000;	
+}
+.FB1{
+	margin-left: 20px;
+	margin-top: 20px;
+}
+.FB1 a{
+	text-decoration: none;
+	color:#b2b2b2;
+	display:block;
+}
+.FB1 a:hover{
+	
+	color:#bf0000;
+}
+.FB2 a{
+    height:60px;
+	width:60px;
+	margin-top:20px;
+	margin-left:35px;
+	float:left;
+	display:block;
+	background: #333;
+}
+.FB2 img{
+	height:50px;
+	width:50px;
+	margin-top:5px;
+	margin-left:5px;
+}
+.FB2 a:hover{
+	background: #e5e5e5;
+}
+.F2{
+	margin-left:10px;
+	float:left;
+}
+.F3 img{
+	height:30px;
+	width:30px;
+	margin-top: 0px;
+	float:left;
+}
+.F4{
+	height:30px;
+	width: 250px;
+	margin-left:35px;
+	margin-top: 6px;
+	color:#b2b2b2;
+	
+}
+
+/*==footer==*/

@@ -1,0 +1,36 @@
+.CRAC0{
+	height: 400px;
+	line-heiht:400px;
+	width:800px;
+	background:#ccc;
+	margin-left:45px;
+	margin-top: 50px;
+}
+.CRAC0 .nameAC{
+	font-size: 30px;
+	text-align: center;
+	color:red;
+	
+}
+.CRAC1 p{
+	margin-left: 50px;
+	font-size: 20px;
+}
+.CRAC1 a{
+	font-size: 20px;
+	color: #0000ff;
+	text-decoration: none;
+	float:right;
+	margin-right: 30px;
+}
+.CRAC1 a:visited {
+   text-decoration: none
+}
+.CRAC1 a:hover {
+   text-decoration: underline;
+   color: #990000;
+}
+.CRAC1 a:active {
+   text-decoration: none;
+   color: #000;
+}

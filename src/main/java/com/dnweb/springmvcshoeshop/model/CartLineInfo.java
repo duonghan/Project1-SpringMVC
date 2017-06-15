@@ -4,9 +4,11 @@ public class CartLineInfo {//Danh sach moi loai san pham trong gio hang
 
 	private ProductInfo productInfo;
 	private int quantity;
-
+	private int size;
+	
 	public CartLineInfo() {
 		this.quantity = 0;
+		this.size = 35;
 	}
 
 	public ProductInfo getProductInfo() {
@@ -23,6 +25,14 @@ public class CartLineInfo {//Danh sach moi loai san pham trong gio hang
 
 	public void setQuantity(int quantity) {
 		this.quantity = quantity;
+	}
+	
+	public int getSize() {
+		return size;
+	}
+
+	public void setSize(int size) {
+		this.size = size;
 	}
 
 	//Tong thanh toan cua gio hang

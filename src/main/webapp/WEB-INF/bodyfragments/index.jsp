@@ -4,14 +4,14 @@
 
 <%@ taglib uri="http://www.springframework.org/security/tags"
 	prefix="security"%>
-	
+
+<div class="Cright">	
 <div class="CR1">
 	<div class="title">
 		<p>
 			<strong> MỚI CẬP NHẬT</strong>
 		</p>
 	</div>
-
 	<br />
 	<!-- New Product -->
 	
@@ -23,7 +23,7 @@
 	
 			<div class="namesp">
 				<a
-					href="${pageContext.request.contextPath}/productImage?id=${prodInfo.id}">${prodInfo.name}</a>
+					href="${pageContext.request.contextPath}/product/info?id=${prodInfo.id}">${prodInfo.name}</a>
 			</div>
 	
 			<c:if test="${prodInfo.discount == 0.0}">
@@ -207,4 +207,5 @@
 	<div class="logo">
 		<a href="https://www.vans.com/"><img src="images/logo6.jpg" alt=""></a>
 	</div>
+</div>
 </div>

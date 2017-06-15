@@ -1,17 +1,22 @@
 package com.dnweb.springmvcshoeshop.controller;
 
 import java.io.IOException;
+import java.text.DateFormat;
+import java.util.Date;
+import java.util.LinkedHashMap;
+import java.util.Locale;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
+import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -24,12 +29,12 @@ import com.dnweb.springmvcshoeshop.dao.OrderDAO;
 import com.dnweb.springmvcshoeshop.dao.ProductDAO;
 import com.dnweb.springmvcshoeshop.entities.Product;
 import com.dnweb.springmvcshoeshop.model.CartInfo;
+import com.dnweb.springmvcshoeshop.model.CartLineInfo;
 import com.dnweb.springmvcshoeshop.model.CustomerInfo;
 import com.dnweb.springmvcshoeshop.model.PaginationResult;
 import com.dnweb.springmvcshoeshop.model.ProductInfo;
 import com.dnweb.springmvcshoeshop.util.CartUtils;
 import com.dnweb.springmvcshoeshop.util.UserUtils;
-import com.dnweb.springmvcshoeshop.validator.CustomerInfoValidator;
 
 @Controller
 
@@ -60,19 +65,19 @@ public class MainController {
 
 		}
 	}
-	
-	//Loi quyen truy cap
+
+	// Loi quyen truy cap
 	@RequestMapping("/403")
 	public String accessDenied() {
 		return "403";
 	}
-	
-	//Khong tim thay trang
+
+	// Khong tim thay trang
 	@RequestMapping("/404")
 	public String pageNotFound(Model model) {
 		return "404";
 	}
-		
+
 	@RequestMapping("/about")
 	public String about() {
 		return "about";
@@ -82,27 +87,26 @@ public class MainController {
 	public String contactus(Model model) {
 		return "contactusPage";
 	}
-	
-	
-	//Hien thi trang chu (ds san pham moi, ban chay...)
+
+	// Hien thi trang chu (ds san pham moi, ban chay...)
 	@RequestMapping("/")
-	public String home( Model model ) {
-		
-		//Mac dinh trang hien tai
+	public String home(Model model) {
+
+		// Mac dinh trang hien tai
 		final int page = 1;
-		//So ban ghi toi da trong 1 trang
+		// So ban ghi toi da trong 1 trang
 		final int maxResult = 9;
-		//So link trang toi da
+		// So link trang toi da
 		final int maxNavigationPage = 1;
-		
+
 		PaginationResult<ProductInfo> result = productDAO.queryProducts(page, maxResult, maxNavigationPage, "");
 		PaginationResult<ProductInfo> lstPopuler = productDAO.listPopulerProduct(page, maxResult, maxNavigationPage);
 		PaginationResult<ProductInfo> lstSales = productDAO.listSalesProduct(page, maxResult, maxNavigationPage);
-		
+
 		model.addAttribute("paginationProducts", result);
 		model.addAttribute("listPopuler", lstPopuler);
 		model.addAttribute("listSales", lstSales);
-		
+
 		return "index";
 	}
 
@@ -123,41 +127,48 @@ public class MainController {
 
 	// Danh sach san pham theo danh muc
 	@RequestMapping(value = { "/category" })
-	public String category(Model model, 
-			@RequestParam(value = "id", defaultValue = "1") String id,
+	public String category(Model model, @RequestParam(value = "id", defaultValue = "1") String id,
 			@RequestParam(value = "name", defaultValue = "") String likeName,
 			@RequestParam(value = "page", defaultValue = "1") int page) {
-		
+
 		final int maxResult = 9;
 		final int maxNavigationPage = 10;
 
 		PaginationResult<ProductInfo> result = productDAO.queryProductsCategory(page, //
 				maxResult, maxNavigationPage, id, likeName);
-		
+
 		model.addAttribute("paginationProductsByCategory", result);
-		
+
 		return "category";
 	}
-	
-	
-	//Chi tiet tung san pham
+
+	// Chi tiet tung san pham
 	@RequestMapping(value = { "/product/info" })
-	public String product(Model model,//
+	public String product(Model model, HttpServletRequest request, //
 			@RequestParam(value = "id", defaultValue = "") String id) {
-		
+
 		ProductInfo productInfo = null;
-		
+		Map<String, Integer> dataSize = this.dataSize();
+
 		if (id != null && id.length() > 0) {
 			productInfo = productDAO.findProductInfo(id);
-		}else{
+		} else {
 			return "redirect:/404";
 		}
-		
-		model.addAttribute("productForm", productInfo);
-		
+
+		if (productInfo != null) {
+
+			CartLineInfo cartLineInfo = new CartLineInfo();
+
+			cartLineInfo.setProductInfo(productInfo);
+			model.addAttribute("cartLine", cartLineInfo);
+			model.addAttribute("sizeForm", dataSize);
+
+		}
+
 		return "productInfo";
 	}
-	
+
 	@RequestMapping({ "/buyProduct" })
 	public String listProductHandler(HttpServletRequest request, Model model, //
 			@RequestParam(value = "id", defaultValue = "") String id) {
@@ -205,10 +216,10 @@ public class MainController {
 		CartInfo myCart = CartUtils.getCartInSession(request);
 
 		model.addAttribute("cartForm", myCart);
-		
+
 		return "shoppingCart";
 	}
-	
+
 	// POST: Cap nhat so luong cho cac san pham da mua
 	@RequestMapping(value = { "/shopping-cart" }, method = RequestMethod.POST)
 	public String shoppingCartUpdateQty(HttpServletRequest request, //
@@ -216,60 +227,58 @@ public class MainController {
 			@ModelAttribute("cartForm") CartInfo cartForm) {
 
 		CartInfo cartInfo = CartUtils.getCartInSession(request);
-		
+
 		cartInfo.updateQuantity(cartForm);
-		//cartInfo.setDescription(cartForm);
+		// cartInfo.setDescription(cartForm);
 		return "redirect:/shopping-cart";
 	}
-	
-	//GET:Hien thi trang nhap thong tin bo sung
-	@RequestMapping( value ={"/shopping-cart/other-info"}, method = RequestMethod.GET)
-	public String shoppingCartOtherInformation(HttpServletRequest request,
-			Model model){
-		
+
+	// GET:Hien thi trang nhap thong tin bo sung
+	@RequestMapping(value = { "/shopping-cart/other-info" }, method = RequestMethod.GET)
+	public String shoppingCartOtherInformation(HttpServletRequest request, Model model) {
+
 		CartInfo cartInfo = CartUtils.getCartInSession(request);
-		
+
 		if (cartInfo.isEmpty()) {
 			return "redirect:/shopping-cart";
 		}
-		
+
 		model.addAttribute("cartForm", cartInfo);
-		
+
 		return "shoppingCartOtherInfo";
 	}
-	
-	//POST: Luu thong tin bo sung don hang
-	@RequestMapping( value = {"/shopping-cart/other-info"}, method = RequestMethod.POST)
-	public String shoppingCartOtherInformation(HttpServletRequest request,
-			Model model,
-			@ModelAttribute("cartForm") CartInfo cartForm){
-		
+
+	// POST: Luu thong tin bo sung don hang
+	@RequestMapping(value = { "/shopping-cart/other-info" }, method = RequestMethod.POST)
+	public String shoppingCartOtherInformation(HttpServletRequest request, Model model,
+			@ModelAttribute("cartForm") CartInfo cartForm) {
+
 		if (!cartForm.getDescription().isEmpty()) {
 			CartInfo cartInfo = CartUtils.getCartInSession(request);
 			cartInfo.setDescription(cartForm.getDescription());
 		}
-		
-		
+
 		return "redirect:/shopping-cart/confirm";
 	}
+
 	// GET: Xem lại thông tin để xác nhận.
 	@RequestMapping(value = { "/shopping-cart/confirm" }, method = RequestMethod.GET)
 	public String shoppingCartConfirmationReview(HttpServletRequest request, Model model) {
-		
+
 		CustomerInfo customerInfo = UserUtils.getLoginedUserFromSession(request);
-		
+
 		CartInfo cartInfo = CartUtils.getCartInSession(request);
 
 		cartInfo.setCustomerInfo(customerInfo);
-		
+
 		model.addAttribute("cartForm", cartInfo);
-		
+
 		// Chưa mua mặt hàng nào.
 		if (cartInfo.isEmpty()) {
 
 			// Chuyển tới trang danh giỏ hàng
 			return "redirect:/shopping-cart";
-		} 
+		}
 
 		return "shoppingCartConfirmation";
 	}
@@ -281,19 +290,19 @@ public class MainController {
 	@Transactional(propagation = Propagation.NEVER)
 	public String shoppingCartConfirmationSave(HttpServletRequest request, Model model,
 			@ModelAttribute("cartForm") CartInfo cartForm) {
-		
+
 		CartInfo cartInfo = CartUtils.getCartInSession(request);
 
 		// Chưa mua mặt hàng nào.
 		if (cartInfo.isEmpty()) {
 			return "redirect:/shopping-cart";
-		} 
-		
+		}
+
 		try {
 			orderDAO.saveOrder(cartInfo);
 		} catch (Exception e) {
-            e.printStackTrace();
-			// Neu co gi loi ==> Chuyen lai sang 
+			e.printStackTrace();
+			// Neu co gi loi ==> Chuyen lai sang
 			return "shoppingCartConfirmation";
 		}
 
@@ -307,7 +316,7 @@ public class MainController {
 		return "redirect:/shopping-cart/finalize";
 	}
 
-	//Trang hoan thanh mua hang
+	// Trang hoan thanh mua hang
 	@RequestMapping(value = { "/shopping-cart/finalize" }, method = RequestMethod.GET)
 	public String shoppingCartFinalize(HttpServletRequest request, Model model) {
 
@@ -316,12 +325,12 @@ public class MainController {
 		if (lastOrderedCart == null) {
 			return "redirect:/shopping-cart";
 		}
-		
+
 		return "shoppingCartFinalize";
 	}
 
 	@RequestMapping(value = { "/productImage" }, method = RequestMethod.GET)
-	public void productImage(HttpServletRequest request, HttpServletResponse response, Model model,
+	public String productImage(HttpServletRequest request, HttpServletResponse response, Model model,
 			@RequestParam("id") String id) throws IOException {
 		Product product = null;
 		if (id != null) {
@@ -332,15 +341,16 @@ public class MainController {
 			response.getOutputStream().write(product.getImage());
 		}
 		response.getOutputStream().close();
+
+		return "redirect:/product/info";
 	}
-	
-	
+
 	// O tim kiem san pham
-	@RequestMapping(value = {"/product/search"})
-	public String searchProduct(HttpServletRequest request, Model model,
-			@RequestParam(value= "name", defaultValue = "") String likeName,
-			@RequestParam(value = "page", defaultValue = "1") int page){
-		
+	@RequestMapping(value = { "/product/search" })
+	public void searchProduct(HttpServletRequest request, Model model,
+			@RequestParam(value = "name", defaultValue = "") String likeName,
+			@RequestParam(value = "page", defaultValue = "1") int page) {
+
 		final int maxResult = 9;
 		final int maxNavigationPage = 10;
 
@@ -348,7 +358,24 @@ public class MainController {
 				maxResult, maxNavigationPage, likeName);
 
 		model.addAttribute("paginationProducts", result);
-		return "productList";
+	}
+
+	// Size giay
+	private Map<String, Integer> dataSize() {
+		Map<String, Integer> sizeMap = new LinkedHashMap<String, Integer>();
+		sizeMap.put("35", 35);
+		sizeMap.put("36", 36);
+		sizeMap.put("37", 37);
+		sizeMap.put("38", 38);
+		sizeMap.put("39", 39);
+		sizeMap.put("40", 40);
+		sizeMap.put("41", 41);
+		sizeMap.put("42", 42);
+		sizeMap.put("43", 43);
+		sizeMap.put("44", 44);
+		sizeMap.put("45", 45);
+
+		return sizeMap;
 	}
 
 }

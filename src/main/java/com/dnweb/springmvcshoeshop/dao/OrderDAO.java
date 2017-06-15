@@ -87,6 +87,7 @@ public class OrderDAO {
 			detail.setAmount(line.getAmount());
 			detail.setPrice(line.getProductInfo().getPrice());
 			detail.setQuantity(line.getQuantity());
+			detail.setSize(line.getSize());
 			
 			String code = line.getProductInfo().getId();
 			Product product = this.productDAO.findProduct(code);
@@ -142,7 +143,7 @@ public class OrderDAO {
 	public List<OrderDetailInfo> listOrderDetailInfos(String orderId) {
 
 		String sql = "Select new " + OrderDetailInfo.class.getName() //
-				+ "(d.id, d.product.id, d.product.name , d.quantity,d.price,d.amount) "//
+				+ "(d.id, d.product.id, d.product.name , d.quantity, d.size, d.price,d.amount) "//
 				+ " from " + OrderDetail.class.getName() + " d "//
 				+ " where d.customerOrder.id = :orderId ";
 
